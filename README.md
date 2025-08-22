@@ -1,60 +1,77 @@
-# CodeIgniter 4 Framework
+# ITE311-RANISES - CodeIgniter 4 Project
 
-## What is CodeIgniter?
+## Setup Instructions
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+### Prerequisites
+- PHP 8.1 or higher
+- Composer
+- XAMPP (for database if needed)
 
-This repository holds the distributable version of the framework.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+### Installation
+1. Clone or download this project
+2. Run `composer install` to install dependencies
+3. Copy `env` to `.env` and configure your settings
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+### Quick Start
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+#### Option 1: Using Spark CLI
+```bash
+# Set environment to development
+php spark env development
 
-## Important Change with index.php
+# Generate encryption key
+php spark key:generate
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+# Start development server
+php spark serve --host=127.0.0.1 --port=8080
+```
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+#### Option 2: Using Batch File (Windows)
+Double-click `start-server.bat`
 
-**Please** read the user guide for a better explanation of how CI4 works!
+#### Option 3: Using PowerShell Script
+```powershell
+.\start-server.ps1
+```
 
-## Repository Management
+### Access Your Application
+Open your browser and go to: http://127.0.0.1:8080
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+### Available Spark Commands
+- `php spark list` - List all available commands
+- `php spark routes` - Show all routes
+- `php spark make:controller [name]` - Create new controller
+- `php spark make:model [name]` - Create new model
+- `php spark make:migration [name]` - Create new migration
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+### Project Structure
+- `app/Controllers/` - Controllers
+- `app/Models/` - Models
+- `app/Views/` - View files
+- `app/Config/` - Configuration files
+- `writable/` - Logs, cache, and uploads
 
-## Contributing
+### Current Features
+- Bootstrap 5 integration
+- Responsive navigation
+- Basic template structure
+- Development server ready
 
-We welcome contributions from the community.
+## Troubleshooting
 
-Please read the [*Contributing to CodeIgniter*](https://github.com/codeigniter4/CodeIgniter4/blob/develop/CONTRIBUTING.md) section in the development repository.
+### Spark CLI Issues
+If you get errors with Spark, make sure:
+1. PHP is in your system PATH
+2. You're in the project root directory
+3. All dependencies are installed
 
-## Server Requirements
+### Server Issues
+- Make sure port 8080 is not in use
+- Check if PHP is properly installed
+- Verify all file permissions are correct
 
-PHP version 8.1 or higher is required, with the following extensions installed:
-
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+## Development Tips
+- Use `php spark serve` for development
+- Check logs in `writable/logs/`
+- Use `php spark env development` for debugging
+- Clear cache with `php spark cache:clear` if needed
