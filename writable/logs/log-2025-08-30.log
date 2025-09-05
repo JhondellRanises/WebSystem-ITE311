@@ -1,0 +1,100 @@
+CRITICAL - 2025-08-30 07:36:59 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "register.php"
+[Method: GET, Route: register]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('register.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('register', [], true)
+ 3 APPPATH\Controllers\Register.php(11): view('register')
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Register->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Register))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-30 07:37:04 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "register.php"
+[Method: GET, Route: register]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('register.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('register', [], true)
+ 3 APPPATH\Controllers\Register.php(11): view('register')
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Register->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Register))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-30 07:37:14 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "register.php"
+[Method: GET, Route: register]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('register.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('register', [], true)
+ 3 APPPATH\Controllers\Register.php(11): view('register')
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Register->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Register))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-30 07:38:54 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "register.php"
+[Method: GET, Route: register]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('register.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('register', [], true)
+ 3 APPPATH\Controllers\Register.php(11): view('register')
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Register->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Register))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-30 07:41:15 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "register.php"
+[Method: GET, Route: register]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('register.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('register', [], true)
+ 3 APPPATH\Controllers\Register.php(11): view('register')
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Register->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Register))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-30 07:41:17 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "register.php"
+[Method: GET, Route: register]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('register.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('register', [], true)
+ 3 APPPATH\Controllers\Register.php(11): view('register')
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Register->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Register))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-08-30 07:42:23 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "register.php"
+[Method: GET, Route: register]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('register.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('register', [], true)
+ 3 APPPATH\Controllers\Register.php(11): view('register')
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Register->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Register))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-08-30 08:24:36 --> mysqli_sql_exception: Table 'users' already exists in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('CREATE TABLE `u...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('CREATE TABLE `u...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('CREATE TABLE `u...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\Forge.php(570): CodeIgniter\Database\BaseConnection->query('CREATE TABLE `u...')
+#4 C:\xampp\htdocs\ITE311-RANISES\app\Database\Migrations\20250829082547_CreateUsersTable.php(47): CodeIgniter\Database\Forge->createTable('users')
+#5 C:\xampp\htdocs\ITE311-RANISES\system\Database\MigrationRunner.php(876): App\Database\Migrations\CreateUsersTable->up()
+#6 C:\xampp\htdocs\ITE311-RANISES\system\Database\MigrationRunner.php(182): CodeIgniter\Database\MigrationRunner->migrate('up', Object(stdClass))
+#7 C:\xampp\htdocs\ITE311-RANISES\system\Commands\Database\Migrate.php(85): CodeIgniter\Database\MigrationRunner->latest(NULL)
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CLI\Commands.php(74): CodeIgniter\Commands\Database\Migrate->run(Array)
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CLI\Console.php(47): CodeIgniter\CLI\Commands->run('migrate', Array)
+#10 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(388): CodeIgniter\CLI\Console->run()
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(133): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+#12 C:\xampp\htdocs\ITE311-RANISES\spark(40): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+#13 {main}

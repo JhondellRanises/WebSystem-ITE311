@@ -17,10 +17,14 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link" href="<?= base_url('home') ?>">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= base_url('about') ?>">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= base_url('contact') ?>">Contact</a></li>
+                </ul>
+                 <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="<?= base_url('register') ?>">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?= base_url('login') ?>">Login</a></li>
                 </ul>
             </div>
         </div>
