@@ -1,27 +1,38 @@
 <?php
 
-use CodeIgniter\Router\RouteCollection;
+namespace Config;
 
-/**
- * @var RouteCollection $routes
+// Create a new instance of our RouteCollection
+$routes = Services::routes();
+
+/*
+ * --------------------------------------------------------------------
+ * Router Setup
+ * --------------------------------------------------------------------
  */
+$routes->setDefaultNamespace('App\Controllers');
+$routes->setDefaultController('Home');
+$routes->setDefaultMethod('index');
+$routes->setTranslateURIDashes(false);
+$routes->set404Override();
+$routes->setAutoRoute(true);
+
+/*
+ * --------------------------------------------------------------------
+ * Route Definitions
+ * --------------------------------------------------------------------
+ */
+
+// Public Pages
 $routes->get('/', 'Home::index');
 $routes->get('/home', 'Home::index');
 $routes->get('/about', 'Home::about');
 $routes->get('/contact', 'Home::contact');
 
 // 🔹 Authentication Routes
-$routes->match(['get','post'], 'register', 'Auth::register');
-$routes->match(['get','post'], 'login', 'Auth::login');
-
-$routes->get('dashboard', 'Auth::dashboard');
+$routes->match(['get', 'post'], 'register', 'Auth::register');
+$routes->match(['get', 'post'], 'login', 'Auth::login');
 $routes->get('logout', 'Auth::logout');
 
-$routes->get('/register', 'Register::index');   // show form
-$routes->post('/register/store', 'Register::store');  // process form
-
-$routes->get('/login', 'Login::index');       // Show login form
-$routes->post('/login/authenticate', 'Login::authenticate'); // Process login
-$routes->get('/dashboard', 'Dashboard::index'); // After login redirect
-$routes->get('/logout', 'Auth::logout');
-
+// 🔹 Dashboard Route (protected inside Auth controller)
+$routes->get('dashboard', 'Auth::dashboard');

@@ -8,28 +8,29 @@ class UserSeeder extends Seeder
 {
     public function run()
     {
+        // Load the password helper
+        helper('text');
+
         $data = [
             [
                 'name'     => 'Admin User',
                 'email'    => 'admin@example.com',
                 'password' => password_hash('admin123', PASSWORD_DEFAULT),
                 'role'     => 'admin',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'name'     => 'Instructor User',
-                'email'    => 'instructor@example.com',
-                'password' => password_hash('instructor123', PASSWORD_DEFAULT),
-                'role'     => 'instructor',
-            ],
-            [
-                'name'     => 'Student User',
-                'email'    => 'student@example.com',
-                'password' => password_hash('student123', PASSWORD_DEFAULT),
-                'role'     => 'student',
+                'name'     => 'Regular User',
+                'email'    => 'user@example.com',
+                'password' => password_hash('user123', PASSWORD_DEFAULT),
+                'role'     => 'user',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
         ];
 
-        // Insert multiple records into "users" table
+        // Using the Query Builder to insert multiple records
         $this->db->table('users')->insertBatch($data);
     }
 }

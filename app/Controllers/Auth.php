@@ -2,85 +2,118 @@
 
 namespace App\Controllers;
 
+use CodeIgniter\Controller;
 use App\Models\UserModel;
 
 class Auth extends BaseController
 {
-    public function register()
-    {
-        if ($this->request->getMethod() === 'post') {
-            $rules = [
-                'name'     => 'required|min_length[3]',
-                'email'    => 'required|valid_email|is_unique[users.email]',
-                'password' => 'required|min_length[6]',
-            ];
+    protected $helpers = ['form', 'url'];
 
-            if (!$this->validate($rules)) {
-                return view('auth/register', [
-                    'validation' => $this->validator
-                ]);
-            }
-
-            $userModel = new UserModel();
-            $userModel->save([
-                'name'     => $this->request->getPost('name'),
-                'email'    => $this->request->getPost('email'),
-                'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
-                'role'     => 'user',
-            ]);
-
-            return redirect()->to('/login')->with('success', 'Registration successful! Please login.');
-        }
-
-        return view('auth/register');
-    }
-
+    // Handle login (GET: show form, POST: process login)
     public function login()
     {
-        if ($this->request->getMethod() === 'post') {
-            $userModel = new UserModel();
-            $user = $userModel->where('email', $this->request->getPost('email'))->first();
-
-            if ($user && password_verify($this->request->getPost('password'), $user['password'])) {
-                session()->set([
-                    'user_id' => $user['id'],
-                    'name'    => $user['name'],
-                    'email'   => $user['email'],
-                    'role'    => $user['role'],
-                    'isLoggedIn' => true,
-                ]);
-                return redirect()->to('/dashboard');
-            } else {
-                return redirect()->back()->with('error', 'Invalid email or password');
-            }
+        // Check if already logged in
+        if (session()->get('logged_in')) {
+            return redirect()->to('/dashboard');
         }
 
-        return view('auth/login');
+        // Handle GET request - show login form
+        if ($this->request->getMethod() === 'GET') {
+            return view('auth/login');
+        }
+
+        // Handle POST request - process login
+        if ($this->request->getMethod() === 'POST') {
+            if (!$this->validate([
+                'email'    => 'required|valid_email',
+                'password' => 'required|min_length[6]'
+            ])) {
+                return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+            }
+
+            $userModel = new UserModel();
+            $user = $userModel->findUserByEmail($this->request->getPost('email'));
+
+            if (!$user || !password_verify($this->request->getPost('password'), $user['password'])) {
+                return redirect()->back()->withInput()->with('error', 'Invalid email or password.');
+            }
+
+            session()->set([  
+                'user_id'   => $user['id'],
+                'user_name' => $user['name'],
+                'user_role' => $user['role'],
+                'logged_in' => true,
+            ]);
+
+            return redirect()->to('/dashboard');
+        }
     }
 
+    // Handle register (GET: show form, POST: process registration)
+    public function register()
+    {
+        // Handle GET request - show register form
+        if ($this->request->getMethod() === 'GET') {
+            return view('auth/register');
+        }
+
+        // Handle POST request - process registration
+        if ($this->request->getMethod() === 'POST') {
+            if (!$this->validate([
+                'name'              => 'required|min_length[3]|max_length[255]',
+                'email'             => 'required|valid_email|is_unique[users.email]',
+                'password'          => 'required|min_length[6]',
+                'confirm_password'  => 'required|matches[password]',
+                'role'              => 'required|in_list[admin,teacher,student,user]',
+            ])) {
+                return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+            }
+
+            $userModel = new UserModel();
+            $userModel->createAccount([
+                'name'     => $this->request->getPost('name'),
+                'email'    => $this->request->getPost('email'),
+                'password' => $this->request->getPost('password'),
+                'role'     => $this->request->getPost('role'),
+            ]);
+
+            return redirect()->to('/login')->with('success', 'Account created successfully. You can now login.');
+        }
+    }
+
+    // Logout
+    public function logout()
+    {
+        session()->destroy();
+        return redirect()->to('/login')->with('success', 'You have been logged out.');
+    }
+
+    // Dashboard
     public function dashboard()
     {
-        if (!session()->get('isLoggedIn')) {
+        if (!session()->get('logged_in')) {
             return redirect()->to('/login')->with('error', 'Please login first.');
         }
 
-        return view('auth/dashboard', [
-            'name' => session()->get('name'),
-        ]);
-    }
+        $userRole = session()->get('user_role');
+        $userId = session()->get('user_id');
 
-     public function logout()
-    {
-        // Clear all session data
-        session()->remove(['user_id', 'name', 'email', 'role', 'isLoggedIn']);
+        $data = [
+            'user_name' => session()->get('user_name'),
+            'user_role' => $userRole,
+            'total_users' => 0,
+            'total_projects' => 0,
+            'total_notifications' => 0,
+            'my_courses' => 0,
+            'my_notifications' => 0,
+        ];
+
+        $userModel = new UserModel();
+        $stats = $userModel->getDashboardStats($userRole, $userId);
         
-        // Destroy the entire session
-        session()->destroy();
-        
-        // Clear any flash messages
-        session()->setFlashdata('success', 'You have been successfully logged out.');
-        
-        // Redirect to home page
-        return redirect()->to('/')->with('success', 'You have been successfully logged out.');
+        // Merge the stats into data array
+        $data = array_merge($data, $stats);
+
+        return view('auth/dashboard', $data);
     }
 }
