@@ -2,6 +2,8 @@
 
 namespace Config;
 
+use Config\Services;
+
 // Create a new instance of our RouteCollection
 $routes = Services::routes();
 
@@ -34,5 +36,7 @@ $routes->match(['get', 'post'], 'register', 'Auth::register');
 $routes->match(['get', 'post'], 'login', 'Auth::login');
 $routes->get('logout', 'Auth::logout');
 
-// 🔹 Dashboard Route (protected inside Auth controller)
-$routes->get('dashboard', 'Auth::dashboard');
+// 🔹 Role-based Dashboards
+$routes->get('admin/dashboard', 'Admin::dashboard');
+$routes->get('teacher/dashboard', 'Teacher::dashboard');
+$routes->get('student/dashboard', 'Student::dashboard');

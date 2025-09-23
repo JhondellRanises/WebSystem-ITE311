@@ -1,7 +1,7 @@
 <?= $this->extend('template') ?>
 
 <?= $this->section('content') ?>
-<h2 class="mb-4 text-center">Dashboard</h2>
+<h2 class="mb-4 text-center">Admin Dashboard</h2>
 
 <?php if(session()->getFlashdata('success')): ?>
     <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
@@ -13,15 +13,17 @@
 <!-- Welcome Card -->
 <div class="card shadow-lg mx-auto mb-5" style="max-width: 600px; border-radius: 15px;">
     <div class="card-body text-center p-5">
-        <h3 class="card-title mb-3">Welcome!</h3>
-        <p class="fs-4 mb-4">
-        <strong><?= esc($user_name) ?></strong>
-        </p>
+        <h3 class="card-title mb-3">Welcome, Admin!</h3>
+        <p class="fs-4 mb-4"><strong><?= esc($user_name) ?></strong></p>
         <p class="text-muted mb-4">Role: <strong><?= esc($user_role) ?></strong></p>
+
+        <!-- Example admin features -->
+        <a href="#" class="btn btn-primary btn-sm px-4 py-2 shadow-sm mb-2">Manage Users</a>
+        <a href="#" class="btn btn-secondary btn-sm px-4 py-2 shadow-sm mb-2">Manage Courses</a>
+        <br>
         <a href="<?= site_url('logout') ?>" class="btn btn-dark btn-sm px-4 py-2 shadow-sm">
-            <i class="bi bi-box-arrow-right"></i> Logout
+            Logout
         </a>
     </div>
 </div>
-
 <?= $this->endSection() ?>

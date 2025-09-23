@@ -2,27 +2,26 @@
 
 namespace App\Controllers;
 
-use CodeIgniter\Controller;
 use App\Models\UserModel;
 
 class Auth extends BaseController
 {
     protected $helpers = ['form', 'url'];
 
-    // Handle login (GET: show form, POST: process login)
+    // 🔹 Handle Login
     public function login()
     {
-        // Check if already logged in
+        // If already logged in, redirect based on role
         if (session()->get('logged_in')) {
-            return redirect()->to('/dashboard');
+            return $this->redirectByRole(session()->get('user_role'));
         }
 
-        // Handle GET request - show login form
+        // GET request → show login form
         if ($this->request->getMethod() === 'GET') {
             return view('auth/login');
         }
 
-        // Handle POST request - process login
+        // POST request → process login
         if ($this->request->getMethod() === 'POST') {
             if (!$this->validate([
                 'email'    => 'required|valid_email',
@@ -34,37 +33,42 @@ class Auth extends BaseController
             $userModel = new UserModel();
             $user = $userModel->findUserByEmail($this->request->getPost('email'));
 
+            // Check user existence and password
             if (!$user || !password_verify($this->request->getPost('password'), $user['password'])) {
                 return redirect()->back()->withInput()->with('error', 'Invalid email or password.');
             }
 
-            session()->set([  
+            // Normalize role (always lowercase)
+            $role = strtolower($user['role']);
+
+            // Set session
+            session()->set([
                 'user_id'   => $user['id'],
                 'user_name' => $user['name'],
-                'user_role' => $user['role'],
+                'user_role' => $role,
                 'logged_in' => true,
             ]);
 
-            return redirect()->to('/dashboard');
+            // ✅ Redirect based on role
+            return $this->redirectByRole($role);
         }
     }
 
-    // Handle register (GET: show form, POST: process registration)
+    // 🔹 Handle Register
     public function register()
     {
-        // Handle GET request - show register form
         if ($this->request->getMethod() === 'GET') {
             return view('auth/register');
         }
 
-        // Handle POST request - process registration
         if ($this->request->getMethod() === 'POST') {
             if (!$this->validate([
                 'name'              => 'required|min_length[3]|max_length[255]',
                 'email'             => 'required|valid_email|is_unique[users.email]',
                 'password'          => 'required|min_length[6]',
                 'confirm_password'  => 'required|matches[password]',
-                'role'              => 'required|in_list[admin,teacher,student,user]',
+                // ✅ Validation updated: accepts lowercase roles
+                'role'              => 'required|in_list[admin,teacher,student]',
             ])) {
                 return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
             }
@@ -74,46 +78,32 @@ class Auth extends BaseController
                 'name'     => $this->request->getPost('name'),
                 'email'    => $this->request->getPost('email'),
                 'password' => $this->request->getPost('password'),
-                'role'     => $this->request->getPost('role'),
+                'role'     => strtolower($this->request->getPost('role')), // ✅ always lowercase
             ]);
 
             return redirect()->to('/login')->with('success', 'Account created successfully. You can now login.');
         }
     }
 
-    // Logout
+    // 🔹 Logout
     public function logout()
     {
         session()->destroy();
         return redirect()->to('/login')->with('success', 'You have been logged out.');
     }
 
-    // Dashboard
-    public function dashboard()
+    // 🔹 Utility: Role-based redirection
+    private function redirectByRole($role)
     {
-        if (!session()->get('logged_in')) {
-            return redirect()->to('/login')->with('error', 'Please login first.');
+        switch (strtolower($role)) {
+            case 'admin':
+                return redirect()->to('/admin/dashboard');
+            case 'teacher':
+                return redirect()->to('/teacher/dashboard');
+            case 'student':
+                return redirect()->to('/student/dashboard');
+            default:
+                return redirect()->to('/login')->with('error', 'Invalid role.');
         }
-
-        $userRole = session()->get('user_role');
-        $userId = session()->get('user_id');
-
-        $data = [
-            'user_name' => session()->get('user_name'),
-            'user_role' => $userRole,
-            'total_users' => 0,
-            'total_projects' => 0,
-            'total_notifications' => 0,
-            'my_courses' => 0,
-            'my_notifications' => 0,
-        ];
-
-        $userModel = new UserModel();
-        $stats = $userModel->getDashboardStats($userRole, $userId);
-        
-        // Merge the stats into data array
-        $data = array_merge($data, $stats);
-
-        return view('auth/dashboard', $data);
     }
 }
