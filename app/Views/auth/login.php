@@ -1,14 +1,25 @@
 <?= $this->extend('template') ?>
-
 <?= $this->section('content') ?>
+
 <div class="container mt-5">
     <h2 class="mb-4 text-center">Login</h2>
 
-    <?php if(session()->getFlashdata('success')): ?>
+    <?php if (session()->getFlashdata('success')): ?>
         <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
     <?php endif; ?>
-    <?php if(session()->getFlashdata('error')): ?>
+
+    <?php if (session()->getFlashdata('error')): ?>
         <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
+    <?php endif; ?>
+
+    <?php if (session()->getFlashdata('errors')): ?>
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                <?php foreach (session()->getFlashdata('errors') as $err): ?>
+                    <li><?= esc($err) ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
     <?php endif; ?>
 
     <div class="card shadow-sm mx-auto" style="max-width: 400px;">
@@ -19,17 +30,11 @@
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" name="email" class="form-control" id="email" value="<?= old('email') ?>" required>
-                    <?php if(isset($errors['email'])): ?>
-                        <small class="text-danger"><?= $errors['email'] ?></small>
-                    <?php endif; ?>
                 </div>
 
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <input type="password" name="password" class="form-control" id="password" required>
-                    <?php if(isset($errors['password'])): ?>
-                        <small class="text-danger"><?= $errors['password'] ?></small>
-                    <?php endif; ?>
                 </div>
 
                 <div class="d-grid">
@@ -43,4 +48,5 @@
         </div>
     </div>
 </div>
+
 <?= $this->endSection() ?>

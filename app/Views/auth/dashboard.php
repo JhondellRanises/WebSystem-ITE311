@@ -1,44 +1,111 @@
-<?= $this->extend('template') ?>
+<?= $this->extend('templates/header') ?>
 
 <?= $this->section('content') ?>
 <div class="container mt-5">
     <h2 class="mb-4 text-center fw-bold">Dashboard</h2>
 
-    <?php if(session()->getFlashdata('success')): ?>
+    <?php if (session()->getFlashdata('success')): ?>
         <div class="alert alert-success text-center"><?= session()->getFlashdata('success') ?></div>
     <?php endif; ?>
-    <?php if(session()->getFlashdata('error')): ?>
+    <?php if (session()->getFlashdata('error')): ?>
         <div class="alert alert-danger text-center"><?= session()->getFlashdata('error') ?></div>
     <?php endif; ?>
 
-    <div class="card shadow-lg mx-auto" style="max-width: 700px; border-radius: 15px;">
+    <div class="card shadow-lg mx-auto mb-4" style="max-width: 700px; border-radius: 15px;">
         <div class="card-body text-center p-5">
             <h3 class="card-title mb-3">
-                Welcome, <span class="text-primary text-capitalize"><?= esc($user_role) ?></span> 🎉
+                Welcome, <span class="text-primary text-capitalize"><?= esc($user_name) ?></span> 🎉
             </h3>
-            <p class="fs-4 mb-1"><strong><?= esc($user_name) ?></strong></p>
-            <p class="text-muted">Role: <strong class="text-capitalize"><?= esc($user_role) ?></strong></p>
-            
-            <hr class="my-4">
-
-            <?php if($user_role === 'admin'): ?>
-                <a href="#" class="btn btn-primary px-4 py-2 shadow-sm">Manage Users</a>
-                <a href="#" class="btn btn-secondary px-4 py-2 shadow-sm">Manage Courses</a>
-            <?php elseif($user_role === 'teacher'): ?>
-                <a href="#" class="btn btn-primary px-4 py-2 shadow-sm">My Courses</a>
-                <a href="#" class="btn btn-secondary px-4 py-2 shadow-sm">Assignments</a>
-                <a href="#" class="btn btn-success px-4 py-2 shadow-sm">Manage Students</a>
-            <?php elseif($user_role === 'student'): ?>
-                <a href="#" class="btn btn-primary px-4 py-2 shadow-sm">My Enrolled Courses</a>
-                <a href="#" class="btn btn-secondary px-4 py-2 shadow-sm">View Grades</a>
-            <?php endif; ?>
-
-            <hr class="my-4">
-
-            <a href="<?= site_url('logout') ?>" class="btn btn-dark px-4 py-2 shadow-sm">
-                <i class="bi bi-box-arrow-right"></i> Logout
-            </a>
+            <p class="text-muted">
+                Role: <strong class="text-capitalize"><?= esc($user_role) ?></strong>
+            </p>
         </div>
     </div>
+
+    <?php if ($user_role === 'student'): ?>
+    <!-- ✅ Enrolled Courses -->
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">My Enrolled Courses</div>
+        <ul class="list-group list-group-flush" id="enrolledCourses">
+            <?php if (!empty($enrolledCourses)): ?>
+                <?php foreach ($enrolledCourses as $course): ?>
+                    <li class="list-group-item"><?= esc($course['title']) ?></li>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <li class="list-group-item text-muted no-enrollment-msg">
+                    You are not enrolled in any course yet.
+                </li>
+            <?php endif; ?>
+        </ul>
+    </div>
+
+    <!-- ✅ Available Courses -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">Available Courses</div>
+        <ul class="list-group list-group-flush">
+            <?php if (!empty($courses)): ?>
+                <?php foreach ($courses as $course): ?>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span class="course-title"><?= esc($course['title']) ?></span>
+                        <button 
+                            class="btn btn-sm btn-success enroll-btn" 
+                            data-course-id="<?= $course['id'] ?>">
+                            Enroll
+                        </button>
+                    </li>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <li class="list-group-item text-muted">No available courses.</li>
+            <?php endif; ?>
+        </ul>
+    </div>
+
+    <div id="alertBox" class="alert mt-3 d-none"></div>
+    <?php endif; ?>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.enroll-btn').click(function() {
+        const courseId = $(this).data('course-id');
+        const button = $(this);
+        const courseTitle = button.closest('li').find('.course-title').text().trim();
+
+        $.ajax({
+            url: "<?= base_url('course/enroll') ?>",
+            type: "POST",
+            data: {
+                course_id: courseId,
+                '<?= csrf_token() ?>': '<?= csrf_hash() ?>'
+            },
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    $('#alertBox')
+                        .removeClass('d-none alert-danger')
+                        .addClass('alert alert-success')
+                        .text(response.message);
+
+                    button.prop('disabled', true).text('Enrolled');
+                    $('.no-enrollment-msg').remove();
+                    $('#enrolledCourses').append('<li class="list-group-item">' + courseTitle + '</li>');
+                } else {
+                    $('#alertBox')
+                        .removeClass('d-none alert-success')
+                        .addClass('alert alert-danger')
+                        .text(response.message);
+                }
+            },
+            error: function(xhr) {
+                $('#alertBox')
+                    .removeClass('d-none alert-success')
+                    .addClass('alert alert-danger')
+                    .text('An error occurred. Please try again.');
+                console.error(xhr.responseText);
+            }
+        });
+    });
+});
+</script>
 <?= $this->endSection() ?>

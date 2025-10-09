@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Database\Seeds;
 
@@ -8,29 +8,34 @@ class UserSeeder extends Seeder
 {
     public function run()
     {
-        // Load the password helper
-        helper('text');
-
         $data = [
             [
-                'name'     => 'Admin User',
-                'email'    => 'admin@example.com',
-                'password' => password_hash('admin123', PASSWORD_DEFAULT),
-                'role'     => 'admin',
+                'name'       => 'Admin User',
+                'email'      => 'admin@example.com',
+                'password'   => password_hash('admin123', PASSWORD_DEFAULT),
+                'role'       => 'admin',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
             [
-                'name'     => 'Regular User',
-                'email'    => 'user@example.com',
-                'password' => password_hash('user123', PASSWORD_DEFAULT),
-                'role'     => 'user',
+                'name'       => 'Teacher User',
+                'email'      => 'teacher@example.com',
+                'password'   => password_hash('teacher123', PASSWORD_DEFAULT),
+                'role'       => 'teacher',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ],
+            [
+                'name'       => 'Student User',
+                'email'      => 'student@example.com',
+                'password'   => password_hash('student123', PASSWORD_DEFAULT),
+                'role'       => 'student',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
             ],
         ];
 
-        // Using the Query Builder to insert multiple records
+        // Insert multiple users
         $this->db->table('users')->insertBatch($data);
     }
 }

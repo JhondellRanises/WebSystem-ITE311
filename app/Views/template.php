@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <!-- Navigation Bar -->
+    <!-- Navigation Bar (Visible only before login) -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="<?= base_url('/') ?>">ITE311-RANISES</a>
@@ -35,7 +35,7 @@
         <?= $this->renderSection('content') ?>
     </div>
 
-    <!-- Bootstrap JS CDN (Optional) -->
+    <!-- Bootstrap JS CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>

@@ -4,7 +4,6 @@ namespace Config;
 
 use Config\Services;
 
-// Create a new instance of our RouteCollection
 $routes = Services::routes();
 
 $routes->setDefaultNamespace('App\Controllers');
@@ -20,10 +19,13 @@ $routes->get('/home', 'Home::index');
 $routes->get('/about', 'Home::about');
 $routes->get('/contact', 'Home::contact');
 
-// 🔹 Authentication Routes
+// Authentication
 $routes->match(['get', 'post'], 'register', 'Auth::register');
 $routes->match(['get', 'post'], 'login', 'Auth::login');
 $routes->get('logout', 'Auth::logout');
 
-// 🔹 Unified Dashboard
+// Dashboard
 $routes->get('dashboard', 'Auth::dashboard');
+
+// Course Enroll
+$routes->post('course/enroll', 'Course::enroll');  // ✅ single route only

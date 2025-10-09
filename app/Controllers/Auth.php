@@ -8,44 +8,49 @@ class Auth extends BaseController
 {
     protected $helpers = ['form', 'url'];
 
-    // 🔹 Login
     public function login()
-    {
-        if (session()->get('logged_in')) {
-            return redirect()->to('/dashboard');
-        }
-
-        if ($this->request->getMethod() === 'GET') {
-            return view('auth/login');
-        }
-
-        if ($this->request->getMethod() === 'POST') {
-            if (!$this->validate([
-                'email'    => 'required|valid_email',
-                'password' => 'required|min_length[6]'
-            ])) {
-                return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
-            }
-
-            $userModel = new UserModel();
-            $user = $userModel->findUserByEmail($this->request->getPost('email'));
-
-            if (!$user || !password_verify($this->request->getPost('password'), $user['password'])) {
-                return redirect()->back()->withInput()->with('error', 'Invalid email or password.');
-            }
-
-            $role = strtolower($user['role']);
-
-            session()->set([
-                'user_id'   => $user['id'],
-                'user_name' => $user['name'],
-                'user_role' => $role,
-                'logged_in' => true,
-            ]);
-
-            return redirect()->to('/dashboard');
-        }
+{
+    // If already logged in, redirect to dashboard
+    if (session()->get('logged_in')) {
+        return redirect()->to('/dashboard');
     }
+
+    // Show the login page
+    if ($this->request->getMethod() === 'GET') {
+        return view('auth/login', [
+            'errors' => session()->getFlashdata('errors') ?? []
+        ]);
+    }
+
+    // Handle login submission
+    if ($this->request->getMethod() === 'POST') {
+        $validationRules = [
+            'email'    => 'required|valid_email',
+            'password' => 'required|min_length[6]'
+        ];
+
+        if (!$this->validate($validationRules)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        $userModel = new UserModel();
+        $user = $userModel->findUserByEmail($this->request->getPost('email'));
+
+        if (!$user || !password_verify($this->request->getPost('password'), $user['password'])) {
+            return redirect()->back()->withInput()->with('error', 'Invalid email or password.');
+        }
+
+        // Set session
+        session()->set([
+            'user_id'   => $user['id'],
+            'user_name' => $user['name'],
+            'user_role' => strtolower($user['role']),
+            'logged_in' => true
+        ]);
+
+        return redirect()->to('/dashboard');
+    }
+}
 
     // 🔹 Register
     public function register()
@@ -77,7 +82,7 @@ class Auth extends BaseController
         }
     }
 
-    // 🔹 Unified Dashboard
+    // 🔹 Dashboard
     public function dashboard()
     {
         $session = session();
@@ -86,9 +91,30 @@ class Auth extends BaseController
             return redirect()->to('/login')->with('error', 'Please log in first.');
         }
 
+        $user_id = $session->get('user_id');
+        $user_role = $session->get('user_role');
+
+        $db = \Config\Database::connect();
+
+        // Get all courses
+        $courses = $db->table('courses')
+                      ->select('id, title, description')
+                      ->get()
+                      ->getResultArray();
+
+        // Get enrolled courses for this user
+        $enrolledCourses = $db->table('enrollments')
+                              ->select('courses.id, courses.title')
+                              ->join('courses', 'enrollments.course_id = courses.id')
+                              ->where('enrollments.user_id', $user_id)
+                              ->get()
+                              ->getResultArray();
+
         $data = [
-            'user_name' => $session->get('user_name'),
-            'user_role' => $session->get('user_role'),
+            'user_name'       => $session->get('user_name'),
+            'user_role'       => $user_role,
+            'courses'         => $courses,
+            'enrolledCourses' => $enrolledCourses
         ];
 
         return view('auth/dashboard', $data);
