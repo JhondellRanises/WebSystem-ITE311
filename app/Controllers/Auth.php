@@ -8,51 +8,68 @@ class Auth extends BaseController
 {
     protected $helpers = ['form', 'url'];
 
+    // 🔹 LOGIN
     public function login()
-{
-    // If already logged in, redirect to dashboard
-    if (session()->get('logged_in')) {
-        return redirect()->to('/dashboard');
-    }
-
-    // Show the login page
-    if ($this->request->getMethod() === 'GET') {
-        return view('auth/login', [
-            'errors' => session()->getFlashdata('errors') ?? []
-        ]);
-    }
-
-    // Handle login submission
-    if ($this->request->getMethod() === 'POST') {
-        $validationRules = [
-            'email'    => 'required|valid_email',
-            'password' => 'required|min_length[6]'
-        ];
-
-        if (!$this->validate($validationRules)) {
-            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+    {
+        // If already logged in, redirect based on role
+        if (session()->get('logged_in')) {
+            return $this->redirectBasedOnRole(session()->get('user_role'));
         }
 
-        $userModel = new UserModel();
-        $user = $userModel->findUserByEmail($this->request->getPost('email'));
-
-        if (!$user || !password_verify($this->request->getPost('password'), $user['password'])) {
-            return redirect()->back()->withInput()->with('error', 'Invalid email or password.');
+        // Show the login page
+        if ($this->request->getMethod() === 'GET') {
+            return view('auth/login', [
+                'errors' => session()->getFlashdata('errors') ?? []
+            ]);
         }
 
-        // Set session
-        session()->set([
-            'user_id'   => $user['id'],
-            'user_name' => $user['name'],
-            'user_role' => strtolower($user['role']),
-            'logged_in' => true
-        ]);
+        // Handle login submission
+        if ($this->request->getMethod() === 'POST') {
+            $validationRules = [
+                'email'    => 'required|valid_email',
+                'password' => 'required|min_length[6]'
+            ];
 
-        return redirect()->to('/dashboard');
+            if (!$this->validate($validationRules)) {
+                return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+            }
+
+            $userModel = new UserModel();
+            $user = $userModel->findUserByEmail($this->request->getPost('email'));
+
+            if (!$user || !password_verify($this->request->getPost('password'), $user['password'])) {
+                return redirect()->back()->withInput()->with('error', 'Invalid email or password.');
+            }
+
+            // Set session
+            session()->set([
+                'user_id'   => $user['id'],
+                'user_name' => $user['name'],
+                'user_role' => strtolower($user['role']),
+                'logged_in' => true
+            ]);
+
+            // ✅ Redirect based on role
+            return $this->redirectBasedOnRole(strtolower($user['role']));
+        }
     }
-}
 
-    // 🔹 Register
+    // 🔹 ROLE-BASED REDIRECTION METHOD
+    private function redirectBasedOnRole($role)
+    {
+        switch ($role) {
+            case 'student':
+                return redirect()->to('/announcements');
+            case 'teacher':
+                return redirect()->to('/teacher/dashboard');
+            case 'admin':
+                return redirect()->to('/admin/dashboard');
+            default:
+                return redirect()->to('/login')->with('error', 'Invalid user role.');
+        }
+    }
+
+    // 🔹 REGISTER
     public function register()
     {
         if ($this->request->getMethod() === 'GET') {
@@ -82,7 +99,7 @@ class Auth extends BaseController
         }
     }
 
-    // 🔹 Dashboard
+    // 🔹 DASHBOARD (if needed for some routes)
     public function dashboard()
     {
         $session = session();
@@ -120,7 +137,7 @@ class Auth extends BaseController
         return view('auth/dashboard', $data);
     }
 
-    // 🔹 Logout
+    // 🔹 LOGOUT
     public function logout()
     {
         session()->destroy();

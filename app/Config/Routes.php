@@ -29,3 +29,7 @@ $routes->get('dashboard', 'Auth::dashboard');
 
 // Course Enroll
 $routes->post('course/enroll', 'Course::enroll');  // ✅ single route only
+$routes->get('teacher/dashboard', 'Teacher::dashboard');
+$routes->get('admin/dashboard', 'Admin::dashboard');
+$routes->get('announcements', 'Announcement::index');
+
