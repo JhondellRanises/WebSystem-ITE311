@@ -10,7 +10,7 @@ class CourseSeeder extends Seeder
     {
         $data = [
             [
-                'title'        => 'ITE 311 - Web Systems',
+                'title'        => 'ITE 311 - Web Systems & Design',
                 'description'  => 'Introduction to web development concepts.',
                 'instructor_id'=> 2,
                 'created_at'   => date('Y-m-d H:i:s'),
@@ -24,8 +24,8 @@ class CourseSeeder extends Seeder
                 'updated_at'   => date('Y-m-d H:i:s')
             ],
             [
-                'title'        => 'ITE 313 - Software Engineering',
-                'description'  => 'Principles of software development and design.',
+                'title'        => 'ITE 313 - Networking',
+                'description'  => 'Principles of Hardware.',
                 'instructor_id'=> 2,
                 'created_at'   => date('Y-m-d H:i:s'),
                 'updated_at'   => date('Y-m-d H:i:s')

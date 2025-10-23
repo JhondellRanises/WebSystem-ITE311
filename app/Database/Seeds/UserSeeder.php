@@ -12,7 +12,7 @@ class UserSeeder extends Seeder
             [
                 'name'       => 'Admin User',
                 'email'      => 'admin@example.com',
-                'password'   => password_hash('admin123', PASSWORD_DEFAULT),
+                'password'   => password_hash('123456', PASSWORD_DEFAULT),
                 'role'       => 'admin',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             [
                 'name'       => 'Teacher User',
                 'email'      => 'teacher@example.com',
-                'password'   => password_hash('teacher123', PASSWORD_DEFAULT),
+                'password'   => password_hash('123456', PASSWORD_DEFAULT),
                 'role'       => 'teacher',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),
@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
             [
                 'name'       => 'Student User',
                 'email'      => 'student@example.com',
-                'password'   => password_hash('student123', PASSWORD_DEFAULT),
+                'password'   => password_hash('123456', PASSWORD_DEFAULT),
                 'role'       => 'student',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s'),

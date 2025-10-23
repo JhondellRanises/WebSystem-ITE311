@@ -8,7 +8,7 @@ class EnrollmentModel extends Model
 {
     protected $table = 'enrollments';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['user_id', 'course_id', 'enrolled_at'];
+    protected $allowedFields = ['user_id', 'course_id', 'enrollment_date'];
     public $useTimestamps = false;
 
     public function enrollUser($data)

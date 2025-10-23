@@ -28,7 +28,8 @@
             <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/dashboard') ?>">Dashboard</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/manage-users') ?>">Manage Users</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/manage-courses') ?>">Manage Courses</a></li>
-            <li class="nav-item"><a class="nav-link" href="<?= base_url('announcement') ?>">Announcements</a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= base_url('materials/upload') ?>">Upload Material</a></li>
+            
 
           <!-- ✅ Teacher Navigation -->
           <?php elseif ($role === 'teacher'): ?>
@@ -36,13 +37,15 @@
             <li class="nav-item"><a class="nav-link" href="<?= base_url('teacher/courses') ?>">My Courses</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('teacher/assignments') ?>">Assignments</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('teacher/students') ?>">Manage Students</a></li>
-            <li class="nav-item"><a class="nav-link" href="<?= base_url('announcement') ?>">Announcements</a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= base_url('materials/upload') ?>">Upload Material</a></li>
+            
 
           <!-- ✅ Student Navigation -->
           <?php elseif ($role === 'student'): ?>
-            <li class="nav-item"><a class="nav-link" href="<?= base_url('student/dashboard') ?>">Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= base_url('dashboard') ?>">Dashboard</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('student/courses') ?>">My Courses</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('student/grades') ?>">View Grades</a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= base_url('materials/student') ?>">Materials</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('announcements') ?>">Announcements</a></li>
           <?php endif; ?>
 
@@ -74,12 +77,44 @@
   </div>
 </nav>
 
+
+<?php
+  $uri = service('uri');
+  $path = strtolower(trim($uri->getPath(), '/'));
+  // Works even if app is deployed under a subfolder like ITE311-RANISES/...
+  $hideGlobalFlash = false;
+  if (strpos($path, 'admin/course/') !== false && substr($path, -6) === 'upload') {
+      $hideGlobalFlash = true;
+  }
+  if (strpos($path, 'materials/upload') !== false) {
+      $hideGlobalFlash = true;
+  }
+?>
+<?php if (!$hideGlobalFlash): ?>
+<!-- ✅ Flash Messages -->
+<div class="container mt-3">
+  <?php if (session()->getFlashdata('success')): ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <?= esc(session()->getFlashdata('success')) ?>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <?php endif; ?>
+  <?php if (session()->getFlashdata('error')): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <?= esc(session()->getFlashdata('error')) ?>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <?php endif; ?>
+</div>
+<?php endif; ?>
+
 <!-- ✅ Main Content -->
-<div class="container mt-4">
+<div class="container mt-2">
   <?= $this->renderSection('content') ?>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- No modal script needed; Upload Material is now a dedicated page. -->
 </body>
 </html>

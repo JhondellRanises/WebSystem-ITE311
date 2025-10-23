@@ -1,8 +1,10 @@
-<?php namespace App\Filters;
+<?php
 
+namespace App\Filters;
+
+use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use CodeIgniter\Filters\FilterInterface;
 
 class RoleAuth implements FilterInterface
 {
@@ -10,52 +12,28 @@ class RoleAuth implements FilterInterface
     {
         $session = session();
 
-        // 🔒 If not logged in, redirect to login
-        if (! $session->get('isLoggedIn')) {
-            return redirect()->to(site_url('login'))->with('error', 'Please log in first.');
+        // 1️⃣ Check if user is logged in
+        if (!$session->get('isLoggedIn')) {
+            return redirect()->to('/login')->with('error', 'Please login first.');
         }
 
-        $role = $session->get('role') ?? '';
-        $path = ltrim($request->getUri()->getPath(), '/'); // e.g. "admin/dashboard"
+        // 2️⃣ Get current role and page path
+        $role = $session->get('role'); // admin, teacher, or student
+        $uri  = service('uri')->getPath(); // e.g. "teacher/dashboard"
 
-        // ✅ 1. Allow everyone to access announcements
-        if ($path === 'announcements' || $path === 'announcements/index') {
-            return null; // allow access
+        // 3️⃣ Determine allowed role from route group argument
+        $allowedRole = $arguments[0] ?? null;
+
+        // 4️⃣ Block access if role doesn’t match
+        if ($allowedRole && $role !== $allowedRole) {
+            return redirect()->to('/announcements')->with('error', 'Access Denied: Insufficient Permissions.');
         }
 
-        // ✅ 2. Admin: only allowed to access /admin/*
-        if (strpos($path, 'admin') === 0) {
-            if ($role !== 'admin') {
-                return redirect()->to(site_url('announcements'))
-                                 ->with('error', 'Access Denied: Insufficient Permissions');
-            }
-            return null;
-        }
-
-        // ✅ 3. Teacher: only allowed to access /teacher/*
-        if (strpos($path, 'teacher') === 0) {
-            if ($role !== 'teacher') {
-                return redirect()->to(site_url('announcements'))
-                                 ->with('error', 'Access Denied: Insufficient Permissions');
-            }
-            return null;
-        }
-
-        // ✅ 4. Student: only allowed to access /student/*
-        if (strpos($path, 'student') === 0) {
-            if ($role !== 'student') {
-                return redirect()->to(site_url('announcements'))
-                                 ->with('error', 'Access Denied: Insufficient Permissions');
-            }
-            return null;
-        }
-
-        // ✅ 5. If path is something else (like public page), allow access
-        return null;
+        return $request; // proceed if authorized
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        // No action needed after
+        // No after logic
     }
 }
