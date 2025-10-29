@@ -1,0 +1,65 @@
+CRITICAL - 2025-10-26 05:49:21 --> ParseError: syntax error, unexpected variable "$db", expecting "function" or "const"
+[Method: GET, Route: admin/course/4/upload]
+in APPPATH\Controllers\Materials.php on line 53.
+ 1 SYSTEMPATH\Autoloader\Autoloader.php(295): CodeIgniter\Autoloader\Autoloader->includeFile('C:\\xampp\\htdocs\\ITE311-RANISES\\app\\Controllers\\Materials.php')
+ 2 SYSTEMPATH\Autoloader\Autoloader.php(271): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Controllers\\Materials')
+ 3 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass('App\\Controllers\\Materials')
+ 4 SYSTEMPATH\CodeIgniter.php(885): class_exists('\\App\\Controllers\\Materials', true)
+ 5 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->startController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-26 05:49:23 --> ParseError: syntax error, unexpected variable "$db", expecting "function" or "const"
+[Method: GET, Route: admin/course/5/upload]
+in APPPATH\Controllers\Materials.php on line 53.
+ 1 SYSTEMPATH\Autoloader\Autoloader.php(295): CodeIgniter\Autoloader\Autoloader->includeFile('C:\\xampp\\htdocs\\ITE311-RANISES\\app\\Controllers\\Materials.php')
+ 2 SYSTEMPATH\Autoloader\Autoloader.php(271): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Controllers\\Materials')
+ 3 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass('App\\Controllers\\Materials')
+ 4 SYSTEMPATH\CodeIgniter.php(885): class_exists('\\App\\Controllers\\Materials', true)
+ 5 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->startController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-26 05:49:31 --> ParseError: syntax error, unexpected variable "$db", expecting "function" or "const"
+[Method: GET, Route: admin/upload]
+in APPPATH\Controllers\Materials.php on line 53.
+ 1 SYSTEMPATH\Autoloader\Autoloader.php(295): CodeIgniter\Autoloader\Autoloader->includeFile('C:\\xampp\\htdocs\\ITE311-RANISES\\app\\Controllers\\Materials.php')
+ 2 SYSTEMPATH\Autoloader\Autoloader.php(271): CodeIgniter\Autoloader\Autoloader->loadInNamespace('App\\Controllers\\Materials')
+ 3 [internal function]: CodeIgniter\Autoloader\Autoloader->loadClass('App\\Controllers\\Materials')
+ 4 SYSTEMPATH\CodeIgniter.php(885): class_exists('\\App\\Controllers\\Materials', true)
+ 5 SYSTEMPATH\CodeIgniter.php(494): CodeIgniter\CodeIgniter->startController()
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-26 14:00:07 --> ErrorException: Cannot redeclare App\Controllers\Materials::upload()
+[Method: GET, Route: student/courses]
+in APPPATH\Controllers\Materials.php on line 27.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2025-10-26 14:00:10 --> ErrorException: Cannot redeclare App\Controllers\Materials::upload()
+[Method: GET, Route: student/courses]
+in APPPATH\Controllers\Materials.php on line 27.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2025-10-26 14:00:15 --> ErrorException: Cannot redeclare App\Controllers\Materials::upload()
+[Method: GET, Route: student/courses]
+in APPPATH\Controllers\Materials.php on line 27.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2025-10-26 14:00:17 --> ErrorException: Cannot redeclare App\Controllers\Materials::upload()
+[Method: GET, Route: student/courses]
+in APPPATH\Controllers\Materials.php on line 27.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->shutdownHandler()
+CRITICAL - 2025-10-26 14:12:49 --> ParseError: syntax error, unexpected end of file, expecting "elseif" or "else" or "endif"
+[Method: GET, Route: admin/dashboard]
+in APPPATH\Views\templates\header.php on line 239.
+ 1 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 2 SYSTEMPATH\View\View.php(242): CodeIgniter\View\View->render('templates/header', [], true)
+ 3 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('admin/dashboard', [], true)
+ 4 APPPATH\Controllers\Admin.php(35): view('admin/dashboard', [...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin->dashboard()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

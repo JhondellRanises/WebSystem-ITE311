@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ITE311-RANISES</title>
+  <meta name="csrf-token-name" content="<?= esc(csrf_token()) ?>">
+  <meta name="csrf-token" content="<?= esc(csrf_hash()) ?>">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -28,16 +30,16 @@
             <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/dashboard') ?>">Dashboard</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/manage-users') ?>">Manage Users</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/manage-courses') ?>">Manage Courses</a></li>
-            <li class="nav-item"><a class="nav-link" href="<?= base_url('materials/upload') ?>">Upload Material</a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/upload') ?>">Upload Material</a></li>
             
 
           <!-- ✅ Teacher Navigation -->
           <?php elseif ($role === 'teacher'): ?>
-            <li class="nav-item"><a class="nav-link" href="<?= base_url('dashboard') ?>">Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= base_url('teacher/dashboard') ?>">Dashboard</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('teacher/courses') ?>">My Courses</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('teacher/assignments') ?>">Assignments</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('teacher/students') ?>">Manage Students</a></li>
-            <li class="nav-item"><a class="nav-link" href="<?= base_url('materials/upload') ?>">Upload Material</a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= base_url('teacher/upload') ?>">Upload Material</a></li>
             
 
           <!-- ✅ Student Navigation -->
@@ -45,7 +47,6 @@
             <li class="nav-item"><a class="nav-link" href="<?= base_url('dashboard') ?>">Dashboard</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('student/courses') ?>">My Courses</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('student/grades') ?>">View Grades</a></li>
-            <li class="nav-item"><a class="nav-link" href="<?= base_url('materials/student') ?>">Materials</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('announcements') ?>">Announcements</a></li>
           <?php endif; ?>
 
@@ -60,6 +61,20 @@
       <!-- ✅ Right Side Buttons -->
       <ul class="navbar-nav ms-auto align-items-center">
         <?php if (session()->get('logged_in')): ?>
+          <li class="nav-item dropdown me-3" data-bs-auto-close="outside">
+            <a class="nav-link dropdown-toggle position-relative" href="#" id="notifDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <span>🔔</span>
+              <span id="notifBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display:none;">0</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notifDropdown" style="min-width: 320px;">
+              <li class="px-3 py-2 fw-semibold">Notifications</li>
+              <li><hr class="dropdown-divider"></li>
+              <li id="notifEmpty" class="px-3 text-muted">No notifications.</li>
+              <li class="px-0">
+                <div id="notifMenu" class="list-group list-group-flush" style="max-height: 320px; overflow-y: auto;"></div>
+              </li>
+            </ul>
+          </li>
           <li class="nav-item me-3 d-flex align-items-center">
             <span class="text-light">
               Hi, <strong><?= esc(session()->get('user_name')) ?></strong> (<?= esc($role) ?>)
@@ -86,7 +101,15 @@
   if (strpos($path, 'admin/course/') !== false && substr($path, -6) === 'upload') {
       $hideGlobalFlash = true;
   }
+  // Hide on upload chooser pages to avoid duplicate messages
+  if ($path === 'admin/upload' || $path === 'teacher/upload') {
+      $hideGlobalFlash = true;
+  }
   if (strpos($path, 'materials/upload') !== false) {
+      $hideGlobalFlash = true;
+  }
+  // Avoid double alerts on announcements pages (broad match)
+  if (strpos($path, 'announcements') !== false) {
       $hideGlobalFlash = true;
   }
 ?>
@@ -106,6 +129,7 @@
     </div>
   <?php endif; ?>
 </div>
+ 
 <?php endif; ?>
 
 <!-- ✅ Main Content -->
@@ -115,6 +139,106 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  (function(){
+    if (!<?= json_encode((bool)session()->get('logged_in')) ?>) return;
+    const badge = document.getElementById('notifBadge');
+    const menu = document.getElementById('notifMenu');
+    const emptyRow = document.getElementById('notifEmpty');
+    const csrfName = document.querySelector('meta[name="csrf-token-name"]')?.getAttribute('content');
+    let csrfHash = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+    // Always include CSRF header on AJAX
+    $.ajaxSetup({
+      beforeSend: function(xhr, settings){
+        if (csrfHash) {
+          xhr.setRequestHeader('X-CSRF-TOKEN', csrfHash);
+        }
+      }
+    });
+
+    function render(list){
+      menu.innerHTML = '';
+      if (!list || list.length === 0){
+        emptyRow.style.display = 'block';
+        return;
+      }
+      emptyRow.style.display = 'none';
+      list.forEach(function(n){
+        const item = document.createElement('div');
+        item.className = 'list-group-item d-flex justify-content-between align-items-start';
+        const msg = document.createElement('div');
+        msg.className = 'me-2';
+        msg.textContent = n.message;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'btn btn-sm btn-outline-secondary';
+        btn.textContent = 'Mark Read';
+        btn.setAttribute('data-notif-id', n.id);
+        item.appendChild(msg);
+        item.appendChild(btn);
+        menu.appendChild(item);
+      });
+    }
+
+    function fetchNotifs(){
+      $.get('<?= base_url('notifications') ?>', { limit: 100 })
+        .done(function(res){
+          const c = parseInt(res.count || 0, 10);
+          if (c > 0){ badge.style.display = 'inline-block'; badge.textContent = c; }
+          else { badge.style.display = 'none'; }
+          render(res.notifications || []);
+          if (res && res.csrf){
+            csrfHash = res.csrf;
+            const meta = document.querySelector('meta[name="csrf-token"]');
+            if (meta) meta.setAttribute('content', csrfHash);
+          }
+        })
+        .fail(function(xhr){ console.error('GET /notifications failed', xhr?.status, xhr?.responseText); });
+    }
+
+    // Delegated handler for Mark Read
+    $(document).on('click', '#notifMenu button[data-notif-id]', function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      const id = $(this).data('notif-id');
+      const $btn = $(this);
+      $btn.prop('disabled', true).text('...');
+      const data = { id: id };
+      if (csrfName) data[csrfName] = csrfHash;
+      // Optimistic UI: remove item now and decrement badge
+      const parentItem = $btn.closest('.list-group-item');
+      if (parentItem.length) parentItem.remove();
+      const currentCount = parseInt(badge.textContent || '0', 10);
+      const newCount = Math.max(0, currentCount - 1);
+      if (newCount > 0) { badge.style.display = 'inline-block'; badge.textContent = newCount; }
+      else { badge.style.display = 'none'; badge.textContent = '0'; }
+
+      $.post('<?= base_url('notifications/mark_read') ?>', data)
+        .done(function(res){
+          if(res && res.csrf){
+            csrfHash = res.csrf;
+            const meta = document.querySelector('meta[name="csrf-token"]');
+            if (meta) meta.setAttribute('content', csrfHash);
+          }
+          fetchNotifs();
+        })
+        .fail(function(xhr){
+          // Fallback to GET if POST blocked by CSRF settings
+          $.get('<?= base_url('notifications/mark_read') ?>', { id: id })
+            .done(function(res){ fetchNotifs(); })
+            .fail(function(){
+              console.error('mark_read failed', xhr?.status, xhr?.responseText);
+              alert('Failed to mark as read. Please try again.');
+              fetchNotifs();
+            });
+        });
+    });
+
+    fetchNotifs();
+    setInterval(fetchNotifs, 60000);
+  })();
+</script>
 <!-- No modal script needed; Upload Material is now a dedicated page. -->
 </body>
 </html>

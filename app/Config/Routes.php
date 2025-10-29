@@ -47,9 +47,17 @@ $routes->post('course/enroll', 'Course::enroll');
 // 📦 Materials: upload, delete, download, and list
 $routes->get('/admin/course/(:num)/upload', 'Materials::upload/$1');
 $routes->post('/admin/course/(:num)/upload', 'Materials::upload/$1');
+$routes->get('/admin/upload', 'Materials::upload');
+$routes->get('/teacher/upload', 'Materials::upload');
 $routes->get('/materials/delete/(:num)', 'Materials::delete/$1');
 $routes->get('/materials/download/(:num)', 'Materials::download/$1');
-$routes->get('/course/(:num)/materials', 'Materials::list/$1');
-$routes->get('/materials', 'Materials::all');
-$routes->get('/materials/upload', 'Materials::uploadIndex');
-$routes->get('/materials/student', 'Materials::student');
+$routes->get('/student/materials', 'Materials::student');
+$routes->get('/student/courses', 'Materials::studentCourses');
+
+// 🔔 Notifications API
+$routes->get('/notifications', 'Notifications::get');
+$routes->post('/notifications/mark_read/(:num)', 'Notifications::mark_as_read/$1');
+$routes->post('/notifications/mark_read', 'Notifications::mark_as_read');
+// GET fallbacks (for labs without CSRF on AJAX)
+$routes->get('/notifications/mark_read/(:num)', 'Notifications::mark_as_read/$1');
+$routes->get('/notifications/mark_read', 'Notifications::mark_as_read');

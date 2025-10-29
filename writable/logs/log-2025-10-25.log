@@ -1,0 +1,90 @@
+CRITICAL - 2025-10-25 09:27:25 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "materials/student.php"
+[Method: GET, Route: materials/student]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('materials/student.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('materials/student', [], true)
+ 3 APPPATH\Controllers\Materials.php(218): view('materials/student', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Materials->student()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-25 09:29:38 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "materials/student.php"
+[Method: GET, Route: materials/student]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('materials/student.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('materials/student', [], true)
+ 3 APPPATH\Controllers\Materials.php(218): view('materials/student', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Materials->student()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-25 09:30:09 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "materials/student.php"
+[Method: GET, Route: materials/student]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('materials/student.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('materials/student', [], true)
+ 3 APPPATH\Controllers\Materials.php(218): view('materials/student', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Materials->student()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-25 09:59:10 --> ArgumentCountError: Too few arguments to function App\Controllers\Materials::upload(), 0 passed in C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php on line 933 and exactly 1 expected
+[Method: GET, Route: materials/upload]
+in APPPATH\Controllers\Materials.php on line 13.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Materials->upload()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-25 09:59:13 --> ArgumentCountError: Too few arguments to function App\Controllers\Materials::upload(), 0 passed in C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php on line 933 and exactly 1 expected
+[Method: GET, Route: materials/upload]
+in APPPATH\Controllers\Materials.php on line 13.
+ 1 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Materials->upload()
+ 2 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+ 3 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 4 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 5 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 6 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-25 10:11:56 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "admin/upload_landing.php"
+[Method: GET, Route: admin/upload]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('admin/upload_landing.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('admin/upload_landing', [], true)
+ 3 APPPATH\Controllers\Materials.php(25): view('admin/upload_landing', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Materials->uploadLanding()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-25 10:14:04 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "admin/upload_landing.php"
+[Method: GET, Route: admin/upload]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('admin/upload_landing.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('admin/upload_landing', [], true)
+ 3 APPPATH\Controllers\Materials.php(25): view('admin/upload_landing', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Materials->uploadLanding()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-10-25 10:14:10 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "admin/upload_landing.php"
+[Method: GET, Route: admin/upload]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('admin/upload_landing.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('admin/upload_landing', [], true)
+ 3 APPPATH\Controllers\Materials.php(25): view('admin/upload_landing', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Materials->uploadLanding()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

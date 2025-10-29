@@ -47,6 +47,16 @@ class Course extends BaseController
 
         try {
             if ($enrollmentModel->insert($data)) {
+                // Create notification for the user
+                try {
+                    $db = \Config\Database::connect();
+                    $course = $db->table('courses')->select('title')->where('id', $course_id)->get()->getRowArray();
+                    $title = $course['title'] ?? ('Course #'.(string)$course_id);
+                    $notifModel = new \App\Models\NotificationModel();
+                    $notifModel->createNotification((int)$user_id, 'You have been enrolled in ' . $title);
+                } catch (\Throwable $e) {
+                    // swallow notification errors to not block enrollment
+                }
                 return $this->response->setJSON([
                     'status' => 'success',
                     'message' => 'Enrollment successful!'
