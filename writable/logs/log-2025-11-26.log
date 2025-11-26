@@ -1,0 +1,48 @@
+CRITICAL - 2025-11-26 03:23:06 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "admin/users/ManageUser.php"
+[Method: GET, Route: admin/manage-users]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('admin/users/ManageUser.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('admin/users/ManageUser', [], true)
+ 3 APPPATH\Controllers\ManageUser.php(33): view('admin/users/ManageUser', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageUser->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageUser))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-26 03:23:09 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "admin/users/ManageUser.php"
+[Method: GET, Route: admin/manage-users]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('admin/users/ManageUser.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('admin/users/ManageUser', [], true)
+ 3 APPPATH\Controllers\ManageUser.php(33): view('admin/users/ManageUser', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageUser->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageUser))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-26 03:23:14 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "admin/users/ManageUser.php"
+[Method: GET, Route: admin/manage-users]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('admin/users/ManageUser.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('admin/users/ManageUser', [], true)
+ 3 APPPATH\Controllers\ManageUser.php(33): view('admin/users/ManageUser', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageUser->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageUser))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-11-26 03:23:18 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "admin/users/ManageUser.php"
+[Method: GET, Route: admin/manage-users]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('admin/users/ManageUser.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('admin/users/ManageUser', [], true)
+ 3 APPPATH\Controllers\ManageUser.php(33): view('admin/users/ManageUser', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageUser->index()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageUser))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

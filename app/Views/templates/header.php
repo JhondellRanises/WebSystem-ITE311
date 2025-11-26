@@ -28,7 +28,7 @@
           <!-- ✅ Admin Navigation -->
           <?php if ($role === 'admin'): ?>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/dashboard') ?>">Dashboard</a></li>
-            <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/manage-users') ?>">Manage Users</a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/manage-users') ?>">Manage User</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/manage-courses') ?>">Manage Courses</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/upload') ?>">Upload Material</a></li>
             

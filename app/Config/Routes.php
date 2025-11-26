@@ -31,6 +31,12 @@ $routes->get('announcements', 'Announcement::index');
 //Role-based dashboards (protected by RoleAuth)
 $routes->group('admin', function($routes) {
     $routes->get('dashboard', 'Admin::dashboard');
+    $routes->get('manage-users', 'ManageUser::index');
+    $routes->match(['get', 'post'], 'manage-users/create', 'ManageUser::create');
+    $routes->match(['get', 'post'], 'manage-users/edit/(:num)', 'ManageUser::edit/$1');
+    $routes->post('manage-users/delete/(:num)', 'ManageUser::delete/$1');
+    $routes->get('manage-users/delete/(:num)', 'ManageUser::delete/$1');
+    $routes->get('manage-users/show/(:num)', 'ManageUser::show/$1');
 });
 
 $routes->group('teacher', function($routes) {
