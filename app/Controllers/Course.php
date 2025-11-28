@@ -7,6 +7,47 @@ use CodeIgniter\Controller;
 
 class Course extends BaseController
 {
+    public function index()
+    {
+        $db = \Config\Database::connect();
+        $courses = $db->table('courses')
+                      ->select('courses.id, courses.title, courses.description, courses.instructor_id, courses.created_at, users.name as instructor_name')
+                      ->join('users', 'users.id = courses.instructor_id', 'left')
+                      ->orderBy('courses.title', 'ASC')
+                      ->get()
+                      ->getResultArray();
+        
+        return view('courses/index', ['courses' => $courses]);
+    }
+
+    public function search()
+{
+    $searchTerm = $this->request->getGet('term') ?? '';
+    
+    $db = \Config\Database::connect();
+    $builder = $db->table('courses c')
+        ->select('c.*, u.name as instructor_name')
+        ->join('users u', 'u.id = c.instructor_id', 'left');
+
+    if (!empty($searchTerm)) {
+        $builder->groupStart()
+            ->like('c.title', $searchTerm)
+            ->orLike('c.description', $searchTerm)
+            ->orLike('u.name', $searchTerm)
+            ->groupEnd();
+    }
+
+    $courses = $builder->orderBy('c.title', 'ASC')
+        ->get()
+        ->getResultArray();
+
+    if ($this->request->isAJAX()) {
+        return $this->response->setJSON($courses);
+    }
+
+    return view('student/courses', ['courses' => $courses]);
+}
+
     public function enroll()
     {
         // ✅ Check session

@@ -31,6 +31,7 @@ $routes->get('announcements', 'Announcement::index');
 //Role-based dashboards (protected by RoleAuth)
 $routes->group('admin', function($routes) {
     $routes->get('dashboard', 'Admin::dashboard');
+    
     $routes->get('manage-users', 'ManageUser::index');
     $routes->match(['get', 'post'], 'manage-users/create', 'ManageUser::create');
     $routes->match(['get', 'post'], 'manage-users/edit/(:num)', 'ManageUser::edit/$1');
@@ -47,9 +48,12 @@ $routes->group('student', function($routes) {
     $routes->get('dashboard', 'Student::dashboard');
 });
 
-// 📚 Course enrollment
+// 📚 Courses
+$routes->get('courses', 'Course::index');
 $routes->post('course/enroll', 'Course::enroll');
 
+// 🔍 Course Search
+$routes->match(['get', 'post'], 'courses/search', 'Course::search');
 // 📦 Materials: upload, delete, download, and list
 $routes->get('/admin/course/(:num)/upload', 'Materials::upload/$1');
 $routes->post('/admin/course/(:num)/upload', 'Materials::upload/$1');

@@ -186,8 +186,9 @@ class Materials extends BaseController
         $userId = session()->get('user_id');
         // Get enrolled courses
         $enrolled = $db->table('enrollments e')
-            ->select('c.id, c.title')
+            ->select('c.id, c.title, c.description, u.name as instructor_name')
             ->join('courses c', 'c.id = e.course_id')
+            ->join('users u', 'u.id = c.instructor_id', 'left')
             ->where('e.user_id', $userId)
             ->orderBy('c.title', 'ASC')
             ->get()->getResultArray();
@@ -222,13 +223,28 @@ class Materials extends BaseController
 
         $db = \Config\Database::connect();
         $userId = session()->get('user_id');
+        
+        // Get enrolled courses
         $enrolled = $db->table('enrollments e')
-            ->select('c.id, c.title')
+            ->select('c.id, c.title, c.description, u.name as instructor_name')
             ->join('courses c', 'c.id = e.course_id')
+            ->join('users u', 'u.id = c.instructor_id', 'left')
             ->where('e.user_id', $userId)
             ->orderBy('c.title', 'ASC')
             ->get()->getResultArray();
 
-        return view('student/courses', [ 'courses' => $enrolled ]);
+        // Get available courses (not enrolled in)
+        $enrolledIds = array_column($db->table('enrollments')->select('course_id')->where('user_id', $userId)->get()->getResultArray(), 'course_id') ?: [0];
+        $available = $db->table('courses c')
+            ->select('c.id, c.title, c.description, c.instructor_id, u.name as instructor_name')
+            ->join('users u', 'u.id = c.instructor_id', 'left')
+            ->whereNotIn('c.id', $enrolledIds)
+            ->orderBy('c.title', 'ASC')
+            ->get()->getResultArray();
+
+        return view('student/courses', [ 
+            'courses' => $enrolled,
+            'availableCourses' => $available
+        ]);
     }
 }
