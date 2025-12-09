@@ -24,7 +24,10 @@
 
                 <div class="mb-3">
                     <label for="name" class="form-label">Full Name</label>
-                    <input type="text" name="name" class="form-control" id="name" value="<?= old('name') ?>" pattern="[a-zA-Z\s\-\'\.]+" title="Only letters, spaces, hyphens, apostrophes, and periods are allowed" required>
+                    <input type="text" name="name" class="form-control" id="name" value="<?= old('name') ?>" pattern="[a-zA-Z0-9\s\-\'\.]+" title="Only letters, numbers, spaces, hyphens, apostrophes, and periods are allowed. Special characters are not allowed." required>
+                    <div class="invalid-feedback" id="name_error" style="display: none;">
+                        The name field cannot contain special characters. Only letters, numbers, spaces, hyphens, apostrophes, and periods are allowed.
+                    </div>
                 </div>
 
                 <div class="mb-3">
@@ -62,4 +65,40 @@
         </div>
     </div>
 </div>
+
+<script>
+(function(){
+  // Real-time name validation for Registration form
+  const nameInput = document.getElementById('name');
+  const nameError = document.getElementById('name_error');
+  
+  if (nameInput) {
+    nameInput.addEventListener('input', function() {
+      const value = this.value;
+      const namePattern = /^[a-zA-Z0-9\s\-\'\.]*$/;
+      
+      if (value && !namePattern.test(value)) {
+        this.classList.add('is-invalid');
+        if (nameError) nameError.style.display = 'block';
+      } else {
+        this.classList.remove('is-invalid');
+        if (nameError) nameError.style.display = 'none';
+      }
+    });
+    
+    // Also validate on paste
+    nameInput.addEventListener('paste', function(e) {
+      setTimeout(() => {
+        const value = this.value;
+        const namePattern = /^[a-zA-Z0-9\s\-\'\.]*$/;
+        if (value && !namePattern.test(value)) {
+          this.classList.add('is-invalid');
+          if (nameError) nameError.style.display = 'block';
+        }
+      }, 10);
+    });
+  }
+})();
+</script>
+
 <?= $this->endSection() ?>

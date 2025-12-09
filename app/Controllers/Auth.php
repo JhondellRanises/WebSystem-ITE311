@@ -77,13 +77,22 @@ class Auth extends BaseController
         }
 
         if ($this->request->getMethod() === 'POST') {
-            if (!$this->validate([
-                'name'              => 'required|min_length[3]|max_length[255]|regex_match[/^[a-zA-Z\s\-\'\.]+$/]',
+            $rules = [
+                'name'              => 'required|min_length[3]|max_length[255]|regex_match[/^[a-zA-Z0-9\s\-\'\.]+$/]',
                 'email'             => 'required|valid_email|is_unique[users.email]',
                 'password'          => 'required|min_length[6]',
                 'confirm_password'  => 'required|matches[password]',
                 'role'              => 'required|in_list[admin,teacher,student]',
-            ])) {
+            ];
+            
+            // Custom error messages
+            $errors = [
+                'name' => [
+                    'regex_match' => 'The name field cannot contain special characters. Only letters, numbers, spaces, hyphens, apostrophes, and periods are allowed.'
+                ]
+            ];
+            
+            if (!$this->validate($rules, $errors)) {
                 return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
             }
 

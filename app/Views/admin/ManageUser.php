@@ -1,6 +1,8 @@
 <?= $this->extend('templates/header') ?>
 <?= $this->section('content') ?>
 
+<?php $errors = session()->getFlashdata('errors') ?? []; ?>
+
 <div class="card shadow-sm mt-3">
   <div class="card-body">
     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
@@ -89,10 +91,22 @@
       <form action="<?= base_url('admin/manage-users/create') ?>" method="post">
         <?= csrf_field() ?>
         <div class="modal-body">
+          <?php $nameError = $errors['name'] ?? null; if ($nameError): ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <?= esc($nameError) ?>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          <?php endif; ?>
           <div class="row g-3">
             <div class="col-md-6">
               <label class="form-label" for="c_name">Full Name</label>
-              <input type="text" class="form-control" id="c_name" name="name" value="<?= esc(old('name')) ?>" pattern="[a-zA-Z\s\-\'\.]+" title="Only letters, spaces, hyphens, apostrophes, and periods are allowed" required>
+              <input type="text" class="form-control <?= $nameError ? 'is-invalid' : '' ?>" id="c_name" name="name" value="<?= esc(old('name')) ?>" pattern="[a-zA-Z0-9\s\-\'\.]+" title="Only letters, numbers, spaces, hyphens, apostrophes, and periods are allowed. Special characters are not allowed." required>
+              <div class="invalid-feedback" id="c_name_error" style="display: none;">
+                The name field cannot contain special characters. Only letters, numbers, spaces, hyphens, apostrophes, and periods are allowed.
+              </div>
+              <?php if ($nameError): ?>
+                <div class="invalid-feedback d-block"><?= esc($nameError) ?></div>
+              <?php endif; ?>
             </div>
             <div class="col-md-6">
               <label class="form-label" for="c_email">Email</label>
@@ -136,10 +150,22 @@
       <form id="editForm" action="#" method="post">
         <?= csrf_field() ?>
         <div class="modal-body">
+          <?php $nameError = $errors['name'] ?? null; if ($nameError): ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <?= esc($nameError) ?>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          <?php endif; ?>
           <div class="row g-3">
             <div class="col-md-6">
               <label class="form-label" for="e_name">Full Name</label>
-              <input type="text" class="form-control" id="e_name" name="name" pattern="[a-zA-Z\s\-\'\.]+" title="Only letters, spaces, hyphens, apostrophes, and periods are allowed" required>
+              <input type="text" class="form-control <?= $nameError ? 'is-invalid' : '' ?>" id="e_name" name="name" pattern="[a-zA-Z0-9\s\-\'\.]+" title="Only letters, numbers, spaces, hyphens, apostrophes, and periods are allowed. Special characters are not allowed." required>
+              <div class="invalid-feedback" id="e_name_error" style="display: none;">
+                The name field cannot contain special characters. Only letters, numbers, spaces, hyphens, apostrophes, and periods are allowed.
+              </div>
+              <?php if ($nameError): ?>
+                <div class="invalid-feedback d-block"><?= esc($nameError) ?></div>
+              <?php endif; ?>
             </div>
             <div class="col-md-6">
               <label class="form-label" for="e_email">Email</label>
@@ -197,6 +223,43 @@
     document.querySelectorAll('input[name="'+csrfName+'"]').forEach(function(el){ el.value = csrfHash; });
   }
 
+  // Real-time name validation function
+  function validateNameField(inputElement, errorElement) {
+    if (!inputElement) return;
+    
+    // Check if already validated to avoid duplicate listeners
+    if (inputElement.dataset.validated === 'true') return;
+    inputElement.dataset.validated = 'true';
+    
+    inputElement.addEventListener('input', function() {
+      const value = this.value;
+      const namePattern = /^[a-zA-Z0-9\s\-\'\.]*$/;
+      
+      if (value && !namePattern.test(value)) {
+        this.classList.add('is-invalid');
+        if (errorElement) errorElement.style.display = 'block';
+      } else {
+        this.classList.remove('is-invalid');
+        if (errorElement) errorElement.style.display = 'none';
+      }
+    });
+    
+    // Also validate on paste
+    inputElement.addEventListener('paste', function(e) {
+      setTimeout(() => {
+        const value = this.value;
+        const namePattern = /^[a-zA-Z0-9\s\-\'\.]*$/;
+        if (value && !namePattern.test(value)) {
+          this.classList.add('is-invalid');
+          if (errorElement) errorElement.style.display = 'block';
+        } else {
+          this.classList.remove('is-invalid');
+          if (errorElement) errorElement.style.display = 'none';
+        }
+      }, 10);
+    });
+  }
+
   // Bootstrap 5 modal instance (no jQuery plugin)
   let editModalInstance = null;
   function getEditModal(){
@@ -216,17 +279,26 @@
       .then(r => r.json())
       .then(data => {
         if (data && data.user){
-          document.getElementById('e_name').value = data.user.name || '';
-          document.getElementById('e_email').value = data.user.email || '';
-          document.getElementById('e_role').value = (data.user.role||'').toLowerCase();
-          document.getElementById('editForm').setAttribute('action', '<?= base_url('admin/manage-users/edit') ?>/' + id);
-          // If we came here due to validation errors, prefer previously submitted values
-          const hasErrors = <?= json_encode(!empty($errors)) ?>;
-          if (hasErrors) {
-            if (OLD.name) document.getElementById('e_name').value = OLD.name;
-            if (OLD.email) document.getElementById('e_email').value = OLD.email;
-            if (OLD.role) document.getElementById('e_role').value = OLD.role;
+          const eNameInput = document.getElementById('e_name');
+          const eNameError = document.getElementById('e_name_error');
+          
+          if (eNameInput) {
+            eNameInput.value = data.user.name || '';
+            document.getElementById('e_email').value = data.user.email || '';
+            document.getElementById('e_role').value = (data.user.role||'').toLowerCase();
+            document.getElementById('editForm').setAttribute('action', '<?= base_url('admin/manage-users/edit') ?>/' + id);
+            // If we came here due to validation errors, prefer previously submitted values
+            const hasErrors = <?= json_encode(!empty($errors)) ?>;
+            if (hasErrors) {
+              if (OLD.name) eNameInput.value = OLD.name;
+              if (OLD.email) document.getElementById('e_email').value = OLD.email;
+              if (OLD.role) document.getElementById('e_role').value = OLD.role;
+            }
+            
+            // Setup real-time validation for edit modal
+            validateNameField(eNameInput, eNameError);
           }
+          
           if (data.csrf) updateCsrf(data.csrf);
         } else {
           alert('Failed to load user.');
@@ -243,6 +315,13 @@
     const id = btn.getAttribute('data-user-id');
     if (id) openEdit(id);
   });
+
+  // Apply validation to Create User modal
+  const cNameInput = document.getElementById('c_name');
+  const cNameError = document.getElementById('c_name_error');
+  if (cNameInput) {
+    validateNameField(cNameInput, cNameError);
+  }
 
   // Auto-open modals based on context (e.g., redirects after validation errors)
   const hasErrors = <?= json_encode(!empty($errors)) ?>;
