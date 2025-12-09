@@ -1,0 +1,194 @@
+ERROR - 2025-12-09 11:55:12 --> mysqli_sql_exception: Unknown column 'status' in 'field list' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `us...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `us...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `us...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `us...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(838): CodeIgniter\Model->doInsert(Array)
+#6 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(797): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\xampp\htdocs\ITE311-RANISES\app\Models\UserModel.php(54): CodeIgniter\Model->insert(Array)
+#8 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\ManageUser.php(83): App\Models\UserModel->createAccount(Array)
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\ManageUser->create()
+#10 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageUser))
+#11 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#13 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#14 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#15 {main}
+CRITICAL - 2025-12-09 11:55:12 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'status' in 'field list'
+[Method: POST, Route: admin/manage-users/create]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `users` (`name`, `email`, `password`, `role`, `status`, `created_at`, `updated_at`) VALUES (:name:, :email:, :password:, :role:, :status:, :created_at:, :updated_at:)', [...], false)
+ 2 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 3 SYSTEMPATH\BaseModel.php(838): CodeIgniter\Model->doInsert([...])
+ 4 SYSTEMPATH\Model.php(797): CodeIgniter\BaseModel->insert([...], true)
+ 5 APPPATH\Models\UserModel.php(54): CodeIgniter\Model->insert([...])
+ 6 APPPATH\Controllers\ManageUser.php(83): App\Models\UserModel->createAccount([...])
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageUser->create()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageUser))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-09 11:55:12 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'status' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `users` (`name`, `email`, `password`, `role`, `status`, `created_at`, `updated_at`) VALUES (\'Jhondell Ranises\', \'Jhondell@gmail.com\', \'$2y$10$M1fcyGpSbYnP.C5veGBpHeF4jHDHR.4cbQNCRjWM7rQnJFBh2QSti\', \'student\', \'active\', \'2025-12-09 11:55:12\', \'2025-12-09 11:55:12\')')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `users` (`name`, `email`, `password`, `role`, `status`, `created_at`, `updated_at`) VALUES (\'Jhondell Ranises\', \'Jhondell@gmail.com\', \'$2y$10$M1fcyGpSbYnP.C5veGBpHeF4jHDHR.4cbQNCRjWM7rQnJFBh2QSti\', \'student\', \'active\', \'2025-12-09 11:55:12\', \'2025-12-09 11:55:12\')')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `users` (`name`, `email`, `password`, `role`, `status`, `created_at`, `updated_at`) VALUES (:name:, :email:, :password:, :role:, :status:, :created_at:, :updated_at:)', [...], false)
+ 4 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 5 SYSTEMPATH\BaseModel.php(838): CodeIgniter\Model->doInsert([...])
+ 6 SYSTEMPATH\Model.php(797): CodeIgniter\BaseModel->insert([...], true)
+ 7 APPPATH\Models\UserModel.php(54): CodeIgniter\Model->insert([...])
+ 8 APPPATH\Controllers\ManageUser.php(83): App\Models\UserModel->createAccount([...])
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageUser->create()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageUser))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-09 11:55:12 --> [Caused by] mysqli_sql_exception: Unknown column 'status' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `users` (`name`, `email`, `password`, `role`, `status`, `created_at`, `updated_at`) VALUES (\'Jhondell Ranises\', \'Jhondell@gmail.com\', \'$2y$10$M1fcyGpSbYnP.C5veGBpHeF4jHDHR.4cbQNCRjWM7rQnJFBh2QSti\', \'student\', \'active\', \'2025-12-09 11:55:12\', \'2025-12-09 11:55:12\')', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `users` (`name`, `email`, `password`, `role`, `status`, `created_at`, `updated_at`) VALUES (\'Jhondell Ranises\', \'Jhondell@gmail.com\', \'$2y$10$M1fcyGpSbYnP.C5veGBpHeF4jHDHR.4cbQNCRjWM7rQnJFBh2QSti\', \'student\', \'active\', \'2025-12-09 11:55:12\', \'2025-12-09 11:55:12\')')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `users` (`name`, `email`, `password`, `role`, `status`, `created_at`, `updated_at`) VALUES (\'Jhondell Ranises\', \'Jhondell@gmail.com\', \'$2y$10$M1fcyGpSbYnP.C5veGBpHeF4jHDHR.4cbQNCRjWM7rQnJFBh2QSti\', \'student\', \'active\', \'2025-12-09 11:55:12\', \'2025-12-09 11:55:12\')')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `users` (`name`, `email`, `password`, `role`, `status`, `created_at`, `updated_at`) VALUES (:name:, :email:, :password:, :role:, :status:, :created_at:, :updated_at:)', [...], false)
+ 5 SYSTEMPATH\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+ 6 SYSTEMPATH\BaseModel.php(838): CodeIgniter\Model->doInsert([...])
+ 7 SYSTEMPATH\Model.php(797): CodeIgniter\BaseModel->insert([...], true)
+ 8 APPPATH\Models\UserModel.php(54): CodeIgniter\Model->insert([...])
+ 9 APPPATH\Controllers\ManageUser.php(83): App\Models\UserModel->createAccount([...])
+10 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageUser->create()
+11 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageUser))
+12 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+13 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+14 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+15 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-09 11:55:19 --> mysqli_sql_exception: Unknown column 'status' in 'field list' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('UPDATE `users` ...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('UPDATE `users` ...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `users` ...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(2521): CodeIgniter\Database\BaseConnection->query('UPDATE `users` ...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\ManageUser.php(167): CodeIgniter\Database\BaseBuilder->update(Array)
+#5 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\ManageUser->delete('6')
+#6 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageUser))
+#7 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+CRITICAL - 2025-12-09 11:55:19 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'status' in 'field list'
+[Method: POST, Route: admin/manage-users/delete/6]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(2521): CodeIgniter\Database\BaseConnection->query('UPDATE `users` SET `status` = :status:, `deleted_at` = :deleted_at:
+WHERE `id` = :id:', [...], false)
+ 2 APPPATH\Controllers\ManageUser.php(167): CodeIgniter\Database\BaseBuilder->update([...])
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageUser->delete('6')
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageUser))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-09 11:55:19 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'status' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('UPDATE `users` SET `status` = \'deleted\', `deleted_at` = \'2025-12-09 11:55:19\'
+WHERE `id` = \'6\'')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `users` SET `status` = \'deleted\', `deleted_at` = \'2025-12-09 11:55:19\'
+WHERE `id` = \'6\'')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(2521): CodeIgniter\Database\BaseConnection->query('UPDATE `users` SET `status` = :status:, `deleted_at` = :deleted_at:
+WHERE `id` = :id:', [...], false)
+ 4 APPPATH\Controllers\ManageUser.php(167): CodeIgniter\Database\BaseBuilder->update([...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageUser->delete('6')
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageUser))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-09 11:55:19 --> [Caused by] mysqli_sql_exception: Unknown column 'status' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('UPDATE `users` SET `status` = \'deleted\', `deleted_at` = \'2025-12-09 11:55:19\'
+WHERE `id` = \'6\'', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('UPDATE `users` SET `status` = \'deleted\', `deleted_at` = \'2025-12-09 11:55:19\'
+WHERE `id` = \'6\'')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('UPDATE `users` SET `status` = \'deleted\', `deleted_at` = \'2025-12-09 11:55:19\'
+WHERE `id` = \'6\'')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(2521): CodeIgniter\Database\BaseConnection->query('UPDATE `users` SET `status` = :status:, `deleted_at` = :deleted_at:
+WHERE `id` = :id:', [...], false)
+ 5 APPPATH\Controllers\ManageUser.php(167): CodeIgniter\Database\BaseBuilder->update([...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageUser->delete('6')
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageUser))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-09 12:05:59 --> ErrorException: Attempt to read property "deleted_at" on array
+[Method: POST, Route: admin/manage-users/restore/7]
+in APPPATH\Controllers\ManageUser.php on line 245.
+ 1 APPPATH\Controllers\ManageUser.php(245): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "deleted_at" on array', 'C:\\xampp\\htdocs\\ITE311-RANISES\\app\\Controllers\\ManageUser.php', 245)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageUser->restore('7')
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageUser))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-09 12:06:03 --> ErrorException: Attempt to read property "deleted_at" on array
+[Method: POST, Route: admin/manage-users/restore/7]
+in APPPATH\Controllers\ManageUser.php on line 245.
+ 1 APPPATH\Controllers\ManageUser.php(245): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "deleted_at" on array', 'C:\\xampp\\htdocs\\ITE311-RANISES\\app\\Controllers\\ManageUser.php', 245)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageUser->restore('7')
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageUser))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-09 12:08:17 --> ErrorException: Attempt to read property "deleted_at" on array
+[Method: POST, Route: admin/manage-users/restore/7]
+in APPPATH\Controllers\ManageUser.php on line 245.
+ 1 APPPATH\Controllers\ManageUser.php(245): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "deleted_at" on array', 'C:\\xampp\\htdocs\\ITE311-RANISES\\app\\Controllers\\ManageUser.php', 245)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageUser->restore('7')
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageUser))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-09 12:09:08 --> ErrorException: Attempt to read property "deleted_at" on array
+[Method: POST, Route: admin/manage-users/restore/7]
+in APPPATH\Controllers\ManageUser.php on line 245.
+ 1 APPPATH\Controllers\ManageUser.php(245): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "deleted_at" on array', 'C:\\xampp\\htdocs\\ITE311-RANISES\\app\\Controllers\\ManageUser.php', 245)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageUser->restore('7')
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageUser))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-09 12:11:48 --> ErrorException: Attempt to read property "deleted_at" on array
+[Method: POST, Route: admin/manage-users/restore/8]
+in APPPATH\Controllers\ManageUser.php on line 251.
+ 1 APPPATH\Controllers\ManageUser.php(251): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "deleted_at" on array', 'C:\\xampp\\htdocs\\ITE311-RANISES\\app\\Controllers\\ManageUser.php', 251)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageUser->restore(8)
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageUser))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-09 12:11:54 --> ErrorException: Attempt to read property "deleted_at" on array
+[Method: POST, Route: admin/manage-users/restore/7]
+in APPPATH\Controllers\ManageUser.php on line 251.
+ 1 APPPATH\Controllers\ManageUser.php(251): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "deleted_at" on array', 'C:\\xampp\\htdocs\\ITE311-RANISES\\app\\Controllers\\ManageUser.php', 251)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageUser->restore(7)
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageUser))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-09 12:13:35 --> ErrorException: Attempt to read property "deleted_at" on array
+[Method: POST, Route: admin/manage-users/restore/8]
+in APPPATH\Controllers\ManageUser.php on line 252.
+ 1 APPPATH\Controllers\ManageUser.php(252): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "deleted_at" on array', 'C:\\xampp\\htdocs\\ITE311-RANISES\\app\\Controllers\\ManageUser.php', 252)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageUser->restore(8)
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageUser))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

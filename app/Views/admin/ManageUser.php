@@ -4,7 +4,7 @@
 <div class="card shadow-sm mt-3">
   <div class="card-body">
     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
-      <h2 class="fw-bold mb-2 mb-sm-0">Manage User</h2>
+      <h2 class="fw-bold mb-2 mb-sm-0">Manage Users</h2>
       <div class="d-flex gap-2 align-items-center">
         <form class="d-flex" action="<?= base_url('admin/manage-users') ?>" method="get">
           <input type="text" class="form-control" name="q" placeholder="Search name or email" value="<?= esc($q ?? '') ?>"/>
@@ -13,16 +13,6 @@
         <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#createModal">Add User</button>
       </div>
     </div>
-
-    <?php $errors = session()->getFlashdata('errors'); if (!empty($errors)): ?>
-      <div class="alert alert-danger">
-        <ul class="mb-0">
-          <?php foreach((array)$errors as $e): ?>
-            <li><?= esc($e) ?></li>
-          <?php endforeach; ?>
-        </ul>
-      </div>
-    <?php endif; ?>
 
     <?php if (!empty($users)): ?>
       <div class="table-responsive">
@@ -33,24 +23,45 @@
               <th>Name</th>
               <th>Email</th>
               <th>Role</th>
+              <th>Status</th>
               <th>Created</th>
               <th class="text-end">Actions</th>
             </tr>
           </thead>
           <tbody>
-            <?php $i = 1; foreach ($users as $u): ?>
-              <tr>
+            <?php $i = 1; foreach ($users as $u): 
+              $isDeleted = !empty($u['deleted_at']);
+            ?>
+              <tr class="<?= $isDeleted ? 'table-secondary' : '' ?>">
                 <td><?= $i++ ?></td>
                 <td><?= esc($u['name']) ?></td>
                 <td><?= esc($u['email']) ?></td>
                 <td><span class="badge bg-secondary text-uppercase"><?= esc($u['role']) ?></span></td>
+                <td>
+                  <?php if ($isDeleted): ?>
+                    <span class="badge bg-danger">Deleted</span>
+                  <?php else: ?>
+                    <span class="badge bg-success">Active</span>
+                  <?php endif; ?>
+                </td>
                 <td><small class="text-muted"><?= esc($u['created_at'] ?? '') ?></small></td>
                 <td class="text-end">
-                  <button class="btn btn-sm btn-outline-primary js-edit" data-user-id="<?= (int)$u['id'] ?>">Edit</button>
-                  <form action="<?= base_url('admin/manage-users/delete/' . $u['id']) ?>" method="post" class="d-inline">
-                    <?= csrf_field() ?>
-                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this user? This cannot be undone.')">Delete</button>
-                  </form>
+                  <?php if ($isDeleted): ?>
+                    <!-- Restore button for deleted users -->
+                    <form action="<?= base_url('admin/manage-users/restore/' . $u['id']) ?>" method="post" class="d-inline">
+                      <?= csrf_field() ?>
+                      <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Restore this user? User will be reactivated.')">
+                        <i class="bi bi-arrow-counterclockwise"></i> Restore
+                      </button>
+                    </form>
+                  <?php else: ?>
+                    <!-- Edit and Delete buttons for active users -->
+                    <button class="btn btn-sm btn-outline-primary js-edit" data-user-id="<?= (int)$u['id'] ?>">Edit</button>
+                    <form action="<?= base_url('admin/manage-users/delete/' . $u['id']) ?>" method="post" class="d-inline">
+                      <?= csrf_field() ?>
+                      <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this user? You can restore it later.')">Delete</button>
+                    </form>
+                  <?php endif; ?>
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -81,7 +92,7 @@
           <div class="row g-3">
             <div class="col-md-6">
               <label class="form-label" for="c_name">Full Name</label>
-              <input type="text" class="form-control" id="c_name" name="name" value="<?= esc(old('name')) ?>" required>
+              <input type="text" class="form-control" id="c_name" name="name" value="<?= esc(old('name')) ?>" pattern="[a-zA-Z\s\-\'\.]+" title="Only letters, spaces, hyphens, apostrophes, and periods are allowed" required>
             </div>
             <div class="col-md-6">
               <label class="form-label" for="c_email">Email</label>
@@ -128,7 +139,7 @@
           <div class="row g-3">
             <div class="col-md-6">
               <label class="form-label" for="e_name">Full Name</label>
-              <input type="text" class="form-control" id="e_name" name="name" required>
+              <input type="text" class="form-control" id="e_name" name="name" pattern="[a-zA-Z\s\-\'\.]+" title="Only letters, spaces, hyphens, apostrophes, and periods are allowed" required>
             </div>
             <div class="col-md-6">
               <label class="form-label" for="e_email">Email</label>

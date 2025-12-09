@@ -11,19 +11,42 @@ class UserModel extends Model
     protected $primaryKey = 'id';
 
     // Allowed fields for insert/update
-    protected $allowedFields = ['name', 'email', 'password', 'role', 'created_at', 'updated_at'];
+    protected $allowedFields = ['name', 'email', 'password', 'role', 'created_at', 'updated_at', 'deleted_at'];
 
     // Automatically manage created_at and updated_at
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
 
+    // Enable soft deletes
+    protected $useSoftDeletes = true;
+    protected $deletedField   = 'deleted_at';
+
     // -----------------------------
-    // Find a user by email
+    // Find a user by email (excludes soft deleted)
     // -----------------------------
     public function findUserByEmail(string $email)
     {
         return $this->where('email', $email)->first();
+    }
+
+    // -----------------------------
+    // Get deleted users with pagination
+    // -----------------------------
+    public function getDeletedUsers(int $perPage = 10)
+    {
+        return $this->onlyDeleted()->orderBy('deleted_at', 'DESC')->paginate($perPage);
+    }
+
+    // -----------------------------
+    // Restore a soft deleted user by setting deleted_at to NULL
+    // -----------------------------
+    public function restoreUser(int $id): bool
+    {
+        $db = \Config\Database::connect();
+        $sql = "UPDATE users SET deleted_at = NULL WHERE id = ?";
+        $result = $db->query($sql, [$id]);
+        return $result !== false;
     }
 
     // -----------------------------

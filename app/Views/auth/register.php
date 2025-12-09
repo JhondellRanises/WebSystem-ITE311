@@ -24,7 +24,7 @@
 
                 <div class="mb-3">
                     <label for="name" class="form-label">Full Name</label>
-                    <input type="text" name="name" class="form-control" id="name" value="<?= old('name') ?>" required>
+                    <input type="text" name="name" class="form-control" id="name" value="<?= old('name') ?>" pattern="[a-zA-Z\s\-\'\.]+" title="Only letters, spaces, hyphens, apostrophes, and periods are allowed" required>
                 </div>
 
                 <div class="mb-3">

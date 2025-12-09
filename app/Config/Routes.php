@@ -32,12 +32,19 @@ $routes->get('announcements', 'Announcement::index');
 $routes->group('admin', function($routes) {
     $routes->get('dashboard', 'Admin::dashboard');
     
+    // User Management CRUD Routes
     $routes->get('manage-users', 'ManageUser::index');
     $routes->match(['get', 'post'], 'manage-users/create', 'ManageUser::create');
+    $routes->match(['get', 'post'], 'manage-users/store', 'ManageUser::store');
     $routes->match(['get', 'post'], 'manage-users/edit/(:num)', 'ManageUser::edit/$1');
+    $routes->match(['get', 'post', 'put'], 'manage-users/update/(:num)', 'ManageUser::update/$1');
     $routes->post('manage-users/delete/(:num)', 'ManageUser::delete/$1');
     $routes->get('manage-users/delete/(:num)', 'ManageUser::delete/$1');
     $routes->get('manage-users/show/(:num)', 'ManageUser::show/$1');
+    
+    // Soft Delete & Restore Routes
+    $routes->post('manage-users/restore/(:num)', 'ManageUser::restore/$1');
+    $routes->get('manage-users/restore/(:num)', 'ManageUser::restore/$1');
 });
 
 $routes->group('teacher', function($routes) {
