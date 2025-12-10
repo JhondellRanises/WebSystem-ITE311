@@ -53,10 +53,20 @@ $routes->group('admin', function($routes) {
     // Soft Delete & Restore Routes
     $routes->post('manage-users/restore/(:num)', 'ManageUser::restore/$1');
     $routes->get('manage-users/restore/(:num)', 'ManageUser::restore/$1');
+    
+    // Admin access to teacher features
+    $routes->get('courses', 'Teacher::courses');
+    $routes->get('students', 'Teacher::students');
+    $routes->post('enrollments/approve/(:num)', 'Teacher::approveEnrollment/$1');
+    $routes->post('enrollments/reject/(:num)', 'Teacher::rejectEnrollment/$1');
 });
 
 $routes->group('teacher', function($routes) {
     $routes->get('dashboard', 'Teacher::dashboard');
+    $routes->get('courses', 'Teacher::courses');
+    $routes->get('students', 'Teacher::students');
+    $routes->post('enrollments/approve/(:num)', 'Teacher::approveEnrollment/$1');
+    $routes->post('enrollments/reject/(:num)', 'Teacher::rejectEnrollment/$1');
 });
 
 $routes->group('student', function($routes) {

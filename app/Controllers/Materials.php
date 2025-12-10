@@ -159,10 +159,22 @@ class Materials extends BaseController
         $course_id = $material['course_id'];
 
         $isAdminOrTeacher = in_array(session()->get('user_role'), ['admin', 'teacher']);
-        $isEnrolled = $enrollmentModel->isAlreadyEnrolled($user_id, $course_id);
+        
+        // For students, check if they have approved enrollment
+        if ($isAdminOrTeacher) {
+            $hasAccess = true;
+        } else {
+            // Check if enrollment exists and is approved
+            try {
+                $hasAccess = $enrollmentModel->isApproved($user_id, $course_id);
+            } catch (\Exception $e) {
+                // Fallback: if status column doesn't exist, check if enrolled at all
+                $hasAccess = $enrollmentModel->isAlreadyEnrolled($user_id, $course_id);
+            }
+        }
 
-        if (!($isAdminOrTeacher || $isEnrolled)) {
-            return redirect()->back()->with('error', 'Access restricted to enrolled students.');
+        if (!$hasAccess) {
+            return redirect()->back()->with('error', 'Access restricted to enrolled students with approved enrollment.');
         }
 
         $fullPath = WRITEPATH . $material['file_path'];
@@ -184,14 +196,27 @@ class Materials extends BaseController
 
         $db = \Config\Database::connect();
         $userId = session()->get('user_id');
-        // Get enrolled courses
-        $enrolled = $db->table('enrollments e')
-            ->select('c.id, c.title, c.description, u.name as instructor_name')
-            ->join('courses c', 'c.id = e.course_id')
-            ->join('users u', 'u.id = c.instructor_id', 'left')
-            ->where('e.user_id', $userId)
-            ->orderBy('c.title', 'ASC')
-            ->get()->getResultArray();
+        
+        // Get enrolled courses (only approved enrollments)
+        try {
+            $enrolled = $db->table('enrollments e')
+                ->select('c.id, c.title, c.description, u.name as instructor_name')
+                ->join('courses c', 'c.id = e.course_id')
+                ->join('users u', 'u.id = c.instructor_id', 'left')
+                ->where('e.user_id', $userId)
+                ->where('e.status', 'approved')
+                ->orderBy('c.title', 'ASC')
+                ->get()->getResultArray();
+        } catch (\Exception $e) {
+            // Fallback: if status column doesn't exist, treat all enrollments as approved
+            $enrolled = $db->table('enrollments e')
+                ->select('c.id, c.title, c.description, u.name as instructor_name')
+                ->join('courses c', 'c.id = e.course_id')
+                ->join('users u', 'u.id = c.instructor_id', 'left')
+                ->where('e.user_id', $userId)
+                ->orderBy('c.title', 'ASC')
+                ->get()->getResultArray();
+        }
 
         if (empty($enrolled)) {
             return view('student/materials', [
@@ -224,26 +249,63 @@ class Materials extends BaseController
         $db = \Config\Database::connect();
         $userId = session()->get('user_id');
         
-        // Get enrolled courses
-        $enrolled = $db->table('enrollments e')
-            ->select('c.id, c.title, c.description, u.name as instructor_name')
-            ->join('courses c', 'c.id = e.course_id')
-            ->join('users u', 'u.id = c.instructor_id', 'left')
-            ->where('e.user_id', $userId)
-            ->orderBy('c.title', 'ASC')
-            ->get()->getResultArray();
+        // Try to get enrollments with status column, fallback if column doesn't exist
+        try {
+            // Get enrolled courses (only approved)
+            $enrolled = $db->table('enrollments e')
+                ->select('c.id, c.title, c.description, u.name as instructor_name, e.status, e.enrollment_date')
+                ->join('courses c', 'c.id = e.course_id')
+                ->join('users u', 'u.id = c.instructor_id', 'left')
+                ->where('e.user_id', $userId)
+                ->where('e.status', 'approved')
+                ->orderBy('c.title', 'ASC')
+                ->get()->getResultArray();
 
-        // Get available courses (not enrolled in)
-        $enrolledIds = array_column($db->table('enrollments')->select('course_id')->where('user_id', $userId)->get()->getResultArray(), 'course_id') ?: [0];
+            // Get pending enrollments
+            $pending = $db->table('enrollments e')
+                ->select('c.id, c.title, c.description, u.name as instructor_name, e.status, e.enrollment_date')
+                ->join('courses c', 'c.id = e.course_id')
+                ->join('users u', 'u.id = c.instructor_id', 'left')
+                ->where('e.user_id', $userId)
+                ->where('e.status', 'pending')
+                ->orderBy('e.enrollment_date', 'DESC')
+                ->get()->getResultArray();
+
+            // Get rejected enrollments
+            $rejected = $db->table('enrollments e')
+                ->select('c.id, c.title, c.description, u.name as instructor_name, e.status, e.rejection_reason, e.rejected_at')
+                ->join('courses c', 'c.id = e.course_id')
+                ->join('users u', 'u.id = c.instructor_id', 'left')
+                ->where('e.user_id', $userId)
+                ->where('e.status', 'rejected')
+                ->orderBy('e.rejected_at', 'DESC')
+                ->get()->getResultArray();
+        } catch (\Exception $e) {
+            // Fallback: if status column doesn't exist, treat all enrollments as approved
+            $enrolled = $db->table('enrollments e')
+                ->select('c.id, c.title, c.description, u.name as instructor_name, e.enrollment_date')
+                ->join('courses c', 'c.id = e.course_id')
+                ->join('users u', 'u.id = c.instructor_id', 'left')
+                ->where('e.user_id', $userId)
+                ->orderBy('c.title', 'ASC')
+                ->get()->getResultArray();
+            $pending = [];
+            $rejected = [];
+        }
+
+        // Get available courses (not enrolled in at all)
+        $allEnrolledIds = array_column($db->table('enrollments')->select('course_id')->where('user_id', $userId)->get()->getResultArray(), 'course_id') ?: [0];
         $available = $db->table('courses c')
             ->select('c.id, c.title, c.description, c.instructor_id, u.name as instructor_name')
             ->join('users u', 'u.id = c.instructor_id', 'left')
-            ->whereNotIn('c.id', $enrolledIds)
+            ->whereNotIn('c.id', $allEnrolledIds)
             ->orderBy('c.title', 'ASC')
             ->get()->getResultArray();
 
         return view('student/courses', [ 
-            'courses' => $enrolled,
+            'courses' => $enrolled ?? [],
+            'pendingCourses' => $pending ?? [],
+            'rejectedCourses' => $rejected ?? [],
             'availableCourses' => $available
         ]);
     }

@@ -18,6 +18,11 @@ class CreateCoursesTable extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 150,
             ],
+            'course_code' => [
+                'type' => 'VARCHAR',
+                'constraint' => 50,
+                'null' => true,
+            ],
             'description' => [
                 'type' => 'TEXT',
                 'null' => true,
@@ -25,6 +30,41 @@ class CreateCoursesTable extends Migration
             'instructor_id' => [
                 'type' => 'INT',
                 'unsigned' => true,
+            ],
+            'academic_year' => [
+                'type' => 'VARCHAR',
+                'constraint' => 20,
+                'null' => true,
+            ],
+            'department' => [
+                'type' => 'VARCHAR',
+                'constraint' => 100,
+                'null' => true,
+            ],
+            'program' => [
+                'type' => 'VARCHAR',
+                'constraint' => 100,
+                'null' => true,
+            ],
+            'term' => [
+                'type' => 'VARCHAR',
+                'constraint' => 20,
+                'null' => true,
+            ],
+            'semester' => [
+                'type' => 'VARCHAR',
+                'constraint' => 50,
+                'null' => true,
+            ],
+            'units' => [
+                'type' => 'DECIMAL',
+                'constraint' => '4,1',
+                'null' => true,
+            ],
+            'schedule' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+                'null' => true,
             ],
             'created_at' => [
                 'type' => 'DATETIME',

@@ -1371,3 +1371,470 @@ in APPPATH\Views\admin\ManageCourse.php on line 295.
  9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
 10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
 11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 17:37:42 --> ErrorException: Undefined array key "course_code"
+[Method: GET, Route: student/courses]
+in APPPATH\Views\student\courses.php on line 60.
+ 1 APPPATH\Views\student\courses.php(60): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined array key "course_code"', 'C:\\xampp\\htdocs\\ITE311-RANISES\\app\\Views\\student\\courses.php', 60)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\xampp\\htdocs\\ITE311-RANISES\\app\\Views\\student\\courses.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('student/courses', [], true)
+ 5 APPPATH\Controllers\Materials.php(245): view('student/courses', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Materials->studentCourses()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-10 17:45:54 --> mysqli_sql_exception: Unknown column 'e.status' in 'field list' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `c`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\Materials.php(235): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\Materials->studentCourses()
+#6 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+#7 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+CRITICAL - 2025-12-10 17:45:54 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'e.status' in 'field list'
+[Method: GET, Route: student/courses]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = :e.user_id:
+AND `e`.`status` = :e.status:
+ORDER BY `c`.`title` ASC', [...], false)
+ 2 APPPATH\Controllers\Materials.php(235): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Materials->studentCourses()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 17:45:54 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'e.status' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = \'3\'
+AND `e`.`status` = \'approved\'
+ORDER BY `c`.`title` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = \'3\'
+AND `e`.`status` = \'approved\'
+ORDER BY `c`.`title` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = :e.user_id:
+AND `e`.`status` = :e.status:
+ORDER BY `c`.`title` ASC', [...], false)
+ 4 APPPATH\Controllers\Materials.php(235): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Materials->studentCourses()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 17:45:54 --> [Caused by] mysqli_sql_exception: Unknown column 'e.status' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = \'3\'
+AND `e`.`status` = \'approved\'
+ORDER BY `c`.`title` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = \'3\'
+AND `e`.`status` = \'approved\'
+ORDER BY `c`.`title` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = \'3\'
+AND `e`.`status` = \'approved\'
+ORDER BY `c`.`title` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = :e.user_id:
+AND `e`.`status` = :e.status:
+ORDER BY `c`.`title` ASC', [...], false)
+ 5 APPPATH\Controllers\Materials.php(235): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Materials->studentCourses()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-10 17:45:59 --> mysqli_sql_exception: Unknown column 'e.status' in 'field list' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `c`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\Materials.php(235): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\Materials->studentCourses()
+#6 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+#7 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+CRITICAL - 2025-12-10 17:45:59 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'e.status' in 'field list'
+[Method: GET, Route: student/courses]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = :e.user_id:
+AND `e`.`status` = :e.status:
+ORDER BY `c`.`title` ASC', [...], false)
+ 2 APPPATH\Controllers\Materials.php(235): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Materials->studentCourses()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 17:45:59 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'e.status' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = \'3\'
+AND `e`.`status` = \'approved\'
+ORDER BY `c`.`title` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = \'3\'
+AND `e`.`status` = \'approved\'
+ORDER BY `c`.`title` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = :e.user_id:
+AND `e`.`status` = :e.status:
+ORDER BY `c`.`title` ASC', [...], false)
+ 4 APPPATH\Controllers\Materials.php(235): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Materials->studentCourses()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 17:45:59 --> [Caused by] mysqli_sql_exception: Unknown column 'e.status' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = \'3\'
+AND `e`.`status` = \'approved\'
+ORDER BY `c`.`title` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = \'3\'
+AND `e`.`status` = \'approved\'
+ORDER BY `c`.`title` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = \'3\'
+AND `e`.`status` = \'approved\'
+ORDER BY `c`.`title` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = :e.user_id:
+AND `e`.`status` = :e.status:
+ORDER BY `c`.`title` ASC', [...], false)
+ 5 APPPATH\Controllers\Materials.php(235): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Materials->studentCourses()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-10 17:46:05 --> mysqli_sql_exception: Unknown column 'e.status' in 'field list' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `c`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\Materials.php(235): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\Materials->studentCourses()
+#6 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+#7 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+CRITICAL - 2025-12-10 17:46:05 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'e.status' in 'field list'
+[Method: GET, Route: student/courses]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = :e.user_id:
+AND `e`.`status` = :e.status:
+ORDER BY `c`.`title` ASC', [...], false)
+ 2 APPPATH\Controllers\Materials.php(235): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Materials->studentCourses()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 17:46:05 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'e.status' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = \'3\'
+AND `e`.`status` = \'approved\'
+ORDER BY `c`.`title` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = \'3\'
+AND `e`.`status` = \'approved\'
+ORDER BY `c`.`title` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = :e.user_id:
+AND `e`.`status` = :e.status:
+ORDER BY `c`.`title` ASC', [...], false)
+ 4 APPPATH\Controllers\Materials.php(235): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Materials->studentCourses()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 17:46:05 --> [Caused by] mysqli_sql_exception: Unknown column 'e.status' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = \'3\'
+AND `e`.`status` = \'approved\'
+ORDER BY `c`.`title` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = \'3\'
+AND `e`.`status` = \'approved\'
+ORDER BY `c`.`title` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = \'3\'
+AND `e`.`status` = \'approved\'
+ORDER BY `c`.`title` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = :e.user_id:
+AND `e`.`status` = :e.status:
+ORDER BY `c`.`title` ASC', [...], false)
+ 5 APPPATH\Controllers\Materials.php(235): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Materials->studentCourses()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-10 17:46:49 --> mysqli_sql_exception: Unknown column 'e.status' in 'field list' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `c`.`id`...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\Materials.php(235): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\Materials->studentCourses()
+#6 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+#7 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+CRITICAL - 2025-12-10 17:46:49 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'e.status' in 'field list'
+[Method: GET, Route: student/courses]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = :e.user_id:
+AND `e`.`status` = :e.status:
+ORDER BY `c`.`title` ASC', [...], false)
+ 2 APPPATH\Controllers\Materials.php(235): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Materials->studentCourses()
+ 4 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+ 5 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 6 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 7 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 8 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 17:46:49 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'e.status' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = \'3\'
+AND `e`.`status` = \'approved\'
+ORDER BY `c`.`title` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = \'3\'
+AND `e`.`status` = \'approved\'
+ORDER BY `c`.`title` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = :e.user_id:
+AND `e`.`status` = :e.status:
+ORDER BY `c`.`title` ASC', [...], false)
+ 4 APPPATH\Controllers\Materials.php(235): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Materials->studentCourses()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 17:46:49 --> [Caused by] mysqli_sql_exception: Unknown column 'e.status' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = \'3\'
+AND `e`.`status` = \'approved\'
+ORDER BY `c`.`title` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = \'3\'
+AND `e`.`status` = \'approved\'
+ORDER BY `c`.`title` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = \'3\'
+AND `e`.`status` = \'approved\'
+ORDER BY `c`.`title` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `c`.`id`, `c`.`title`, `c`.`description`, `u`.`name` as `instructor_name`, `e`.`status`, `e`.`enrollment_date`
+FROM `enrollments` `e`
+JOIN `courses` `c` ON `c`.`id` = `e`.`course_id`
+LEFT JOIN `users` `u` ON `u`.`id` = `c`.`instructor_id`
+WHERE `e`.`user_id` = :e.user_id:
+AND `e`.`status` = :e.status:
+ORDER BY `c`.`title` ASC', [...], false)
+ 5 APPPATH\Controllers\Materials.php(235): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Materials->studentCourses()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 18:08:59 --> ErrorException: require(C:\xampp\htdocs\ITE311-RANISES\app\Views/errors/cli/error_exception.php): Failed to open stream: No such file or directory
+[Method: CLI, Route: db:seed/AnnoucementsSeeder]
+in SYSTEMPATH\CLI\BaseCommand.php on line 133.
+ 1 SYSTEMPATH\CLI\BaseCommand.php(133): CodeIgniter\Debug\Exceptions->errorHandler(2, 'require(C:\\xampp\\htdocs\\ITE311-RANISES\\app\\Views/errors/cli/error_exception.php): Failed to open stream: No such file or directory', 'C:\\xampp\\htdocs\\ITE311-RANISES\\system\\CLI\\BaseCommand.php', 133)
+ 2 SYSTEMPATH\CLI\BaseCommand.php(133): require()
+ 3 SYSTEMPATH\Commands\Database\Seed.php(81): CodeIgniter\CLI\BaseCommand->showError(Object(CodeIgniter\Exceptions\InvalidArgumentException))
+ 4 SYSTEMPATH\CLI\Commands.php(74): CodeIgniter\Commands\Database\Seed->run([])
+ 5 SYSTEMPATH\CLI\Console.php(47): CodeIgniter\CLI\Commands->run('db:seed', [...])
+ 6 SYSTEMPATH\Boot.php(388): CodeIgniter\CLI\Console->run()
+ 7 SYSTEMPATH\Boot.php(133): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+ 8 FCPATH\spark(40): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+ERROR - 2025-12-10 18:23:34 --> Error connecting to the database: mysqli_sql_exception: Unknown database 'lms_ranises' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'lms_ranises', 3306, '', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*)...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(675): CodeIgniter\Database\BaseBuilder->countAllResults(true)
+#5 C:\xampp\htdocs\ITE311-RANISES\app\Models\NotificationModel.php(15): CodeIgniter\Model->countAllResults()
+#6 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\Notifications.php(17): App\Models\NotificationModel->getUnreadCount(1)
+#7 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\Notifications->get()
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Notifications))
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Unknown database 'lms_ranises' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:246
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(419): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*)...', Array, false)
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(675): CodeIgniter\Database\BaseBuilder->countAllResults(true)
+#4 C:\xampp\htdocs\ITE311-RANISES\app\Models\NotificationModel.php(15): CodeIgniter\Model->countAllResults()
+#5 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\Notifications.php(17): App\Models\NotificationModel->getUnreadCount(1)
+#6 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\Notifications->get()
+#7 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Notifications))
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#10 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 {main}
+CRITICAL - 2025-12-10 18:23:34 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Unknown database 'lms_ranises'
+[Method: GET, Route: notifications]
+in SYSTEMPATH\Database\BaseConnection.php on line 465.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS `numrows`
+FROM `notifications`
+WHERE `user_id` = :user_id:
+AND `is_read` = :is_read:', [...], false)
+ 3 SYSTEMPATH\Model.php(675): CodeIgniter\Database\BaseBuilder->countAllResults(true)
+ 4 APPPATH\Models\NotificationModel.php(15): CodeIgniter\Model->countAllResults()
+ 5 APPPATH\Controllers\Notifications.php(17): App\Models\NotificationModel->getUnreadCount(1)
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Notifications->get()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Notifications))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

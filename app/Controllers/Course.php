@@ -71,36 +71,55 @@ class Course extends BaseController
 
         $enrollmentModel = new EnrollmentModel();
 
-        // ✅ Check if already enrolled
-        if ($enrollmentModel->isAlreadyEnrolled($user_id, $course_id)) {
+        // ✅ Check if already enrolled (pending or approved)
+        $existingEnrollment = $enrollmentModel->where('user_id', $user_id)
+            ->where('course_id', $course_id)
+            ->whereIn('status', ['pending', 'approved'])
+            ->first();
+
+        if ($existingEnrollment) {
+            $status = $existingEnrollment['status'] === 'pending' ? 'pending approval' : 'already enrolled';
             return $this->response->setJSON([
                 'status' => 'error',
-                'message' => 'You are already enrolled in this course.'
+                'message' => 'You are ' . $status . ' in this course.'
             ]);
         }
 
-        // ✅ Insert enrollment
+        // ✅ Insert enrollment with pending status
         $data = [
             'user_id' => $user_id,
             'course_id' => $course_id,
-            'enrollment_date' => date('Y-m-d H:i:s')
+            'enrollment_date' => date('Y-m-d H:i:s'),
+            'status' => 'pending'
         ];
 
         try {
             if ($enrollmentModel->insert($data)) {
-                // Create notification for the user
+                // Create notification for the instructor
                 try {
                     $db = \Config\Database::connect();
-                    $course = $db->table('courses')->select('title')->where('id', $course_id)->get()->getRowArray();
-                    $title = $course['title'] ?? ('Course #'.(string)$course_id);
-                    $notifModel = new \App\Models\NotificationModel();
-                    $notifModel->createNotification((int)$user_id, 'You have been enrolled in ' . $title);
+                    $course = $db->table('courses')
+                        ->select('courses.title, courses.instructor_id, users.name as student_name')
+                        ->join('users', 'users.id = ' . $user_id, 'left')
+                        ->where('courses.id', $course_id)
+                        ->get()
+                        ->getRowArray();
+                    
+                    if ($course && $course['instructor_id']) {
+                        $notifModel = new \App\Models\NotificationModel();
+                        $studentName = session()->get('user_name') ?? 'A student';
+                        $notifModel->createNotification(
+                            (int)$course['instructor_id'], 
+                            $studentName . ' has requested enrollment in ' . ($course['title'] ?? 'a course')
+                        );
+                    }
                 } catch (\Throwable $e) {
                     // swallow notification errors to not block enrollment
                 }
+                
                 return $this->response->setJSON([
                     'status' => 'success',
-                    'message' => 'Enrollment successful!'
+                    'message' => 'Enrollment request submitted! Waiting for instructor approval.'
                 ]);
             } else {
                 return $this->response->setJSON([

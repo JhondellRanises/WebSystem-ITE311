@@ -48,7 +48,7 @@ class ManageCourse extends BaseController
         $courses = $courseModel->paginate(10, 'courses');
         $pager = $courseModel->pager;
 
-        // Instructor options (admin or teacher)
+        // Instructor options (admin or teacher only - exclude students)
         $userModel = new UserModel();
         $instructors = $userModel->whereIn('role', ['admin', 'teacher'])
             ->orderBy('name', 'ASC')
@@ -86,8 +86,8 @@ class ManageCourse extends BaseController
             ],
             'Department of Engineering and Technology' => [
                 'Bachelor of Science in Civil Engineering',
-                'Bachelor of Science in Electrical Engineering',
-                'Bachelor of Science in Mechanical Engineering',
+                'Bachelor of Science in Information Technology',
+                'Bachelor of Science in Computer Science',
                 'Bachelor of Science in Computer Engineering',
             ],
             'Department of Arts and Sciences' => [
@@ -99,12 +99,12 @@ class ManageCourse extends BaseController
             ],
             'Department of Criminal and Justice' => [
                 'Bachelor of Science in Criminology',
-                'Bachelor of Science in Criminal Justice',
             ],
             'Department of Business Education' => [
                 'Bachelor of Science in Business Administration',
                 'Bachelor of Science in Accountancy',
                 'Bachelor of Science in Entrepreneurship',
+                'Bachelor of Science in Customs Administration'
             ],
             'Department of Allied Health and Sciences' => [
                 'Bachelor of Science in Nursing',

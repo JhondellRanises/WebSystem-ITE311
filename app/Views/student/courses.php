@@ -39,7 +39,7 @@
 
       <?php if (empty($courses)): ?>
         <div class="alert alert-light border">
-          <i class="fas fa-info-circle"></i> You are not enrolled in any course yet. <a href="#availableCourses">Browse available courses below</a>
+          <i class="fas fa-info-circle"></i> You are not enrolled in any approved courses yet. <a href="#availableCourses">Browse available courses below</a>
         </div>
       <?php else: ?>
         <div class="table-responsive">
@@ -71,6 +71,81 @@
       <?php endif; ?>
     </div>
   </div>
+
+  <!-- Pending Enrollments Section -->
+  <?php if (!empty($pendingCourses ?? [])): ?>
+    <div class="card shadow-sm mb-4 border-warning">
+      <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="fas fa-clock"></i> Pending Enrollment Requests (<?= count($pendingCourses) ?>)</h5>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle">
+            <thead>
+              <tr>
+                <th>Course Title</th>
+                <th>Instructor</th>
+                <th>Request Date</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($pendingCourses as $c): ?>
+                <tr>
+                  <td><strong><?= esc($c['title']) ?></strong></td>
+                  <td><?= esc($c['instructor_name'] ?? 'N/A') ?></td>
+                  <td><?= $c['enrollment_date'] ? date('M d, Y', strtotime($c['enrollment_date'])) : 'N/A' ?></td>
+                  <td><span class="badge bg-warning text-dark">Pending Approval</span></td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+        <div class="alert alert-info mt-3 mb-0">
+          <i class="fas fa-info-circle"></i> Your enrollment requests are waiting for instructor approval.
+        </div>
+      </div>
+    </div>
+  <?php endif; ?>
+
+  <!-- Rejected Enrollments Section -->
+  <?php if (!empty($rejectedCourses ?? [])): ?>
+    <div class="card shadow-sm mb-4 border-danger">
+      <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="fas fa-times-circle"></i> Rejected Enrollment Requests (<?= count($rejectedCourses) ?>)</h5>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle">
+            <thead>
+              <tr>
+                <th>Course Title</th>
+                <th>Instructor</th>
+                <th>Rejected Date</th>
+                <th>Reason</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($rejectedCourses as $c): ?>
+                <tr>
+                  <td><strong><?= esc($c['title']) ?></strong></td>
+                  <td><?= esc($c['instructor_name'] ?? 'N/A') ?></td>
+                  <td><?= $c['rejected_at'] ? date('M d, Y', strtotime($c['rejected_at'])) : 'N/A' ?></td>
+                  <td>
+                    <?php if ($c['rejection_reason']): ?>
+                      <span class="text-danger"><?= esc($c['rejection_reason']) ?></span>
+                    <?php else: ?>
+                      <span class="text-muted">No reason provided</span>
+                    <?php endif; ?>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  <?php endif; ?>
 
   <!-- Available Courses Section -->
   <div class="card shadow-sm mb-4" id="availableCourses">
@@ -140,7 +215,7 @@
                     </small>
                   </td>
                   <td>
-                    <small><?= !empty($c['instructor_id']) ? esc($c['instructor_id']) : 'N/A' ?></small>
+                    <small><?= esc($c['instructor_name'] ?? 'Unassigned') ?></small>
                   </td>
                   <td class="text-end">
                     <button class="btn btn-success btn-sm enroll-btn" data-course-id="<?= (int)$c['id'] ?>" data-course-title="<?= esc($c['title']) ?>">
@@ -363,7 +438,7 @@ $(document).ready(function() {
               .addClass('alert-success')
               .html('<i class="fas fa-check-circle"></i> ' + response.message);
 
-            button.prop('disabled', true).html('<i class="fas fa-check"></i> Enrolled');
+            button.prop('disabled', true).html('<i class="fas fa-clock"></i> Pending');
             
             $('html, body').animate({scrollTop: alertBox.offset().top - 100}, 300);
           } else {
