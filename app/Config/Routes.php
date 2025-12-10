@@ -41,6 +41,14 @@ $routes->group('admin', function($routes) {
     $routes->post('manage-users/delete/(:num)', 'ManageUser::delete/$1');
     $routes->get('manage-users/delete/(:num)', 'ManageUser::delete/$1');
     $routes->get('manage-users/show/(:num)', 'ManageUser::show/$1');
+
+    // Course Management
+    $routes->get('manage-courses', 'ManageCourse::index');
+    $routes->match(['get', 'post'], 'manage-courses/create', 'ManageCourse::create');
+    $routes->match(['get', 'post'], 'manage-courses/edit/(:num)', 'ManageCourse::edit/$1');
+    $routes->post('manage-courses/delete/(:num)', 'ManageCourse::delete/$1');
+    $routes->get('manage-courses/delete/(:num)', 'ManageCourse::delete/$1');
+    $routes->get('manage-courses/show/(:num)', 'ManageCourse::show/$1');
     
     // Soft Delete & Restore Routes
     $routes->post('manage-users/restore/(:num)', 'ManageUser::restore/$1');

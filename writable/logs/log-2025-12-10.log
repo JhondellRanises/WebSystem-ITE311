@@ -41,3 +41,1333 @@ in SYSTEMPATH\CLI\BaseCommand.php on line 133.
  6 SYSTEMPATH\Boot.php(388): CodeIgniter\CLI\Console->run()
  7 SYSTEMPATH\Boot.php(133): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
  8 FCPATH\spark(40): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+ERROR - 2025-12-10 15:42:00 --> mysqli_sql_exception: Unknown column 'courses.cn' in 'field list' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+#10 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-12-10 15:42:00 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.cn' in 'field list'
+[Method: GET, Route: admin/manage-courses]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:42:00 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.cn' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:42:00 --> [Caused by] mysqli_sql_exception: Unknown column 'courses.cn' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-10 15:42:02 --> mysqli_sql_exception: Unknown column 'courses.cn' in 'field list' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+#10 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-12-10 15:42:02 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.cn' in 'field list'
+[Method: GET, Route: admin/manage-courses]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:42:02 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.cn' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:42:02 --> [Caused by] mysqli_sql_exception: Unknown column 'courses.cn' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-10 15:42:05 --> mysqli_sql_exception: Unknown column 'courses.cn' in 'field list' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+#10 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-12-10 15:42:05 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.cn' in 'field list'
+[Method: GET, Route: admin/manage-courses]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:42:05 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.cn' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:42:05 --> [Caused by] mysqli_sql_exception: Unknown column 'courses.cn' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-10 15:42:07 --> mysqli_sql_exception: Unknown column 'courses.cn' in 'field list' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+#10 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-12-10 15:42:07 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.cn' in 'field list'
+[Method: GET, Route: admin/manage-courses]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:42:07 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.cn' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:42:07 --> [Caused by] mysqli_sql_exception: Unknown column 'courses.cn' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`section`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-10 15:46:20 --> mysqli_sql_exception: Unknown column 'courses.semester' in 'field list' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+#10 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-12-10 15:46:20 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.semester' in 'field list'
+[Method: GET, Route: admin/manage-courses]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:46:20 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.semester' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:46:20 --> [Caused by] mysqli_sql_exception: Unknown column 'courses.semester' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-10 15:46:21 --> mysqli_sql_exception: Unknown column 'courses.semester' in 'field list' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+#10 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-12-10 15:46:21 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.semester' in 'field list'
+[Method: GET, Route: admin/manage-courses]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:46:21 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.semester' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:46:21 --> [Caused by] mysqli_sql_exception: Unknown column 'courses.semester' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-10 15:46:23 --> mysqli_sql_exception: Unknown column 'courses.semester' in 'field list' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+#10 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-12-10 15:46:23 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.semester' in 'field list'
+[Method: GET, Route: admin/manage-courses]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:46:23 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.semester' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:46:23 --> [Caused by] mysqli_sql_exception: Unknown column 'courses.semester' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-10 15:46:31 --> mysqli_sql_exception: Unknown column 'courses.semester' in 'field list' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+#10 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-12-10 15:46:31 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.semester' in 'field list'
+[Method: GET, Route: admin/manage-courses]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:46:31 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.semester' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:46:31 --> [Caused by] mysqli_sql_exception: Unknown column 'courses.semester' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-10 15:46:45 --> mysqli_sql_exception: Unknown column 'courses.semester' in 'field list' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+#10 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-12-10 15:46:45 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.semester' in 'field list'
+[Method: GET, Route: admin/manage-courses]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:46:45 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.semester' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:46:45 --> [Caused by] mysqli_sql_exception: Unknown column 'courses.semester' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-10 15:46:48 --> mysqli_sql_exception: Unknown column 'courses.semester' in 'field list' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+#10 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-12-10 15:46:48 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.semester' in 'field list'
+[Method: GET, Route: admin/manage-courses]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:46:48 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.semester' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:46:48 --> [Caused by] mysqli_sql_exception: Unknown column 'courses.semester' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-10 15:46:51 --> mysqli_sql_exception: Unknown column 'courses.semester' in 'field list' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+#10 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-12-10 15:46:51 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.semester' in 'field list'
+[Method: GET, Route: admin/manage-courses]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:46:51 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.semester' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:46:51 --> [Caused by] mysqli_sql_exception: Unknown column 'courses.semester' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-10 15:46:54 --> mysqli_sql_exception: Unknown column 'courses.semester' in 'field list' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+#10 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-12-10 15:46:54 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.semester' in 'field list'
+[Method: GET, Route: admin/manage-courses]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:46:54 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.semester' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:46:54 --> [Caused by] mysqli_sql_exception: Unknown column 'courses.semester' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-10 15:47:10 --> mysqli_sql_exception: Unknown column 'courses.semester' in 'field list' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+#10 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-12-10 15:47:10 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.semester' in 'field list'
+[Method: GET, Route: admin/manage-courses]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:47:10 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.semester' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:47:10 --> [Caused by] mysqli_sql_exception: Unknown column 'courses.semester' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-10 15:47:32 --> mysqli_sql_exception: Unknown column 'courses.semester' in 'field list' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+#6 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+#7 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+#10 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-12-10 15:47:32 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.semester' in 'field list'
+[Method: GET, Route: admin/manage-courses]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 4 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 5 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:47:32 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'courses.semester' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 6 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 7 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 15:47:32 --> [Caused by] mysqli_sql_exception: Unknown column 'courses.semester' in 'field list'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `courses`.`id`, `courses`.`title`, `courses`.`description`, `courses`.`created_at`, `courses`.`cn`, `courses`.`subject_code`, `courses`.`term`, `courses`.`semester`, `courses`.`units`, `courses`.`schedule`, `u`.`name` as `instructor_name`, `u`.`role` as `instructor_role`, (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as enroll_count, (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count
+FROM `courses`
+LEFT JOIN `users` `u` ON `u`.`id` = `courses`.`instructor_id`
+ORDER BY `courses`.`created_at` DESC
+ LIMIT 10', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(10, 0)
+ 7 SYSTEMPATH\BaseModel.php(1281): CodeIgniter\BaseModel->findAll(10, 0)
+ 8 APPPATH\Controllers\ManageCourse.php(48): CodeIgniter\BaseModel->paginate(10, 'courses')
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-10 16:15:57 --> ErrorException: Undefined variable $recommendedSchedules
+[Method: GET, Route: admin/manage-courses]
+in APPPATH\Views\admin\ManageCourse.php on line 295.
+ 1 APPPATH\Views\admin\ManageCourse.php(295): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $recommendedSchedules', 'C:\\xampp\\htdocs\\ITE311-RANISES\\app\\Views\\admin\\ManageCourse.php', 295)
+ 2 SYSTEMPATH\View\View.php(226): include('C:\\xampp\\htdocs\\ITE311-RANISES\\app\\Views\\admin\\ManageCourse.php')
+ 3 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('admin/ManageCourse', [], true)
+ 5 APPPATH\Controllers\ManageCourse.php(86): view('admin/ManageCourse', [...])
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageCourse->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageCourse))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

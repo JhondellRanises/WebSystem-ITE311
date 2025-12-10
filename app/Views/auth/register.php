@@ -115,6 +115,20 @@
     emailInput.addEventListener('input', handler);
     emailInput.addEventListener('paste', () => setTimeout(handler, 10));
   }
+
+  if (emailInput) {
+    const emailPattern = /^[a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)*@gmail\.com$/;
+    emailInput.addEventListener('input', function() {
+      const value = this.value.trim();
+      if (value && !emailPattern.test(value)) {
+        this.classList.add('is-invalid');
+        if (emailError) emailError.style.display = 'block';
+      } else {
+        this.classList.remove('is-invalid');
+        if (emailError) emailError.style.display = 'none';
+      }
+    });
+  }
 })();
 </script>
 
