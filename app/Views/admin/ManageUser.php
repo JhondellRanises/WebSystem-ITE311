@@ -1,7 +1,11 @@
 <?= $this->extend('templates/header') ?>
 <?= $this->section('content') ?>
 
-<?php $errors = session()->getFlashdata('errors') ?? []; ?>
+<?php
+  $errors = session()->getFlashdata('errors') ?? [];
+  $nameError = $errors['name'] ?? null;
+  $emailError = $errors['email'] ?? null;
+?>
 
 <div class="card shadow-sm mt-3">
   <div class="card-body">
@@ -114,7 +118,7 @@
       <form action="<?= base_url('admin/manage-users/create') ?>" method="post">
         <?= csrf_field() ?>
         <div class="modal-body">
-          <?php $nameError = $errors['name'] ?? null; if ($nameError): ?>
+          <?php if ($nameError): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
               <?= esc($nameError) ?>
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -133,7 +137,22 @@
             </div>
             <div class="col-md-6">
               <label class="form-label" for="c_email">Email</label>
-              <input type="email" class="form-control" id="c_email" name="email" value="<?= esc(old('email')) ?>" required>
+              <input
+                type="email"
+                class="form-control <?= $emailError ? 'is-invalid' : '' ?>"
+                id="c_email"
+                name="email"
+                value="<?= esc(old('email')) ?>"
+                pattern="^[a-zA-Z0-9]+(?:\.?[a-zA-Z0-9]+)*@gmail\.com$"
+                title="Use a Gmail address with letters, numbers, and periods only."
+                required
+              >
+              <div class="invalid-feedback" id="c_email_error" style="display: none;">
+                Please use a valid Gmail address without special characters (letters, numbers, and periods only).
+              </div>
+              <?php if ($emailError): ?>
+                <div class="invalid-feedback d-block"><?= esc($emailError) ?></div>
+              <?php endif; ?>
             </div>
             <div class="col-md-6">
               <label class="form-label" for="c_password">Password</label>
@@ -173,7 +192,7 @@
       <form id="editForm" action="#" method="post">
         <?= csrf_field() ?>
         <div class="modal-body">
-          <?php $nameError = $errors['name'] ?? null; if ($nameError): ?>
+          <?php if ($nameError): ?>
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
               <?= esc($nameError) ?>
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -192,7 +211,21 @@
             </div>
             <div class="col-md-6">
               <label class="form-label" for="e_email">Email</label>
-              <input type="email" class="form-control" id="e_email" name="email" required>
+              <input
+                type="email"
+                class="form-control <?= $emailError ? 'is-invalid' : '' ?>"
+                id="e_email"
+                name="email"
+                pattern="^[a-zA-Z0-9]+(?:\.?[a-zA-Z0-9]+)*@gmail\.com$"
+                title="Use a Gmail address with letters, numbers, and periods only."
+                required
+              >
+              <div class="invalid-feedback" id="e_email_error" style="display: none;">
+                Please use a valid Gmail address without special characters (letters, numbers, and periods only).
+              </div>
+              <?php if ($emailError): ?>
+                <div class="invalid-feedback d-block"><?= esc($emailError) ?></div>
+              <?php endif; ?>
             </div>
             <div class="col-md-6">
               <label class="form-label" for="e_role">Role</label>
@@ -283,6 +316,26 @@
     });
   }
 
+  // Real-time Gmail validation function
+  function validateGmailField(inputElement, errorElement) {
+    if (!inputElement) return;
+
+    if (inputElement.dataset.validated === 'true') return;
+    inputElement.dataset.validated = 'true';
+
+    const gmailPattern = /^[a-zA-Z0-9]+(?:\.?[a-zA-Z0-9]+)*@gmail\.com$/;
+
+    function runValidation(target){
+      const value = target.value;
+      const isValid = !value || gmailPattern.test(value);
+      target.classList.toggle('is-invalid', !isValid);
+      if (errorElement) errorElement.style.display = isValid ? 'none' : 'block';
+    }
+
+    inputElement.addEventListener('input', function() { runValidation(this); });
+    inputElement.addEventListener('paste', function() { setTimeout(() => runValidation(this), 10); });
+  }
+
   // Bootstrap 5 modal instance (no jQuery plugin)
   let editModalInstance = null;
   function getEditModal(){
@@ -320,6 +373,7 @@
             
             // Setup real-time validation for edit modal
             validateNameField(eNameInput, eNameError);
+            validateGmailField(document.getElementById('e_email'), document.getElementById('e_email_error'));
           }
           
           if (data.csrf) updateCsrf(data.csrf);
@@ -342,8 +396,13 @@
   // Apply validation to Create User modal
   const cNameInput = document.getElementById('c_name');
   const cNameError = document.getElementById('c_name_error');
+  const cEmailInput = document.getElementById('c_email');
+  const cEmailError = document.getElementById('c_email_error');
   if (cNameInput) {
     validateNameField(cNameInput, cNameError);
+  }
+  if (cEmailInput) {
+    validateGmailField(cEmailInput, cEmailError);
   }
 
   // Auto-open modals based on context (e.g., redirects after validation errors)

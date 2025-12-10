@@ -32,7 +32,19 @@
 
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" name="email" class="form-control" id="email" value="<?= old('email') ?>" required>
+                    <input
+                        type="email"
+                        name="email"
+                        class="form-control"
+                        id="email"
+                        value="<?= old('email') ?>"
+                        pattern="^[a-zA-Z0-9]+(?:\.?[a-zA-Z0-9]+)*@gmail\.com$"
+                        title="Use a Gmail address with letters, numbers, and periods only."
+                        required
+                    >
+                    <div class="invalid-feedback" id="email_error" style="display: none;">
+                        Please use a valid Gmail address without special characters (letters, numbers, and periods only).
+                    </div>
                 </div>
 
                 <div class="mb-3">
@@ -68,35 +80,40 @@
 
 <script>
 (function(){
-  // Real-time name validation for Registration form
+  // Real-time validation for Registration form
   const nameInput = document.getElementById('name');
   const nameError = document.getElementById('name_error');
-  
+  const emailInput = document.getElementById('email');
+  const emailError = document.getElementById('email_error');
+
+  function validateName(value){
+    const namePattern = /^[a-zA-Z0-9\s\-\'\.]*$/;
+    return !value || namePattern.test(value);
+  }
+
+  function validateGmail(value){
+    const gmailPattern = /^[a-zA-Z0-9]+(?:\.?[a-zA-Z0-9]+)*@gmail\.com$/;
+    return !value || gmailPattern.test(value);
+  }
+
   if (nameInput) {
-    nameInput.addEventListener('input', function() {
-      const value = this.value;
-      const namePattern = /^[a-zA-Z0-9\s\-\'\.]*$/;
-      
-      if (value && !namePattern.test(value)) {
-        this.classList.add('is-invalid');
-        if (nameError) nameError.style.display = 'block';
-      } else {
-        this.classList.remove('is-invalid');
-        if (nameError) nameError.style.display = 'none';
-      }
-    });
-    
-    // Also validate on paste
-    nameInput.addEventListener('paste', function(e) {
-      setTimeout(() => {
-        const value = this.value;
-        const namePattern = /^[a-zA-Z0-9\s\-\'\.]*$/;
-        if (value && !namePattern.test(value)) {
-          this.classList.add('is-invalid');
-          if (nameError) nameError.style.display = 'block';
-        }
-      }, 10);
-    });
+    const handler = function() {
+      const valid = validateName(this.value);
+      this.classList.toggle('is-invalid', !valid);
+      if (nameError) nameError.style.display = valid ? 'none' : 'block';
+    };
+    nameInput.addEventListener('input', handler);
+    nameInput.addEventListener('paste', () => setTimeout(handler, 10));
+  }
+
+  if (emailInput) {
+    const handler = function() {
+      const valid = validateGmail(this.value);
+      this.classList.toggle('is-invalid', !valid);
+      if (emailError) emailError.style.display = valid ? 'none' : 'block';
+    };
+    emailInput.addEventListener('input', handler);
+    emailInput.addEventListener('paste', () => setTimeout(handler, 10));
   }
 })();
 </script>
