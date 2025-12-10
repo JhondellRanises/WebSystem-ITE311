@@ -62,6 +62,15 @@ class UserModel extends Model
     }
 
     // -----------------------------
+    // Check if a user is an admin
+    // -----------------------------
+    public function isAdmin(int $userId): bool
+    {
+        $user = $this->find($userId);
+        return $user && $user['role'] === 'admin';
+    }
+
+    // -----------------------------
     // Get dashboard statistics
     // -----------------------------
     public function getDashboardStats(string $role, int $userId): array

@@ -20,6 +20,23 @@ class ManageUser extends BaseController
     }
 
     /**
+     * Check if the given user ID is the currently logged-in user
+     */
+    private function isCurrentUser($userId): bool
+    {
+        return (int)$userId === (int)session()->get('user_id');
+    }
+
+    /**
+     * Check if the given user ID belongs to an admin account
+     */
+    private function isAdminUser($userId): bool
+    {
+        $model = new UserModel();
+        return $model->isAdmin($userId);
+    }
+
+    /**
      * Display a listing of all users (including deleted)
      * Deleted users will show a Restore button instead of Delete
      */
@@ -116,6 +133,11 @@ class ManageUser extends BaseController
     {
         if ($resp = $this->requireAdmin()) return $resp;
 
+        // RULE 2: Prevent logged-in admin from editing their own account
+        if ($this->isCurrentUser($id)) {
+            return redirect()->to('/admin/manage-users')->with('error', 'You cannot edit your own account.');
+        }
+
         $model = new UserModel();
         // Find user including soft deleted
         $user = $model->withDeleted()->find($id);
@@ -208,8 +230,13 @@ class ManageUser extends BaseController
         if ($resp = $this->requireAdmin()) return $resp;
 
         // Prevent self-deletion
-        if ((int)$id === (int)session()->get('user_id')) {
+        if ($this->isCurrentUser($id)) {
             return redirect()->back()->with('error', 'You cannot delete your own account.');
+        }
+
+        // RULE 1: Prevent deleting admin accounts
+        if ($this->isAdminUser($id)) {
+            return redirect()->back()->with('error', 'Admin accounts cannot be deleted.');
         }
 
         $model = new UserModel();
@@ -254,14 +281,21 @@ class ManageUser extends BaseController
         if (is_array($user)) {
             $userName = $user['name'] ?? 'User';
             $isDeleted = !empty($user['deleted_at']);
+            $userRole = $user['role'] ?? '';
         } else {
             $userName = $user->name ?? 'User';
             $isDeleted = !empty($user->deleted_at);
+            $userRole = $user->role ?? '';
         }
 
         // Check if user is actually deleted
         if (!$isDeleted) {
             return redirect()->to('/admin/manage-users')->with('error', 'User is not deleted.');
+        }
+
+        // RULE 1: Prevent restoring admin accounts (extra safeguard)
+        if ($userRole === 'admin') {
+            return redirect()->to('/admin/manage-users')->with('error', 'Admin accounts cannot be restored.');
         }
 
         // Restore using model's restore method

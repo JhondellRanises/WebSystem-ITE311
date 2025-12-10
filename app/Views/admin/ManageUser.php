@@ -33,12 +33,18 @@
           <tbody>
             <?php $i = 1; foreach ($users as $u): 
               $isDeleted = !empty($u['deleted_at']);
+              $isAdmin = $u['role'] === 'admin';
+              $isCurrentUser = (int)$u['id'] === (int)session()->get('user_id');
             ?>
               <tr class="<?= $isDeleted ? 'table-secondary' : '' ?>">
                 <td><?= $i++ ?></td>
                 <td><?= esc($u['name']) ?></td>
                 <td><?= esc($u['email']) ?></td>
-                <td><span class="badge bg-secondary text-uppercase"><?= esc($u['role']) ?></span></td>
+                <td>
+                  <span class="badge <?= $isAdmin ? 'bg-danger' : 'bg-secondary' ?> text-uppercase">
+                    <?= esc($u['role']) ?>
+                  </span>
+                </td>
                 <td>
                   <?php if ($isDeleted): ?>
                     <span class="badge bg-danger">Deleted</span>
@@ -50,19 +56,36 @@
                 <td class="text-end">
                   <?php if ($isDeleted): ?>
                     <!-- Restore button for deleted users -->
-                    <form action="<?= base_url('admin/manage-users/restore/' . $u['id']) ?>" method="post" class="d-inline">
-                      <?= csrf_field() ?>
-                      <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Restore this user? User will be reactivated.')">
-                        <i class="bi bi-arrow-counterclockwise"></i> Restore
-                      </button>
-                    </form>
+                    <?php if (!$isAdmin): ?>
+                      <form action="<?= base_url('admin/manage-users/restore/' . $u['id']) ?>" method="post" class="d-inline">
+                        <?= csrf_field() ?>
+                        <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Restore this user? User will be reactivated.')">
+                          <i class="bi bi-arrow-counterclockwise"></i> Restore
+                        </button>
+                      </form>
+                    <?php else: ?>
+                      <span class="text-muted small">Admin (Cannot restore)</span>
+                    <?php endif; ?>
                   <?php else: ?>
                     <!-- Edit and Delete buttons for active users -->
-                    <button class="btn btn-sm btn-outline-primary js-edit" data-user-id="<?= (int)$u['id'] ?>">Edit</button>
-                    <form action="<?= base_url('admin/manage-users/delete/' . $u['id']) ?>" method="post" class="d-inline">
-                      <?= csrf_field() ?>
-                      <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this user? You can restore it later.')">Delete</button>
-                    </form>
+                    <?php if (!$isCurrentUser): ?>
+                      <!-- Show Edit button for all users except current user -->
+                      <button class="btn btn-sm btn-outline-primary js-edit" data-user-id="<?= (int)$u['id'] ?>">Edit</button>
+                    <?php endif; ?>
+                    
+                    <?php if (!$isAdmin && !$isCurrentUser): ?>
+                      <!-- Show Delete button only for non-admin users and not current user -->
+                      <form action="<?= base_url('admin/manage-users/delete/' . $u['id']) ?>" method="post" class="d-inline">
+                        <?= csrf_field() ?>
+                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this user? You can restore it later.')">Delete</button>
+                      </form>
+                    <?php elseif ($isAdmin): ?>
+                      <!-- Admin user: show protected message (cannot delete) -->
+                      <span class="text-muted small">Admin (Protected)</span>
+                    <?php elseif ($isCurrentUser): ?>
+                      <!-- Current user: show disabled message -->
+                      <span class="text-muted small">(Your account)</span>
+                    <?php endif; ?>
                   <?php endif; ?>
                 </td>
               </tr>
