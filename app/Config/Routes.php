@@ -88,9 +88,12 @@ $routes->match(['get', 'post'], 'courses/search', 'Course::search');
 // 📦 Materials: upload, delete, download, and list
 $routes->get('/admin/course/(:num)/upload', 'Materials::upload/$1');
 $routes->post('/admin/course/(:num)/upload', 'Materials::upload/$1');
-$routes->get('/admin/upload', 'Materials::upload');
-$routes->get('/teacher/upload', 'Materials::upload');
+$routes->match(['get', 'post'], '/admin/upload', 'Materials::upload');
+$routes->match(['get', 'post'], '/teacher/upload', 'Materials::upload');
+$routes->match(['get', 'post'], '/teacher/course/(:num)/upload', 'Materials::upload/$1');
 $routes->get('/materials/delete/(:num)', 'Materials::delete/$1');
+$routes->get('/materials/restore/(:num)', 'Materials::restore/$1');
+$routes->get('/materials/permanent-delete/(:num)', 'Materials::permanentDelete/$1');
 $routes->get('/materials/download/(:num)', 'Materials::download/$1');
 $routes->get('/student/materials', 'Materials::student');
 $routes->get('/student/courses', 'Materials::studentCourses');

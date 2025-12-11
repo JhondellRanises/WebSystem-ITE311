@@ -24,13 +24,48 @@ class Materials extends BaseController
             $courses = $builder->orderBy('title','ASC')->get()->getResultArray();
 
             // Build aggregated materials list (admin: all; teacher: only own courses)
-            $builderAll = $db->table('materials m')
-                ->select('m.id, m.file_name, m.created_at, m.course_id, c.title as course_title')
-                ->join('courses c', 'c.id = m.course_id');
-            if (session()->get('user_role') === 'teacher') {
-                $builderAll->where('c.instructor_id', session()->get('user_id'));
+            $allMaterials = [];
+            try {
+                $builderAll = $db->table('materials m')
+                    ->select('m.id, m.file_name, m.created_at, m.course_id, c.title as course_title')
+                    ->join('courses c', 'c.id = m.course_id')
+                    ->where('m.deleted_at', null);
+                if (session()->get('user_role') === 'teacher') {
+                    $builderAll->where('c.instructor_id', session()->get('user_id'));
+                }
+                $allMaterials = $builderAll->orderBy('m.created_at','DESC')->get()->getResultArray();
+            } catch (\Exception $e) {
+                // If join fails, try without course title
+                try {
+                    $builderAll = $db->table('materials')
+                        ->where('deleted_at', null);
+                    if (session()->get('user_role') === 'teacher') {
+                        $builderAll->where('instructor_id', session()->get('user_id'));
+                    }
+                    $allMaterials = $builderAll->orderBy('created_at','DESC')->get()->getResultArray();
+                } catch (\Exception $e2) {
+                    $allMaterials = [];
+                }
             }
-            $allMaterials = $builderAll->orderBy('m.created_at','DESC')->get()->getResultArray();
+
+            // Get deleted materials
+            $deletedMaterials = [];
+            try {
+                $materialModel = new MaterialModel();
+                $deletedMaterials = $materialModel->getDeletedMaterials();
+                if (session()->get('user_role') === 'teacher') {
+                    $deletedMaterials = array_filter($deletedMaterials, function($m) use ($db) {
+                        try {
+                            $course = $db->table('courses')->where('id', $m['course_id'])->get()->getRowArray();
+                            return $course && $course['instructor_id'] == session()->get('user_id');
+                        } catch (\Exception $e) {
+                            return false;
+                        }
+                    });
+                }
+            } catch (\Exception $e) {
+                $deletedMaterials = [];
+            }
 
             $viewPath = (session()->get('user_role') === 'admin') ? 'admin/upload' : 'teacher/upload';
             return view($viewPath, [
@@ -39,6 +74,7 @@ class Materials extends BaseController
                 'materials' => [],
                 'courses' => $courses,
                 'all_materials' => $allMaterials,
+                'deleted_materials' => $deletedMaterials,
             ]);
         }
 
@@ -50,13 +86,48 @@ class Materials extends BaseController
         // Build aggregated materials list (admin: all, teacher: own courses)
         $role = session()->get('user_role');
         $userId = session()->get('user_id');
-        $builderAll = $db->table('materials m')
-            ->select('m.id, m.file_name, m.created_at, m.course_id, c.title as course_title')
-            ->join('courses c', 'c.id = m.course_id');
-        if ($role === 'teacher') {
-            $builderAll->where('c.instructor_id', $userId);
+        $allMaterials = [];
+        try {
+            $builderAll = $db->table('materials m')
+                ->select('m.id, m.file_name, m.created_at, m.course_id, c.title as course_title')
+                ->join('courses c', 'c.id = m.course_id')
+                ->where('m.deleted_at', null);
+            if ($role === 'teacher') {
+                $builderAll->where('c.instructor_id', $userId);
+            }
+            $allMaterials = $builderAll->orderBy('m.created_at','DESC')->get()->getResultArray();
+        } catch (\Exception $e) {
+            // If join fails, try without course title
+            try {
+                $builderAll = $db->table('materials')
+                    ->where('deleted_at', null);
+                if ($role === 'teacher') {
+                    $builderAll->where('instructor_id', $userId);
+                }
+                $allMaterials = $builderAll->orderBy('created_at','DESC')->get()->getResultArray();
+            } catch (\Exception $e2) {
+                $allMaterials = [];
+            }
         }
-        $allMaterials = $builderAll->orderBy('m.created_at','DESC')->get()->getResultArray();
+
+        // Get deleted materials
+        $deletedMaterials = [];
+        try {
+            $materialModel = new MaterialModel();
+            $deletedMaterials = $materialModel->getDeletedMaterials();
+            if ($role === 'teacher') {
+                $deletedMaterials = array_filter($deletedMaterials, function($m) use ($db, $userId) {
+                    try {
+                        $course = $db->table('courses')->where('id', $m['course_id'])->get()->getRowArray();
+                        return $course && $course['instructor_id'] == $userId;
+                    } catch (\Exception $e) {
+                        return false;
+                    }
+                });
+            }
+        } catch (\Exception $e) {
+            $deletedMaterials = [];
+        }
 
         if ($this->request->getMethod() === 'GET') {
             // Also load other courses for quick navigation
@@ -72,6 +143,7 @@ class Materials extends BaseController
                 'materials' => $materials,
                 'courses' => $courses,
                 'all_materials' => $allMaterials,
+                'deleted_materials' => $deletedMaterials,
             ]);
         }
 
@@ -84,7 +156,7 @@ class Materials extends BaseController
                 ? 'material_file' : 'material';
 
             $rules = [
-                $fileField => 'uploaded['.$fileField.']|max_size['.$fileField.',10240]|ext_in['.$fileField.',pdf,ppt,pptx,doc,docx,xls,xlsx,zip,rar,txt,jpg,jpeg,png]'
+                $fileField => 'uploaded['.$fileField.']|max_size['.$fileField.',10240]|ext_in['.$fileField.',pdf,ppt,pptx,doc,docx]'
             ];
 
             if (!$this->validate($rules)) {
@@ -126,19 +198,85 @@ class Materials extends BaseController
             return redirect()->to('/login')->with('error', 'Access denied.');
         }
 
-        $materialModel = new MaterialModel();
-        $material = $materialModel->find($material_id);
+        $db = \Config\Database::connect();
+        $material = $db->table('materials')->where('id', $material_id)->get()->getRowArray();
         if (!$material) {
             return redirect()->back()->with('error', 'Material not found.');
         }
 
+        // Check if deleted_at column exists
+        try {
+            $columns = $db->getFieldData('materials');
+            $hasDeletedAt = false;
+            foreach ($columns as $column) {
+                if ($column->name === 'deleted_at') {
+                    $hasDeletedAt = true;
+                    break;
+                }
+            }
+            
+            if ($hasDeletedAt) {
+                // Soft delete - set deleted_at timestamp
+                $db->table('materials')->where('id', $material_id)->update(['deleted_at' => date('Y-m-d H:i:s')]);
+                return redirect()->back()->with('success', 'Material deleted. You can restore it from the Trash section.');
+            } else {
+                // Hard delete if column doesn't exist
+                $fullPath = WRITEPATH . $material['file_path'];
+                if (is_file($fullPath)) {
+                    @unlink($fullPath);
+                }
+                $db->table('materials')->where('id', $material_id)->delete();
+                return redirect()->back()->with('success', 'Material deleted successfully.');
+            }
+        } catch (\Exception $e) {
+            // If error checking columns, do hard delete
+            $fullPath = WRITEPATH . $material['file_path'];
+            if (is_file($fullPath)) {
+                @unlink($fullPath);
+            }
+            $db->table('materials')->where('id', $material_id)->delete();
+            return redirect()->back()->with('success', 'Material deleted successfully.');
+        }
+    }
+
+    public function restore($material_id)
+    {
+        if (!session()->get('logged_in') || !in_array(session()->get('user_role'), ['admin', 'teacher'])) {
+            return redirect()->to('/login')->with('error', 'Access denied.');
+        }
+
+        $db = \Config\Database::connect();
+        $material = $db->table('materials')->where('id', $material_id)->get()->getRowArray();
+        if (!$material) {
+            return redirect()->back()->with('error', 'Material not found.');
+        }
+
+        // Restore the material
+        $db->table('materials')->where('id', $material_id)->update(['deleted_at' => null]);
+        return redirect()->back()->with('success', 'Material restored successfully.');
+    }
+
+    public function permanentDelete($material_id)
+    {
+        if (!session()->get('logged_in') || !in_array(session()->get('user_role'), ['admin', 'teacher'])) {
+            return redirect()->to('/login')->with('error', 'Access denied.');
+        }
+
+        $db = \Config\Database::connect();
+        $material = $db->table('materials')->where('id', $material_id)->get()->getRowArray();
+        if (!$material) {
+            return redirect()->back()->with('error', 'Material not found.');
+        }
+
+        // Permanently delete the file
         $fullPath = WRITEPATH . $material['file_path'];
         if (is_file($fullPath)) {
             @unlink($fullPath);
         }
 
-        $materialModel->delete($material_id);
-        return redirect()->back()->with('success', 'Material deleted.');
+        // Hard delete from database
+        $db->table('materials')->where('id', $material_id)->delete();
+        return redirect()->back()->with('success', 'Material permanently deleted.');
     }
 
     public function download($material_id)

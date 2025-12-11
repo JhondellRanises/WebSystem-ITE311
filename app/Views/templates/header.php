@@ -100,14 +100,8 @@
   $path = strtolower(trim($uri->getPath(), '/'));
   // Works even if app is deployed under a subfolder like ITE311-RANISES/...
   $hideGlobalFlash = false;
-  if (strpos($path, 'admin/course/') !== false && substr($path, -6) === 'upload') {
-      $hideGlobalFlash = true;
-  }
-  // Hide on upload chooser pages to avoid duplicate messages
-  if ($path === 'admin/upload' || $path === 'teacher/upload') {
-      $hideGlobalFlash = true;
-  }
-  if (strpos($path, 'materials/upload') !== false) {
+  // Hide on all upload pages to avoid duplicate messages
+  if (strpos($path, '/upload') !== false) {
       $hideGlobalFlash = true;
   }
   // Avoid double alerts on announcements pages (broad match)

@@ -1,6 +1,13 @@
 <?= $this->extend('templates/header') ?>
 <?= $this->section('content') ?>
 
+<?php
+// Set default values for variables that might not be set
+$deleted_materials = $deleted_materials ?? [];
+$all_materials = $all_materials ?? [];
+$courses = $courses ?? [];
+?>
+
 <div class="container mt-5">
   <div class="card shadow-sm">
     <div class="card-body">
@@ -54,8 +61,8 @@
           <?= csrf_field() ?>
           <div class="mb-2">
             <label for="material_file" class="form-label">Select Material File</label>
-            <input type="file" name="material_file" id="material_file" class="form-control" required>
-            <div class="form-text">Allowed: PDF, DOC, PPT, JPG, PNG. Max 10MB.</div>
+            <input type="file" name="material_file" id="material_file" class="form-control" accept=".pdf,.ppt,.pptx,.doc,.docx" required>
+            <div class="form-text">Allowed: PDF, PPT, PPTX, DOC, DOCX. Max 10MB.</div>
           </div>
           <div class="d-flex gap-2">
             <button type="submit" class="btn btn-primary" <?= empty($course_id) ? 'disabled' : '' ?>>Upload File</button>
@@ -84,6 +91,29 @@
       <?php else: ?>
         <div class="alert alert-light border mt-2 mb-0">No uploaded materials found across all courses.</div>
       <?php endif; ?>
+
+      <hr class="my-4">
+
+      <h4 class="mt-2 mb-2">Trash (Deleted Materials)</h4>
+      <?php if (!empty($deleted_materials)): ?>
+        <div class="list-group">
+          <?php foreach ($deleted_materials as $row): ?>
+            <div class="list-group-item d-flex justify-content-between align-items-center bg-light">
+              <div class="d-flex align-items-center gap-2">
+                <span class="fw-semibold text-muted"><?= esc($row['file_name']) ?></span>
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <small class="text-muted me-2">[<?= (int)$row['course_id'] ?>] <?= esc($row['course_title']) ?> • Deleted: <?= esc($row['deleted_at']) ?></small>
+                <a href="<?= base_url('materials/restore/' . $row['id']) ?>" class="btn btn-sm btn-warning">Restore</a>
+                <a href="<?= base_url('materials/permanent-delete/' . $row['id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Permanently delete this file? This cannot be undone.')">Delete Permanently</a>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+      <?php else: ?>
+        <div class="alert alert-light border mt-2 mb-0">No deleted materials in trash.</div>
+      <?php endif; ?>
+
     </div>
   </div>
 </div>

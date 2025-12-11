@@ -35,6 +35,11 @@ class CreateMaterialsTable extends Migration
                 'type' => 'DATETIME',
                 'null' => false,
             ],
+            'deleted_at' => [
+                'type' => 'DATETIME',
+                'null' => true,
+                'default' => null,
+            ],
         ]);
 
         $this->forge->addKey('id', true);
