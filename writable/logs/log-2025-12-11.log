@@ -2987,3 +2987,911 @@ in APPPATH\Controllers\Materials.php on line 80.
  7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
  8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
  9 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-11 14:46:55 --> mysqli_sql_exception: Table 'schedules' already exists in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('CREATE TABLE `s...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('CREATE TABLE `s...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('CREATE TABLE `s...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\Forge.php(570): CodeIgniter\Database\BaseConnection->query('CREATE TABLE `s...')
+#4 C:\xampp\htdocs\ITE311-RANISES\app\Database\Migrations\20251211000000_CreateSchedulesTable.php(74): CodeIgniter\Database\Forge->createTable('schedules')
+#5 C:\xampp\htdocs\ITE311-RANISES\system\Database\MigrationRunner.php(876): App\Database\Migrations\CreateSchedulesTable->up()
+#6 C:\xampp\htdocs\ITE311-RANISES\system\Database\MigrationRunner.php(182): CodeIgniter\Database\MigrationRunner->migrate('up', Object(stdClass))
+#7 C:\xampp\htdocs\ITE311-RANISES\system\Commands\Database\Migrate.php(85): CodeIgniter\Database\MigrationRunner->latest(NULL)
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CLI\Commands.php(74): CodeIgniter\Commands\Database\Migrate->run(Array)
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CLI\Console.php(47): CodeIgniter\CLI\Commands->run('migrate', Array)
+#10 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(388): CodeIgniter\CLI\Console->run()
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(133): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+#12 C:\xampp\htdocs\ITE311-RANISES\spark(40): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-12-11 14:46:55 --> ErrorException: require(C:\xampp\htdocs\ITE311-RANISES\app\Views/errors/cli/error_exception.php): Failed to open stream: No such file or directory
+[Method: CLI, Route: migrate]
+in SYSTEMPATH\CLI\BaseCommand.php on line 133.
+ 1 SYSTEMPATH\CLI\BaseCommand.php(133): CodeIgniter\Debug\Exceptions->errorHandler(2, 'require(C:\\xampp\\htdocs\\ITE311-RANISES\\app\\Views/errors/cli/error_exception.php): Failed to open stream: No such file or directory', 'C:\\xampp\\htdocs\\ITE311-RANISES\\system\\CLI\\BaseCommand.php', 133)
+ 2 SYSTEMPATH\CLI\BaseCommand.php(133): require()
+ 3 SYSTEMPATH\Commands\Database\Migrate.php(99): CodeIgniter\CLI\BaseCommand->showError(Object(CodeIgniter\Database\Exceptions\DatabaseException))
+ 4 SYSTEMPATH\CLI\Commands.php(74): CodeIgniter\Commands\Database\Migrate->run([])
+ 5 SYSTEMPATH\CLI\Console.php(47): CodeIgniter\CLI\Commands->run('migrate', [])
+ 6 SYSTEMPATH\Boot.php(388): CodeIgniter\CLI\Console->run()
+ 7 SYSTEMPATH\Boot.php(133): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+ 8 FCPATH\spark(40): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+ERROR - 2025-12-11 14:47:40 --> mysqli_sql_exception: Table 'schedules' already exists in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('CREATE TABLE `s...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('CREATE TABLE `s...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('CREATE TABLE `s...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\Forge.php(570): CodeIgniter\Database\BaseConnection->query('CREATE TABLE `s...')
+#4 C:\xampp\htdocs\ITE311-RANISES\app\Database\Migrations\20251211000000_CreateSchedulesTable.php(74): CodeIgniter\Database\Forge->createTable('schedules')
+#5 C:\xampp\htdocs\ITE311-RANISES\system\Database\MigrationRunner.php(876): App\Database\Migrations\CreateSchedulesTable->up()
+#6 C:\xampp\htdocs\ITE311-RANISES\system\Database\MigrationRunner.php(182): CodeIgniter\Database\MigrationRunner->migrate('up', Object(stdClass))
+#7 C:\xampp\htdocs\ITE311-RANISES\system\Commands\Database\Migrate.php(85): CodeIgniter\Database\MigrationRunner->latest(NULL)
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CLI\Commands.php(74): CodeIgniter\Commands\Database\Migrate->run(Array)
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CLI\Console.php(47): CodeIgniter\CLI\Commands->run('migrate', Array)
+#10 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(388): CodeIgniter\CLI\Console->run()
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(133): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+#12 C:\xampp\htdocs\ITE311-RANISES\spark(40): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-12-11 14:47:40 --> ErrorException: require(C:\xampp\htdocs\ITE311-RANISES\app\Views/errors/cli/error_exception.php): Failed to open stream: No such file or directory
+[Method: CLI, Route: migrate]
+in SYSTEMPATH\CLI\BaseCommand.php on line 133.
+ 1 SYSTEMPATH\CLI\BaseCommand.php(133): CodeIgniter\Debug\Exceptions->errorHandler(2, 'require(C:\\xampp\\htdocs\\ITE311-RANISES\\app\\Views/errors/cli/error_exception.php): Failed to open stream: No such file or directory', 'C:\\xampp\\htdocs\\ITE311-RANISES\\system\\CLI\\BaseCommand.php', 133)
+ 2 SYSTEMPATH\CLI\BaseCommand.php(133): require()
+ 3 SYSTEMPATH\Commands\Database\Migrate.php(99): CodeIgniter\CLI\BaseCommand->showError(Object(CodeIgniter\Database\Exceptions\DatabaseException))
+ 4 SYSTEMPATH\CLI\Commands.php(74): CodeIgniter\Commands\Database\Migrate->run([...])
+ 5 SYSTEMPATH\CLI\Console.php(47): CodeIgniter\CLI\Commands->run('migrate', [...])
+ 6 SYSTEMPATH\Boot.php(388): CodeIgniter\CLI\Console->run()
+ 7 SYSTEMPATH\Boot.php(133): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+ 8 FCPATH\spark(40): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+ERROR - 2025-12-11 14:47:49 --> mysqli_sql_exception: Table 'schedules' already exists in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('CREATE TABLE `s...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('CREATE TABLE `s...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('CREATE TABLE `s...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\Forge.php(570): CodeIgniter\Database\BaseConnection->query('CREATE TABLE `s...')
+#4 C:\xampp\htdocs\ITE311-RANISES\app\Database\Migrations\20251211000000_CreateSchedulesTable.php(74): CodeIgniter\Database\Forge->createTable('schedules')
+#5 C:\xampp\htdocs\ITE311-RANISES\system\Database\MigrationRunner.php(876): App\Database\Migrations\CreateSchedulesTable->up()
+#6 C:\xampp\htdocs\ITE311-RANISES\system\Database\MigrationRunner.php(182): CodeIgniter\Database\MigrationRunner->migrate('up', Object(stdClass))
+#7 C:\xampp\htdocs\ITE311-RANISES\system\Commands\Database\Migrate.php(85): CodeIgniter\Database\MigrationRunner->latest(NULL)
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CLI\Commands.php(74): CodeIgniter\Commands\Database\Migrate->run(Array)
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CLI\Console.php(47): CodeIgniter\CLI\Commands->run('migrate', Array)
+#10 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(388): CodeIgniter\CLI\Console->run()
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(133): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+#12 C:\xampp\htdocs\ITE311-RANISES\spark(40): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-12-11 14:47:49 --> ErrorException: require(C:\xampp\htdocs\ITE311-RANISES\app\Views/errors/cli/error_exception.php): Failed to open stream: No such file or directory
+[Method: CLI, Route: migrate]
+in SYSTEMPATH\CLI\BaseCommand.php on line 133.
+ 1 SYSTEMPATH\CLI\BaseCommand.php(133): CodeIgniter\Debug\Exceptions->errorHandler(2, 'require(C:\\xampp\\htdocs\\ITE311-RANISES\\app\\Views/errors/cli/error_exception.php): Failed to open stream: No such file or directory', 'C:\\xampp\\htdocs\\ITE311-RANISES\\system\\CLI\\BaseCommand.php', 133)
+ 2 SYSTEMPATH\CLI\BaseCommand.php(133): require()
+ 3 SYSTEMPATH\Commands\Database\Migrate.php(99): CodeIgniter\CLI\BaseCommand->showError(Object(CodeIgniter\Database\Exceptions\DatabaseException))
+ 4 SYSTEMPATH\CLI\Commands.php(74): CodeIgniter\Commands\Database\Migrate->run([...])
+ 5 SYSTEMPATH\CLI\Console.php(47): CodeIgniter\CLI\Commands->run('migrate', [...])
+ 6 SYSTEMPATH\Boot.php(388): CodeIgniter\CLI\Console->run()
+ 7 SYSTEMPATH\Boot.php(133): CodeIgniter\Boot::runCommand(Object(CodeIgniter\CLI\Console))
+ 8 FCPATH\spark(40): CodeIgniter\Boot::bootSpark(Object(Config\Paths))
+ERROR - 2025-12-11 14:50:57 --> mysqli_sql_exception: Unknown column 'schedules.instructor_id' in 'on clause' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `schedul...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `schedul...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `schedul...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `schedul...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\ITE311-RANISES\app\Models\ScheduleModel.php(40): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\ManageSchedule.php(44): App\Models\ScheduleModel->getAllSchedules()
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\ManageSchedule->index()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageSchedule))
+#10 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-12-11 14:50:57 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'schedules.instructor_id' in 'on clause'
+[Method: GET, Route: admin/manage-schedules]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\ScheduleModel.php(40): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Controllers\ManageSchedule.php(44): App\Models\ScheduleModel->getAllSchedules()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageSchedule->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageSchedule))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-11 14:50:57 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'schedules.instructor_id' in 'on clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\ScheduleModel.php(40): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Controllers\ManageSchedule.php(44): App\Models\ScheduleModel->getAllSchedules()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageSchedule->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageSchedule))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-11 14:50:57 --> [Caused by] mysqli_sql_exception: Unknown column 'schedules.instructor_id' in 'on clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\ScheduleModel.php(40): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Controllers\ManageSchedule.php(44): App\Models\ScheduleModel->getAllSchedules()
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageSchedule->index()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageSchedule))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-11 14:51:00 --> mysqli_sql_exception: Unknown column 'schedules.instructor_id' in 'on clause' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `schedul...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `schedul...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `schedul...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `schedul...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\ITE311-RANISES\app\Models\ScheduleModel.php(40): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\ManageSchedule.php(44): App\Models\ScheduleModel->getAllSchedules()
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\ManageSchedule->index()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageSchedule))
+#10 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-12-11 14:51:00 --> CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'schedules.instructor_id' in 'on clause'
+[Method: GET, Route: admin/manage-schedules]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC', [], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\ScheduleModel.php(40): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Controllers\ManageSchedule.php(44): App\Models\ScheduleModel->getAllSchedules()
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageSchedule->index()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageSchedule))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-11 14:51:00 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: Unknown column 'schedules.instructor_id' in 'on clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC', [], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\ScheduleModel.php(40): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Controllers\ManageSchedule.php(44): App\Models\ScheduleModel->getAllSchedules()
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageSchedule->index()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageSchedule))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-11 14:51:00 --> [Caused by] mysqli_sql_exception: Unknown column 'schedules.instructor_id' in 'on clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC', [], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\ScheduleModel.php(40): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Controllers\ManageSchedule.php(44): App\Models\ScheduleModel->getAllSchedules()
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageSchedule->index()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageSchedule))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-11 14:54:08 --> CodeIgniter\Validation\Exceptions\ValidationException: "valid_time" is not a valid rule.
+[Method: POST, Route: admin/manage-schedules/store]
+in SYSTEMPATH\Validation\Validation.php on line 345.
+ 1 SYSTEMPATH\Validation\Validation.php(345): CodeIgniter\Validation\Exceptions\ValidationException::forRuleNotFound('valid_time')
+ 2 SYSTEMPATH\Validation\Validation.php(201): CodeIgniter\Validation\Validation->processRules('start_time', 'start_time', '12:01', [...], [...], 'start_time')
+ 3 SYSTEMPATH\Controller.php(138): CodeIgniter\Validation\Validation->run()
+ 4 APPPATH\Controllers\ManageSchedule.php(102): CodeIgniter\Controller->validate([...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageSchedule->store()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageSchedule))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-11 15:00:16 --> CodeIgniter\Validation\Exceptions\ValidationException: "valid_time" is not a valid rule.
+[Method: POST, Route: admin/manage-schedules/store]
+in SYSTEMPATH\Validation\Validation.php on line 345.
+ 1 SYSTEMPATH\Validation\Validation.php(345): CodeIgniter\Validation\Exceptions\ValidationException::forRuleNotFound('valid_time')
+ 2 SYSTEMPATH\Validation\Validation.php(201): CodeIgniter\Validation\Validation->processRules('start_time', 'start_time', '12:00', [...], [...], 'start_time')
+ 3 SYSTEMPATH\Controller.php(138): CodeIgniter\Validation\Validation->run()
+ 4 APPPATH\Controllers\ManageSchedule.php(102): CodeIgniter\Controller->validate([...])
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageSchedule->store()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageSchedule))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-11 15:09:39 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`....' at line 6 in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT COUNT(*)...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*)...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*)...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*)...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(675): CodeIgniter\Database\BaseBuilder->countAllResults(true)
+#5 C:\xampp\htdocs\ITE311-RANISES\app\Models\ScheduleModel.php(115): CodeIgniter\Model->countAllResults()
+#6 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\ManageSchedule.php(117): App\Models\ScheduleModel->isTimeSlotAvailable(2, 'Tuesday', '22:00', '23:00')
+#7 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\ManageSchedule->store()
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageSchedule))
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-12-11 15:09:39 --> CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`....' at line 6
+[Method: POST, Route: admin/manage-schedules/store]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS `numrows`
+FROM `schedules`
+WHERE `schedules`.`instructor_id` = :schedules.instructor_id:
+AND `schedules`.`day_of_week` = :schedules.day_of_week:
+AND `schedules`.`is_active` = :schedules.is_active:
+AND (`schedules`.`start_time` < ? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`.`end_time` > ?):', [...], false)
+ 2 SYSTEMPATH\Model.php(675): CodeIgniter\Database\BaseBuilder->countAllResults(true)
+ 3 APPPATH\Models\ScheduleModel.php(115): CodeIgniter\Model->countAllResults()
+ 4 APPPATH\Controllers\ManageSchedule.php(117): App\Models\ScheduleModel->isTimeSlotAvailable(2, 'Tuesday', '22:00', '23:00')
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageSchedule->store()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageSchedule))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-11 15:09:39 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`....' at line 6
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*) AS `numrows`
+FROM `schedules`
+WHERE `schedules`.`instructor_id` = 2
+AND `schedules`.`day_of_week` = \'Tuesday\'
+AND `schedules`.`is_active` = 1
+AND (`schedules`.`start_time` < ? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`.`end_time` > ?):')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*) AS `numrows`
+FROM `schedules`
+WHERE `schedules`.`instructor_id` = 2
+AND `schedules`.`day_of_week` = \'Tuesday\'
+AND `schedules`.`is_active` = 1
+AND (`schedules`.`start_time` < ? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`.`end_time` > ?):')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS `numrows`
+FROM `schedules`
+WHERE `schedules`.`instructor_id` = :schedules.instructor_id:
+AND `schedules`.`day_of_week` = :schedules.day_of_week:
+AND `schedules`.`is_active` = :schedules.is_active:
+AND (`schedules`.`start_time` < ? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`.`end_time` > ?):', [...], false)
+ 4 SYSTEMPATH\Model.php(675): CodeIgniter\Database\BaseBuilder->countAllResults(true)
+ 5 APPPATH\Models\ScheduleModel.php(115): CodeIgniter\Model->countAllResults()
+ 6 APPPATH\Controllers\ManageSchedule.php(117): App\Models\ScheduleModel->isTimeSlotAvailable(2, 'Tuesday', '22:00', '23:00')
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageSchedule->store()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageSchedule))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-11 15:09:39 --> [Caused by] mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`....' at line 6
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT COUNT(*) AS `numrows`
+FROM `schedules`
+WHERE `schedules`.`instructor_id` = 2
+AND `schedules`.`day_of_week` = \'Tuesday\'
+AND `schedules`.`is_active` = 1
+AND (`schedules`.`start_time` < ? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`.`end_time` > ?):', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*) AS `numrows`
+FROM `schedules`
+WHERE `schedules`.`instructor_id` = 2
+AND `schedules`.`day_of_week` = \'Tuesday\'
+AND `schedules`.`is_active` = 1
+AND (`schedules`.`start_time` < ? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`.`end_time` > ?):')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*) AS `numrows`
+FROM `schedules`
+WHERE `schedules`.`instructor_id` = 2
+AND `schedules`.`day_of_week` = \'Tuesday\'
+AND `schedules`.`is_active` = 1
+AND (`schedules`.`start_time` < ? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`.`end_time` > ?):')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS `numrows`
+FROM `schedules`
+WHERE `schedules`.`instructor_id` = :schedules.instructor_id:
+AND `schedules`.`day_of_week` = :schedules.day_of_week:
+AND `schedules`.`is_active` = :schedules.is_active:
+AND (`schedules`.`start_time` < ? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`.`end_time` > ?):', [...], false)
+ 5 SYSTEMPATH\Model.php(675): CodeIgniter\Database\BaseBuilder->countAllResults(true)
+ 6 APPPATH\Models\ScheduleModel.php(115): CodeIgniter\Model->countAllResults()
+ 7 APPPATH\Controllers\ManageSchedule.php(117): App\Models\ScheduleModel->isTimeSlotAvailable(2, 'Tuesday', '22:00', '23:00')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageSchedule->store()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageSchedule))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-11 15:14:23 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`....' at line 6 in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT COUNT(*)...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*)...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*)...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*)...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(675): CodeIgniter\Database\BaseBuilder->countAllResults(true)
+#5 C:\xampp\htdocs\ITE311-RANISES\app\Models\ScheduleModel.php(115): CodeIgniter\Model->countAllResults()
+#6 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\ManageSchedule.php(117): App\Models\ScheduleModel->isTimeSlotAvailable(2, 'Monday', '22:00', '14:00')
+#7 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\ManageSchedule->store()
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageSchedule))
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#12 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#13 {main}
+CRITICAL - 2025-12-11 15:14:23 --> CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`....' at line 6
+[Method: POST, Route: admin/manage-schedules/store]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS `numrows`
+FROM `schedules`
+WHERE `schedules`.`instructor_id` = :schedules.instructor_id:
+AND `schedules`.`day_of_week` = :schedules.day_of_week:
+AND `schedules`.`is_active` = :schedules.is_active:
+AND (`schedules`.`start_time` < ? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`.`end_time` > ?):', [...], false)
+ 2 SYSTEMPATH\Model.php(675): CodeIgniter\Database\BaseBuilder->countAllResults(true)
+ 3 APPPATH\Models\ScheduleModel.php(115): CodeIgniter\Model->countAllResults()
+ 4 APPPATH\Controllers\ManageSchedule.php(117): App\Models\ScheduleModel->isTimeSlotAvailable(2, 'Monday', '22:00', '14:00')
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageSchedule->store()
+ 6 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageSchedule))
+ 7 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-11 15:14:23 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`....' at line 6
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*) AS `numrows`
+FROM `schedules`
+WHERE `schedules`.`instructor_id` = 2
+AND `schedules`.`day_of_week` = \'Monday\'
+AND `schedules`.`is_active` = 1
+AND (`schedules`.`start_time` < ? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`.`end_time` > ?):')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*) AS `numrows`
+FROM `schedules`
+WHERE `schedules`.`instructor_id` = 2
+AND `schedules`.`day_of_week` = \'Monday\'
+AND `schedules`.`is_active` = 1
+AND (`schedules`.`start_time` < ? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`.`end_time` > ?):')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS `numrows`
+FROM `schedules`
+WHERE `schedules`.`instructor_id` = :schedules.instructor_id:
+AND `schedules`.`day_of_week` = :schedules.day_of_week:
+AND `schedules`.`is_active` = :schedules.is_active:
+AND (`schedules`.`start_time` < ? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`.`end_time` > ?):', [...], false)
+ 4 SYSTEMPATH\Model.php(675): CodeIgniter\Database\BaseBuilder->countAllResults(true)
+ 5 APPPATH\Models\ScheduleModel.php(115): CodeIgniter\Model->countAllResults()
+ 6 APPPATH\Controllers\ManageSchedule.php(117): App\Models\ScheduleModel->isTimeSlotAvailable(2, 'Monday', '22:00', '14:00')
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageSchedule->store()
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageSchedule))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-11 15:14:23 --> [Caused by] mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`....' at line 6
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT COUNT(*) AS `numrows`
+FROM `schedules`
+WHERE `schedules`.`instructor_id` = 2
+AND `schedules`.`day_of_week` = \'Monday\'
+AND `schedules`.`is_active` = 1
+AND (`schedules`.`start_time` < ? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`.`end_time` > ?):', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT COUNT(*) AS `numrows`
+FROM `schedules`
+WHERE `schedules`.`instructor_id` = 2
+AND `schedules`.`day_of_week` = \'Monday\'
+AND `schedules`.`is_active` = 1
+AND (`schedules`.`start_time` < ? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`.`end_time` > ?):')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT COUNT(*) AS `numrows`
+FROM `schedules`
+WHERE `schedules`.`instructor_id` = 2
+AND `schedules`.`day_of_week` = \'Monday\'
+AND `schedules`.`is_active` = 1
+AND (`schedules`.`start_time` < ? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`.`end_time` > ?):')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1733): CodeIgniter\Database\BaseConnection->query('SELECT COUNT(*) AS `numrows`
+FROM `schedules`
+WHERE `schedules`.`instructor_id` = :schedules.instructor_id:
+AND `schedules`.`day_of_week` = :schedules.day_of_week:
+AND `schedules`.`is_active` = :schedules.is_active:
+AND (`schedules`.`start_time` < ? AND `schedules`.`end_time` > ?) :(schedules.start_time < ? AND `schedules`.`end_time` > ?):', [...], false)
+ 5 SYSTEMPATH\Model.php(675): CodeIgniter\Database\BaseBuilder->countAllResults(true)
+ 6 APPPATH\Models\ScheduleModel.php(115): CodeIgniter\Model->countAllResults()
+ 7 APPPATH\Controllers\ManageSchedule.php(117): App\Models\ScheduleModel->isTimeSlotAvailable(2, 'Monday', '22:00', '14:00')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\ManageSchedule->store()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\ManageSchedule))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-11 15:24:53 --> Schedule validation failed: {"instructor_id":"The instructor_id field is required."}
+ERROR - 2025-12-11 15:27:41 --> Schedule validation failed: {"instructor_id":"The instructor_id field is required."}
+ERROR - 2025-12-11 15:30:54 --> Schedule validation failed: {"instructor_id":"The instructor_id field is required."}
+ERROR - 2025-12-11 15:37:02 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`na...' at line 1 in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINC...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINC...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINC...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINC...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\ITE311-RANISES\app\Models\ScheduleModel.php(87): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\Student.php(231): App\Models\ScheduleModel->getStudentSchedules('4')
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\Student->mySchedule()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#10 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-12-11 15:37:02 --> CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`na...' at line 1
+[Method: GET, Route: student/my-schedule]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = :enrollments.user_id:
+AND `enrollments`.`status` = :enrollments.status:
+AND `schedules`.`is_active` = :schedules.is_active:
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\ScheduleModel.php(87): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Controllers\Student.php(231): App\Models\ScheduleModel->getStudentSchedules('4')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Student->mySchedule()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-11 15:37:02 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`na...' at line 1
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = \'4\'
+AND `enrollments`.`status` = \'approved\'
+AND `schedules`.`is_active` = 1
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = \'4\'
+AND `enrollments`.`status` = \'approved\'
+AND `schedules`.`is_active` = 1
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = :enrollments.user_id:
+AND `enrollments`.`status` = :enrollments.status:
+AND `schedules`.`is_active` = :schedules.is_active:
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\ScheduleModel.php(87): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Controllers\Student.php(231): App\Models\ScheduleModel->getStudentSchedules('4')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Student->mySchedule()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-11 15:37:02 --> [Caused by] mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`na...' at line 1
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = \'4\'
+AND `enrollments`.`status` = \'approved\'
+AND `schedules`.`is_active` = 1
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = \'4\'
+AND `enrollments`.`status` = \'approved\'
+AND `schedules`.`is_active` = 1
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = \'4\'
+AND `enrollments`.`status` = \'approved\'
+AND `schedules`.`is_active` = 1
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = :enrollments.user_id:
+AND `enrollments`.`status` = :enrollments.status:
+AND `schedules`.`is_active` = :schedules.is_active:
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\ScheduleModel.php(87): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Controllers\Student.php(231): App\Models\ScheduleModel->getStudentSchedules('4')
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Student->mySchedule()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-11 15:37:28 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`na...' at line 1 in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINC...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINC...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINC...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINC...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\ITE311-RANISES\app\Models\ScheduleModel.php(87): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\Student.php(231): App\Models\ScheduleModel->getStudentSchedules('4')
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\Student->mySchedule()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#10 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-12-11 15:37:29 --> CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`na...' at line 1
+[Method: GET, Route: student/my-schedule]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = :enrollments.user_id:
+AND `enrollments`.`status` = :enrollments.status:
+AND `schedules`.`is_active` = :schedules.is_active:
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\ScheduleModel.php(87): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Controllers\Student.php(231): App\Models\ScheduleModel->getStudentSchedules('4')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Student->mySchedule()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-11 15:37:29 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`na...' at line 1
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = \'4\'
+AND `enrollments`.`status` = \'approved\'
+AND `schedules`.`is_active` = 1
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = \'4\'
+AND `enrollments`.`status` = \'approved\'
+AND `schedules`.`is_active` = 1
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = :enrollments.user_id:
+AND `enrollments`.`status` = :enrollments.status:
+AND `schedules`.`is_active` = :schedules.is_active:
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\ScheduleModel.php(87): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Controllers\Student.php(231): App\Models\ScheduleModel->getStudentSchedules('4')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Student->mySchedule()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-11 15:37:29 --> [Caused by] mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`na...' at line 1
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = \'4\'
+AND `enrollments`.`status` = \'approved\'
+AND `schedules`.`is_active` = 1
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = \'4\'
+AND `enrollments`.`status` = \'approved\'
+AND `schedules`.`is_active` = 1
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = \'4\'
+AND `enrollments`.`status` = \'approved\'
+AND `schedules`.`is_active` = 1
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = :enrollments.user_id:
+AND `enrollments`.`status` = :enrollments.status:
+AND `schedules`.`is_active` = :schedules.is_active:
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\ScheduleModel.php(87): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Controllers\Student.php(231): App\Models\ScheduleModel->getStudentSchedules('4')
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Student->mySchedule()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-11 15:37:32 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`na...' at line 1 in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINC...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINC...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINC...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINC...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\system\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+#6 C:\xampp\htdocs\ITE311-RANISES\app\Models\ScheduleModel.php(87): CodeIgniter\BaseModel->findAll()
+#7 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\Student.php(231): App\Models\ScheduleModel->getStudentSchedules('4')
+#8 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\Student->mySchedule()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+#10 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 {main}
+CRITICAL - 2025-12-11 15:37:32 --> CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`na...' at line 1
+[Method: GET, Route: student/my-schedule]
+in SYSTEMPATH\Database\BaseConnection.php on line 684.
+ 1 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = :enrollments.user_id:
+AND `enrollments`.`status` = :enrollments.status:
+AND `schedules`.`is_active` = :schedules.is_active:
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC', [...], false)
+ 2 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 3 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 4 APPPATH\Models\ScheduleModel.php(87): CodeIgniter\BaseModel->findAll()
+ 5 APPPATH\Controllers\Student.php(231): App\Models\ScheduleModel->getStudentSchedules('4')
+ 6 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Student->mySchedule()
+ 7 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+ 8 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-11 15:37:32 --> [Caused by] CodeIgniter\Database\Exceptions\DatabaseException: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`na...' at line 1
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 332.
+ 1 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = \'4\'
+AND `enrollments`.`status` = \'approved\'
+AND `schedules`.`is_active` = 1
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC')
+ 2 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = \'4\'
+AND `enrollments`.`status` = \'approved\'
+AND `schedules`.`is_active` = 1
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = :enrollments.user_id:
+AND `enrollments`.`status` = :enrollments.status:
+AND `schedules`.`is_active` = :schedules.is_active:
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC', [...], false)
+ 4 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 5 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 6 APPPATH\Models\ScheduleModel.php(87): CodeIgniter\BaseModel->findAll()
+ 7 APPPATH\Controllers\Student.php(231): App\Models\ScheduleModel->getStudentSchedules('4')
+ 8 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Student->mySchedule()
+ 9 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+10 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+13 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-11 15:37:32 --> [Caused by] mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`na...' at line 1
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 327.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = \'4\'
+AND `enrollments`.`status` = \'approved\'
+AND `schedules`.`is_active` = 1
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = \'4\'
+AND `enrollments`.`status` = \'approved\'
+AND `schedules`.`is_active` = 1
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC')
+ 3 SYSTEMPATH\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = \'4\'
+AND `enrollments`.`status` = \'approved\'
+AND `schedules`.`is_active` = 1
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINCT` `schedules`.*, `courses`.`title` as `course_title`, `courses`.`course_code`, `users`.`name` as `instructor_name`
+FROM `schedules`
+LEFT JOIN `courses` ON `courses`.`id` = `schedules`.`course_id`
+LEFT JOIN `users` ON `users`.`id` = `schedules`.`instructor_id`
+LEFT JOIN `enrollments` ON `enrollments`.`course_id` = `schedules`.`course_id`
+WHERE `enrollments`.`user_id` = :enrollments.user_id:
+AND `enrollments`.`status` = :enrollments.status:
+AND `schedules`.`is_active` = :schedules.is_active:
+GROUP BY `schedules`.`id`
+ORDER BY `schedules`.`day_of_week` ASC, `schedules`.`start_time` ASC', [...], false)
+ 5 SYSTEMPATH\Model.php(286): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(677): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Models\ScheduleModel.php(87): CodeIgniter\BaseModel->findAll()
+ 8 APPPATH\Controllers\Student.php(231): App\Models\ScheduleModel->getStudentSchedules('4')
+ 9 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Student->mySchedule()
+10 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Student))
+11 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+12 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+13 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+14 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+CRITICAL - 2025-12-11 17:04:41 --> CodeIgniter\View\Exceptions\ViewException: Invalid file: "admin/dashboard_new.php"
+[Method: GET, Route: admin/dashboard]
+in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
+ 1 SYSTEMPATH\View\View.php(214): CodeIgniter\Exceptions\FrameworkException::forInvalidFile('admin/dashboard_new.php')
+ 2 SYSTEMPATH\Common.php(1167): CodeIgniter\View\View->render('admin/dashboard_new', [], true)
+ 3 APPPATH\Controllers\Admin.php(47): view('admin/dashboard_new', [...])
+ 4 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Admin->dashboard()
+ 5 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Admin))
+ 6 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 9 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

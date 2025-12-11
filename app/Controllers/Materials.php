@@ -169,6 +169,18 @@ class Materials extends BaseController
             }
 
             $originalName = $file->getClientName();
+            
+            // Check if file with same name already exists in this course
+            $existingFile = $db->table('materials')
+                ->where('course_id', $course_id)
+                ->where('file_name', $originalName)
+                ->where('deleted_at', null)
+                ->get()
+                ->getRowArray();
+            
+            if ($existingFile) {
+                return redirect()->back()->with('error', 'A file with the name "' . esc($originalName) . '" already exists in this course. Please rename the file or delete the existing one first.');
+            }
             $uploadRoot = WRITEPATH . 'uploads/materials/course_' . $course_id;
             if (!is_dir($uploadRoot)) {
                 mkdir($uploadRoot, 0777, true);

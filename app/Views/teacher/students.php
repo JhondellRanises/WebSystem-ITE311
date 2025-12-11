@@ -77,13 +77,16 @@
         </div>
       </div>
 
-      <!-- Pending Enrollments -->
+      <!-- Pending Enrollments (Awaiting Student Approval) -->
       <?php if (!empty($pendingEnrollments)): ?>
-        <div class="card mb-4 border-warning">
-          <div class="card-header bg-warning text-dark">
-            <h5 class="mb-0"><i class="fas fa-clock"></i> Pending Enrollment Requests (<?= count($pendingEnrollments) ?>)</h5>
+        <div class="card mb-4 border-info">
+          <div class="card-header bg-info text-white">
+            <h5 class="mb-0"><i class="fas fa-hourglass-half"></i> Pending Enrollments - Awaiting Student Approval (<?= count($pendingEnrollments) ?>)</h5>
           </div>
           <div class="card-body">
+            <div class="alert alert-info mb-3">
+              <i class="fas fa-info-circle"></i> These students have been sent enrollment requests. They must approve the enrollment before appearing in the "Approved Students" list.
+            </div>
             <div class="table-responsive">
               <table class="table table-hover align-middle">
                 <thead>
@@ -92,7 +95,7 @@
                     <th>Student Name</th>
                     <th>Email</th>
                     <th>Request Date</th>
-                    <th class="text-end">Actions</th>
+                    <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -102,46 +105,10 @@
                       <td><?= esc($pending['student_name']) ?></td>
                       <td><?= esc($pending['student_email']) ?></td>
                       <td><?= $pending['enrollment_date'] ? date('M d, Y H:i', strtotime($pending['enrollment_date'])) : 'N/A' ?></td>
-                      <td class="text-end">
-                        <form action="<?= base_url('teacher/enrollments/approve/' . $pending['id']) ?>" method="post" class="d-inline">
-                          <?= csrf_field() ?>
-                          <input type="hidden" name="course_id" value="<?= $selectedCourseId ?>">
-                          <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Approve enrollment for <?= esc($pending['student_name']) ?>?')">
-                            <i class="fas fa-check"></i> Approve
-                          </button>
-                        </form>
-                        <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#rejectModal<?= $pending['id'] ?>">
-                          <i class="fas fa-times"></i> Reject
-                        </button>
+                      <td>
+                        <span class="badge bg-warning text-dark">Waiting for Student Approval</span>
                       </td>
                     </tr>
-
-                    <!-- Reject Modal -->
-                    <div class="modal fade" id="rejectModal<?= $pending['id'] ?>" tabindex="-1">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title">Reject Enrollment Request</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                          </div>
-                          <form action="<?= base_url('teacher/enrollments/reject/' . $pending['id']) ?>" method="post">
-                            <?= csrf_field() ?>
-                            <input type="hidden" name="course_id" value="<?= $selectedCourseId ?>">
-                            <div class="modal-body">
-                              <p>Are you sure you want to reject the enrollment request from <strong><?= esc($pending['student_name']) ?></strong>?</p>
-                              <div class="mb-3">
-                                <label class="form-label">Rejection Reason (Optional)</label>
-                                <textarea name="rejection_reason" class="form-control" rows="3" placeholder="Enter reason for rejection..."></textarea>
-                              </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                              <button type="submit" class="btn btn-danger">Reject Enrollment</button>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
                   <?php endforeach; ?>
                 </tbody>
               </table>

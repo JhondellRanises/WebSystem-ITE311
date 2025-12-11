@@ -86,9 +86,13 @@
                     <small><?= esc($c['instructor_name'] ?? 'N/A') ?></small>
                   </td>
                   <td class="text-end">
-                    <button class="btn btn-success btn-sm enroll-btn" data-course-id="<?= (int)$c['id'] ?>" data-course-title="<?= esc($c['title']) ?>">
-                      <i class="fas fa-plus"></i> Enroll
-                    </button>
+                    <?php if (session()->get('user_role') === 'student'): ?>
+                      <span class="badge bg-secondary">Enroll via Teacher</span>
+                    <?php else: ?>
+                      <button class="btn btn-success btn-sm enroll-btn" data-course-id="<?= (int)$c['id'] ?>" data-course-title="<?= esc($c['title']) ?>">
+                        <i class="fas fa-plus"></i> Enroll Student
+                      </button>
+                    <?php endif; ?>
                   </td>
                 </tr>
               <?php endforeach; ?>

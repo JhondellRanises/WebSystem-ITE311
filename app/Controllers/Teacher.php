@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\CourseModel;
 use App\Models\EnrollmentModel;
 use App\Models\UserModel;
+use App\Models\ScheduleModel;
 
 class Teacher extends BaseController
 {
@@ -411,15 +412,16 @@ class Teacher extends BaseController
             ->first();
 
         if ($existing) {
-            // If pending or rejected, update to approved
-            if (in_array($existing['status'] ?? 'pending', ['pending', 'rejected'])) {
+            // If rejected, allow re-enrollment as pending
+            if ($existing['status'] === 'rejected') {
                 $enrollmentModel->update($existing['id'], [
-                    'status' => 'approved',
-                    'approved_at' => date('Y-m-d H:i:s'),
+                    'status' => 'pending',
+                    'enrollment_date' => date('Y-m-d H:i:s'),
                     'rejected_at' => null,
                     'rejection_reason' => null
                 ]);
             } else {
+                // Already pending or approved
                 if ($this->request->isAJAX()) {
                     return $this->response->setJSON([
                         'status' => 'error',
@@ -430,22 +432,21 @@ class Teacher extends BaseController
                     ->with('error', 'Student is already enrolled in this course.');
             }
         } else {
-            // Create new enrollment (auto-approved)
+            // Create new enrollment (requires student approval)
             $enrollmentModel->insert([
                 'user_id' => $studentId,
                 'course_id' => $courseId,
                 'enrollment_date' => date('Y-m-d H:i:s'),
-                'status' => 'approved',
-                'approved_at' => date('Y-m-d H:i:s')
+                'status' => 'pending'
             ]);
         }
 
-        // Create notification for student
+        // Create notification for student to approve enrollment
         try {
             $notifModel = new \App\Models\NotificationModel();
             $notifModel->createNotification(
                 $studentId,
-                'You have been enrolled in ' . $course['title'] . ' by ' . (session()->get('user_name') ?? 'the instructor') . '.'
+                'You have been enrolled in ' . $course['title'] . ' by ' . (session()->get('user_name') ?? 'the instructor') . '. Please approve or reject this enrollment.'
             );
         } catch (\Throwable $e) {
             // swallow notification errors
@@ -461,5 +462,74 @@ class Teacher extends BaseController
 
         return redirect()->to('/teacher/students?course_id=' . $courseId)
             ->with('success', 'Student enrolled successfully!');
+    }
+
+    /**
+     * View teacher's schedule
+     */
+    public function mySchedule()
+    {
+        if ($resp = $this->requireTeacherOrAdmin()) return $resp;
+
+        $userId = session()->get('user_id');
+        $role = session()->get('user_role');
+        $scheduleModel = new ScheduleModel();
+
+        // Get schedules for this teacher (or all for admin)
+        if ($role === 'admin') {
+            $schedules = $scheduleModel->getAllSchedules();
+        } else {
+            $schedules = $scheduleModel->getInstructorSchedules($userId);
+        }
+
+        // Group schedules by day of week (handle day ranges like "Monday-Friday")
+        $schedulesByDay = [];
+        $dayOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        
+        foreach ($dayOrder as $day) {
+            $schedulesByDay[$day] = [];
+        }
+
+        foreach ($schedules as $schedule) {
+            $dayRange = $schedule['day_of_week'];
+            
+            // Handle day ranges (e.g., "Monday-Friday")
+            if (strpos($dayRange, '-') !== false) {
+                list($startDay, $endDay) = explode('-', $dayRange);
+                $startDay = trim($startDay);
+                $endDay = trim($endDay);
+                
+                // Add schedule to all days in the range
+                $inRange = false;
+                foreach ($dayOrder as $day) {
+                    if ($day === $startDay) {
+                        $inRange = true;
+                    }
+                    if ($inRange) {
+                        $schedulesByDay[$day][] = $schedule;
+                    }
+                    if ($day === $endDay) {
+                        $inRange = false;
+                    }
+                }
+            } else {
+                // Single day
+                if (isset($schedulesByDay[$dayRange])) {
+                    $schedulesByDay[$dayRange][] = $schedule;
+                }
+            }
+        }
+
+        // Sort each day's schedules by start time
+        foreach ($schedulesByDay as &$daySchedules) {
+            usort($daySchedules, function($a, $b) {
+                return strcmp($a['start_time'], $b['start_time']);
+            });
+        }
+
+        return view('teacher/my_schedule', [
+            'schedules' => $schedules,
+            'schedulesByDay' => $schedulesByDay
+        ]);
     }
 }

@@ -30,6 +30,7 @@
             <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/dashboard') ?>">Dashboard</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/manage-users') ?>">Manage User</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/manage-courses') ?>">Manage Courses</a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/manage-schedules') ?>">Manage Schedule</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/courses') ?>">My Courses</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/students') ?>">Manage Students</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/upload') ?>">Upload Material</a></li>
@@ -39,6 +40,7 @@
           <?php elseif ($role === 'teacher'): ?>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('teacher/dashboard') ?>">Dashboard</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('teacher/courses') ?>">My Courses</a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= base_url('teacher/my-schedule') ?>">My Schedule</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('teacher/assignments') ?>">Assignments</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('teacher/students') ?>">Manage Students</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('teacher/upload') ?>">Upload Material</a></li>
@@ -48,6 +50,7 @@
           <?php elseif ($role === 'student'): ?>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('dashboard') ?>">Dashboard</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('student/courses') ?>">My Courses</a></li>
+            <li class="nav-item"><a class="nav-link" href="<?= base_url('student/my-schedule') ?>">My Schedule</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('student/grades') ?>">View Grades</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('announcements') ?>">Announcements</a></li>
           <?php endif; ?>
@@ -106,6 +109,10 @@
   }
   // Avoid double alerts on announcements pages (broad match)
   if (strpos($path, 'announcements') !== false) {
+      $hideGlobalFlash = true;
+  }
+  // Avoid double alerts on manage-schedules pages
+  if (strpos($path, 'manage-schedules') !== false) {
       $hideGlobalFlash = true;
   }
 ?>

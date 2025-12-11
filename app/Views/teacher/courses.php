@@ -10,7 +10,7 @@
     <?php if (!empty($courses)): ?>
       <div class="table-responsive">
         <table class="table table-hover align-middle">
-          <thead>
+          <thead class="table-light">
             <tr>
               <th>#</th>
               <th>Course Code</th>
@@ -29,7 +29,7 @@
             <?php $i = 1; foreach ($courses as $c): ?>
               <tr>
                 <td><?= $i++ ?></td>
-                <td><?= esc($c['course_code'] ?? 'N/A') ?></td>
+                <td><span class="badge bg-secondary"><?= esc($c['course_code'] ?? 'N/A') ?></span></td>
                 <td>
                   <div class="fw-semibold"><?= esc($c['title']) ?></div>
                   <div class="text-muted small"><?= esc(mb_strimwidth($c['description'] ?? '', 0, 60, '...')) ?></div>
@@ -62,5 +62,20 @@
   </div>
 </div>
 
+<style>
+  .table tbody tr:hover {
+    background-color: rgba(102, 126, 234, 0.05);
+  }
+  
+  .btn-sm {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.875rem;
+  }
+  
+  .badge {
+    padding: 0.35rem 0.65rem;
+    font-weight: 500;
+  }
+</style>
 <?= $this->endSection() ?>
 

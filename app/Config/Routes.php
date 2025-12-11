@@ -54,6 +54,16 @@ $routes->group('admin', function($routes) {
     $routes->post('manage-users/restore/(:num)', 'ManageUser::restore/$1');
     $routes->get('manage-users/restore/(:num)', 'ManageUser::restore/$1');
     
+    // Schedule Management
+    $routes->get('manage-schedules', 'ManageSchedule::index');
+    $routes->post('manage-schedules/store', 'ManageSchedule::store');
+    $routes->post('manage-schedules/update/(:num)', 'ManageSchedule::update/$1');
+    $routes->post('manage-schedules/delete/(:num)', 'ManageSchedule::delete/$1');
+    $routes->get('manage-schedules/delete/(:num)', 'ManageSchedule::delete/$1');
+    $routes->post('manage-schedules/toggle-active/(:num)', 'ManageSchedule::toggleActive/$1');
+    $routes->get('manage-schedules/get/(:num)', 'ManageSchedule::getSchedule/$1');
+    $routes->get('manage-schedules/enrollments/(:num)', 'ManageSchedule::getScheduleEnrollments/$1');
+    
     // Admin access to teacher features
     $routes->get('courses', 'Teacher::courses');
     $routes->get('students', 'Teacher::students');
@@ -68,6 +78,7 @@ $routes->group('teacher', function($routes) {
     $routes->get('dashboard', 'Teacher::dashboard');
     $routes->get('courses', 'Teacher::courses');
     $routes->get('students', 'Teacher::students');
+    $routes->get('my-schedule', 'Teacher::mySchedule');
     $routes->post('enrollments/approve/(:num)', 'Teacher::approveEnrollment/$1');
     $routes->post('enrollments/reject/(:num)', 'Teacher::rejectEnrollment/$1');
     $routes->get('students/test', 'Teacher::testSearch');
@@ -77,6 +88,10 @@ $routes->group('teacher', function($routes) {
 
 $routes->group('student', function($routes) {
     $routes->get('dashboard', 'Student::dashboard');
+    $routes->post('enrollment/approve', 'Student::approveEnrollment');
+    $routes->post('enrollment/reject', 'Student::rejectEnrollment');
+    $routes->get('courses', 'Student::courses');
+    $routes->get('my-schedule', 'Student::mySchedule');
 });
 
 // 📚 Courses

@@ -74,11 +74,14 @@
 
   <!-- Pending Enrollments Section -->
   <?php if (!empty($pendingCourses ?? [])): ?>
-    <div class="card shadow-sm mb-4 border-warning">
-      <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
-        <h5 class="mb-0"><i class="fas fa-clock"></i> Pending Enrollment Requests (<?= count($pendingCourses) ?>)</h5>
+    <div class="card shadow-sm mb-4 border-info">
+      <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="fas fa-hourglass-half"></i> Pending Enrollment Requests (<?= count($pendingCourses) ?>)</h5>
       </div>
       <div class="card-body">
+        <div class="alert alert-info mb-3">
+          <i class="fas fa-info-circle"></i> You have been enrolled in these courses by your instructor. Please approve or reject the enrollment.
+        </div>
         <div class="table-responsive">
           <table class="table table-hover align-middle">
             <thead>
@@ -87,6 +90,7 @@
                 <th>Instructor</th>
                 <th>Request Date</th>
                 <th>Status</th>
+                <th class="text-end">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -95,14 +99,50 @@
                   <td><strong><?= esc($c['title']) ?></strong></td>
                   <td><?= esc($c['instructor_name'] ?? 'N/A') ?></td>
                   <td><?= $c['enrollment_date'] ? date('M d, Y', strtotime($c['enrollment_date'])) : 'N/A' ?></td>
-                  <td><span class="badge bg-warning text-dark">Pending Approval</span></td>
+                  <td><span class="badge bg-warning text-dark">Pending Your Approval</span></td>
+                  <td class="text-end">
+                    <form method="post" action="<?= base_url('student/enrollment/approve') ?>" class="d-inline">
+                      <?= csrf_field() ?>
+                      <input type="hidden" name="course_id" value="<?= (int)$c['id'] ?>">
+                      <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Approve enrollment in <?= esc($c['title']) ?>?')">
+                        <i class="fas fa-check"></i> Approve
+                      </button>
+                    </form>
+                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#rejectModal<?= (int)$c['id'] ?>">
+                      <i class="fas fa-times"></i> Reject
+                    </button>
+                  </td>
                 </tr>
+
+                <!-- Reject Modal -->
+                <div class="modal fade" id="rejectModal<?= (int)$c['id'] ?>" tabindex="-1">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title">Reject Enrollment</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
+                      <form method="post" action="<?= base_url('student/enrollment/reject') ?>">
+                        <?= csrf_field() ?>
+                        <input type="hidden" name="course_id" value="<?= (int)$c['id'] ?>">
+                        <div class="modal-body">
+                          <p>Are you sure you want to reject the enrollment in <strong><?= esc($c['title']) ?></strong>?</p>
+                          <div class="mb-3">
+                            <label class="form-label">Reason (Optional)</label>
+                            <textarea name="reason" class="form-control" rows="3" placeholder="Enter reason for rejection..."></textarea>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                          <button type="submit" class="btn btn-danger">Reject Enrollment</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
               <?php endforeach; ?>
             </tbody>
           </table>
-        </div>
-        <div class="alert alert-info mt-3 mb-0">
-          <i class="fas fa-info-circle"></i> Your enrollment requests are waiting for instructor approval.
         </div>
       </div>
     </div>
@@ -195,31 +235,36 @@
             <thead class="table-light">
               <tr>
                 <th style="width:80px;">ID</th>
+                <th style="width:100px;">CN</th>
                 <th>Course Title</th>
-                <th>Description</th>
+                <th style="width:80px;">Units</th>
+                <th style="width:100px;">Semester</th>
                 <th style="width:120px;">Instructor</th>
                 <th class="text-end" style="width:150px;">Action</th>
               </tr>
             </thead>
             <tbody id="availableCoursesBody">
               <?php foreach ($availableCourses as $c): ?>
-                <tr class="available-course-row" data-title="<?= strtolower(esc($c['title'])) ?>" data-description="<?= strtolower(esc($c['description'] ?? '')) ?>">
+                <tr class="available-course-row" data-title="<?= strtolower(esc($c['title'])) ?>" data-description="<?= strtolower(esc($c['description'] ?? '')) ?>" data-course-id="<?= (int)$c['id'] ?>">
                   <td><?= (int)$c['id'] ?></td>
+                  <td>
+                    <small class="badge bg-secondary"><?= esc($c['course_code'] ?? 'N/A') ?></small>
+                  </td>
                   <td>
                     <strong><?= esc($c['title']) ?></strong>
                   </td>
                   <td>
-                    <small class="text-muted">
-                      <?= esc(substr($c['description'] ?? 'No description', 0, 60)) ?>
-                      <?= strlen($c['description'] ?? '') > 60 ? '...' : '' ?>
-                    </small>
+                    <small><?= isset($c['units']) ? number_format($c['units'], 1) : 'N/A' ?></small>
+                  </td>
+                  <td>
+                    <small><?= esc($c['semester'] ?? 'N/A') ?></small>
                   </td>
                   <td>
                     <small><?= esc($c['instructor_name'] ?? 'Unassigned') ?></small>
                   </td>
                   <td class="text-end">
-                    <button class="btn btn-success btn-sm enroll-btn" data-course-id="<?= (int)$c['id'] ?>" data-course-title="<?= esc($c['title']) ?>">
-                      <i class="fas fa-plus"></i> Enroll
+                    <button class="btn btn-info btn-sm view-details-btn" data-course-id="<?= (int)$c['id'] ?>" data-bs-toggle="modal" data-bs-target="#courseDetailsModal">
+                      <i class="fas fa-eye"></i> View Details
                     </button>
                   </td>
                 </tr>
@@ -342,7 +387,7 @@ $(document).ready(function() {
         availableCoursesTable.css('opacity', '1');
         
         if (response.length === 0) {
-          availableCoursesBody.html('<tr><td colspan="5" class="text-center text-muted py-4">No courses found matching your search.</td></tr>');
+          availableCoursesBody.html('<tr><td colspan="7" class="text-center text-muted py-4">No courses found matching your search.</td></tr>');
           availableNoResults.removeClass('d-none');
           availableResultsInfo.addClass('d-none');
         } else {
@@ -350,14 +395,16 @@ $(document).ready(function() {
           let html = '';
           response.forEach(function(course) {
             html += `
-              <tr class="available-course-row" data-title="${course.title.toLowerCase()}" data-description="${(course.description || '').toLowerCase()}">
+              <tr class="available-course-row" data-title="${course.title.toLowerCase()}" data-description="${(course.description || '').toLowerCase()}" data-course-id="${course.id}">
                 <td>${course.id}</td>
+                <td><small class="badge bg-secondary">${course.course_code || 'N/A'}</small></td>
                 <td><strong>${course.title}</strong></td>
-                <td><small class="text-muted">${(course.description || 'No description').substring(0, 60)}${(course.description || '').length > 60 ? '...' : ''}</small></td>
-                <td><small>${course.instructor_name || 'N/A'}</small></td>
+                <td><small>${course.units ? parseFloat(course.units).toFixed(1) : 'N/A'}</small></td>
+                <td><small>${course.semester || 'N/A'}</small></td>
+                <td><small>${course.instructor_name || 'Unassigned'}</small></td>
                 <td class="text-end">
-                  <button class="btn btn-success btn-sm enroll-btn" data-course-id="${course.id}" data-course-title="${course.title}">
-                    <i class="fas fa-plus"></i> Enroll
+                  <button class="btn btn-info btn-sm view-details-btn" data-course-id="${course.id}" data-bs-toggle="modal" data-bs-target="#courseDetailsModal">
+                    <i class="fas fa-eye"></i> View Details
                   </button>
                 </td>
               </tr>`;
@@ -372,7 +419,7 @@ $(document).ready(function() {
       error: function(xhr, status, error) {
         availableCoursesTable.css('opacity', '1');
         console.error('AJAX Error:', error);
-        availableCoursesBody.html('<tr><td colspan="5" class="text-center text-danger py-4">Error loading courses. Please try again.</td></tr>');
+        availableCoursesBody.html('<tr><td colspan="7" class="text-center text-danger py-4">Error loading courses. Please try again.</td></tr>');
         availableNoResults.addClass('d-none');
         availableResultsInfo.addClass('d-none');
       }

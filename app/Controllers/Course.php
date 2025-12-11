@@ -26,7 +26,7 @@ class Course extends BaseController
     
     $db = \Config\Database::connect();
     $builder = $db->table('courses c')
-        ->select('c.*, u.name as instructor_name')
+        ->select('c.id, c.title, c.description, c.course_code, c.units, c.semester, c.instructor_id, u.name as instructor_name')
         ->join('users u', 'u.id = c.instructor_id', 'left');
 
     if (!empty($searchTerm)) {
@@ -58,8 +58,18 @@ class Course extends BaseController
             ]);
         }
 
+        // ✅ Only teachers and admins can enroll students
+        $userRole = session()->get('user_role');
+        if ($userRole === 'student') {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Students cannot self-enroll. Please ask your teacher to enroll you.'
+            ]);
+        }
+
         $user_id = session()->get('user_id');
         $course_id = $this->request->getPost('course_id');
+        $student_id = $this->request->getPost('student_id') ?? $user_id; // Allow enrolling other students
 
         // ✅ Validate course_id
         if (empty($course_id)) {
@@ -72,7 +82,7 @@ class Course extends BaseController
         $enrollmentModel = new EnrollmentModel();
 
         // ✅ Check if already enrolled (pending or approved)
-        $existingEnrollment = $enrollmentModel->where('user_id', $user_id)
+        $existingEnrollment = $enrollmentModel->where('user_id', $student_id)
             ->where('course_id', $course_id)
             ->whereIn('status', ['pending', 'approved'])
             ->first();
@@ -81,13 +91,13 @@ class Course extends BaseController
             $status = $existingEnrollment['status'] === 'pending' ? 'pending approval' : 'already enrolled';
             return $this->response->setJSON([
                 'status' => 'error',
-                'message' => 'You are ' . $status . ' in this course.'
+                'message' => 'Student is ' . $status . ' in this course.'
             ]);
         }
 
-        // ✅ Insert enrollment with pending status
+        // ✅ Insert enrollment with pending status (requires student approval)
         $data = [
-            'user_id' => $user_id,
+            'user_id' => $student_id,
             'course_id' => $course_id,
             'enrollment_date' => date('Y-m-d H:i:s'),
             'status' => 'pending'
@@ -95,22 +105,22 @@ class Course extends BaseController
 
         try {
             if ($enrollmentModel->insert($data)) {
-                // Create notification for the instructor
+                // Create notification for the STUDENT to approve enrollment
                 try {
                     $db = \Config\Database::connect();
                     $course = $db->table('courses')
-                        ->select('courses.title, courses.instructor_id, users.name as student_name')
-                        ->join('users', 'users.id = ' . $user_id, 'left')
+                        ->select('courses.title, users.name as teacher_name')
+                        ->join('users', 'users.id = courses.instructor_id', 'left')
                         ->where('courses.id', $course_id)
                         ->get()
                         ->getRowArray();
                     
-                    if ($course && $course['instructor_id']) {
+                    if ($course) {
                         $notifModel = new \App\Models\NotificationModel();
-                        $studentName = session()->get('user_name') ?? 'A student';
+                        $teacherName = $course['teacher_name'] ?? 'Your teacher';
                         $notifModel->createNotification(
-                            (int)$course['instructor_id'], 
-                            $studentName . ' has requested enrollment in ' . ($course['title'] ?? 'a course')
+                            (int)$student_id, 
+                            'You have been enrolled in ' . ($course['title'] ?? 'a course') . ' by ' . $teacherName . '. Please approve or reject this enrollment.'
                         );
                     }
                 } catch (\Throwable $e) {
@@ -119,7 +129,7 @@ class Course extends BaseController
                 
                 return $this->response->setJSON([
                     'status' => 'success',
-                    'message' => 'Enrollment request submitted! Waiting for instructor approval.'
+                    'message' => 'Student enrolled successfully! Waiting for student approval.'
                 ]);
             } else {
                 return $this->response->setJSON([
