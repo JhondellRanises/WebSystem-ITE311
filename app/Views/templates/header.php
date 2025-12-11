@@ -169,15 +169,42 @@
       list.forEach(function(n){
         const item = document.createElement('div');
         item.className = 'list-group-item d-flex justify-content-between align-items-start';
+        
+        const contentWrapper = document.createElement('div');
+        contentWrapper.className = 'flex-grow-1 me-2';
+        
         const msg = document.createElement('div');
-        msg.className = 'me-2';
         msg.textContent = n.message;
+        
+        const timeWrapper = document.createElement('div');
+        timeWrapper.className = 'text-muted small mt-1';
+        
+        if (n.created_at) {
+          const date = new Date(n.created_at);
+          const options = { 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true,
+            timeZone: 'Asia/Manila'
+          };
+          timeWrapper.textContent = date.toLocaleString('en-US', options) + ' (PHT)';
+        } else {
+          timeWrapper.textContent = 'Just now';
+        }
+        
+        contentWrapper.appendChild(msg);
+        contentWrapper.appendChild(timeWrapper);
+        
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'btn btn-sm btn-outline-secondary';
         btn.textContent = 'Mark Read';
         btn.setAttribute('data-notif-id', n.id);
-        item.appendChild(msg);
+        
+        item.appendChild(contentWrapper);
         item.appendChild(btn);
         menu.appendChild(item);
       });

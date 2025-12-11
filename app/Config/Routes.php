@@ -59,6 +59,9 @@ $routes->group('admin', function($routes) {
     $routes->get('students', 'Teacher::students');
     $routes->post('enrollments/approve/(:num)', 'Teacher::approveEnrollment/$1');
     $routes->post('enrollments/reject/(:num)', 'Teacher::rejectEnrollment/$1');
+    $routes->get('students/test', 'Teacher::testSearch');
+    $routes->get('students/search', 'Teacher::searchStudents');
+    $routes->post('students/enroll', 'Teacher::enrollStudent');
 });
 
 $routes->group('teacher', function($routes) {
@@ -67,6 +70,9 @@ $routes->group('teacher', function($routes) {
     $routes->get('students', 'Teacher::students');
     $routes->post('enrollments/approve/(:num)', 'Teacher::approveEnrollment/$1');
     $routes->post('enrollments/reject/(:num)', 'Teacher::rejectEnrollment/$1');
+    $routes->get('students/test', 'Teacher::testSearch');
+    $routes->get('students/search', 'Teacher::searchStudents');
+    $routes->post('students/enroll', 'Teacher::enrollStudent');
 });
 
 $routes->group('student', function($routes) {
