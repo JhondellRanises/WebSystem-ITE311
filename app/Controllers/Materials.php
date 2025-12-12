@@ -14,6 +14,15 @@ class Materials extends BaseController
         if (!session()->get('logged_in') || !in_array(session()->get('user_role'), ['admin', 'teacher'])) {
             return redirect()->to('/login')->with('error', 'Access denied.');
         }
+        
+        // Check for course_id in query parameter if not provided in route
+        if ($course_id === null) {
+            $queryCourseid = $this->request->getGet('course_id');
+            if (!empty($queryCourseid)) {
+                $course_id = (int)$queryCourseid;
+            }
+        }
+        
         // If no course is provided, show a blank chooser page
         if ($course_id === null) {
             $db = \Config\Database::connect();

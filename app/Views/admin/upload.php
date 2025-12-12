@@ -24,8 +24,9 @@ $courses = $courses ?? [];
           <div class="col-sm-6 col-md-5 col-lg-4">
             <label for="courseSwitch" class="form-label mb-1">Choose Course</label>
             <select id="courseSwitch" class="form-select">
+              <option value="">-- Select Course here --</option>
               <?php foreach ($courses as $c): ?>
-                <option value="<?= (int)$c['id'] ?>" <?= ((int)$c['id'] === (int)$course_id) ? 'selected' : '' ?>><?= esc($c['title']) ?></option>
+                <option value="<?= (int)$c['id'] ?>" <?= ((int)$c['id'] === (int)$course_id) ? 'selected' : '' ?> <?= (stripos($c['title'], 'Web Systems & Design') !== false) ? 'data-default="true"' : '' ?>><?= esc($c['title']) ?></option>
               <?php endforeach; ?>
             </select>
           </div>
@@ -34,10 +35,19 @@ $courses = $courses ?? [];
           (function(){
             const sel = document.getElementById('courseSwitch');
             if(sel){
-              sel.addEventListener('change', function(){
+              const handleCourseChange = function(){
                 const id = parseInt(sel.value, 10);
                 if(id>0){ window.location.href = '<?= base_url('admin/course') ?>/' + id + '/upload'; }
-              });
+              };
+              sel.addEventListener('change', handleCourseChange);
+              // Trigger on load if no course_id is set (first time or page load)
+              if(!sel.value || sel.value === '0') {
+                const firstOption = sel.querySelector('option');
+                if(firstOption && firstOption.value && firstOption.value !== '0') {
+                  sel.value = firstOption.value;
+                  handleCourseChange();
+                }
+              }
             }
           })();
         </script>
@@ -57,8 +67,9 @@ $courses = $courses ?? [];
 
       <div class="border rounded p-3 mb-3 bg-light-subtle">
         <h6 class="fw-semibold mb-3">Upload a File</h6>
-        <form id="uploadForm" action="<?= empty($course_id) ? base_url('admin/upload') : base_url('admin/course/' . (int)$course_id . '/upload') ?>" method="post" enctype="multipart/form-data">
+        <form id="uploadForm" action="<?= base_url('admin/course/') ?><?= !empty($course_id) ? (int)$course_id : '' ?>/upload" method="post" enctype="multipart/form-data">
           <?= csrf_field() ?>
+          <input type="hidden" id="courseIdInput" name="course_id" value="<?= !empty($course_id) ? (int)$course_id : '' ?>">
           <div class="mb-2">
             <label for="exam_type" class="form-label">Exam Type</label>
             <select name="exam_type" id="exam_type" class="form-select" required>
@@ -74,10 +85,30 @@ $courses = $courses ?? [];
             <div class="form-text">Allowed: PDF, PPT, PPTX, DOC, DOCX. Max 10MB.</div>
           </div>
           <div class="d-flex gap-2">
-            <button type="submit" class="btn btn-primary" <?= empty($course_id) ? 'disabled' : '' ?>>Upload File</button>
+            <button type="submit" class="btn btn-primary" id="uploadBtn" <?= empty($course_id) ? 'disabled' : '' ?>>Upload File</button>
           </div>
         </form>
       </div>
+      <script>
+        (function(){
+          const courseSwitch = document.getElementById('courseSwitch');
+          const uploadBtn = document.getElementById('uploadBtn');
+          const uploadForm = document.getElementById('uploadForm');
+          const courseIdInput = document.getElementById('courseIdInput');
+          if(courseSwitch && uploadBtn && uploadForm && courseIdInput) {
+            courseSwitch.addEventListener('change', function(){
+              const courseId = parseInt(this.value, 10);
+              if(courseId > 0) {
+                uploadBtn.disabled = false;
+                courseIdInput.value = courseId;
+                uploadForm.action = '<?= base_url('admin/course/') ?>' + courseId + '/upload';
+              } else {
+                uploadBtn.disabled = true;
+              }
+            });
+          }
+        })();
+      </script>
 
       <hr class="my-4">
 

@@ -175,6 +175,13 @@ class ManageSchedule extends BaseController
             return redirect()->back()->withInput()->with('error', 'Instructor has a schedule conflict at this time.');
         }
 
+        // Check for student schedule conflicts
+        $roomNumber = $this->request->getPost('room_number');
+        $building = $this->request->getPost('building');
+        if ($this->scheduleModel->hasStudentConflict((int)$this->request->getPost('course_id'), $dayRange, $startTime, $endTime, $roomNumber, $building)) {
+            return redirect()->back()->withInput()->with('error', 'This schedule conflicts with an existing schedule. Students cannot have overlapping classes on the same day and time.');
+        }
+
         // Calculate duration
         $startDateTime = new \DateTime('2000-01-01 ' . $startTime);
         $endDateTime = new \DateTime('2000-01-01 ' . $endTime);
@@ -253,6 +260,13 @@ class ManageSchedule extends BaseController
         // Check for time conflicts (excluding current schedule)
         if (!$this->scheduleModel->isTimeSlotAvailable($instructorId, $dayOfWeek, $startTime, $endTime, $id)) {
             return redirect()->back()->withInput()->with('error', 'Instructor has a schedule conflict at this time.');
+        }
+
+        // Check for student schedule conflicts (excluding current schedule)
+        $roomNumber = $this->request->getPost('room_number');
+        $building = $this->request->getPost('building');
+        if ($this->scheduleModel->hasStudentConflict((int)$this->request->getPost('course_id'), $dayRange, $startTime, $endTime, $roomNumber, $building, $id)) {
+            return redirect()->back()->withInput()->with('error', 'This schedule conflicts with an existing schedule. Students cannot have overlapping classes on the same day and time.');
         }
 
         // Calculate duration

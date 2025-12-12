@@ -138,6 +138,63 @@ class ScheduleModel extends Model
     }
 
     /**
+     * Check if schedule conflicts with any existing schedules
+     * Prevents students from having overlapping schedules in different courses
+     * Checks: day and time overlap (students cannot attend two classes at same time)
+     */
+    public function hasStudentConflict($courseId, $dayOfWeek, $startTime, $endTime, $roomNumber, $building, $excludeScheduleId = null)
+    {
+        $db = \Config\Database::connect();
+
+        // Parse the new schedule's day range
+        $newDays = $this->expandDayRange($dayOfWeek);
+
+        // Convert times to comparable format (HH:MM)
+        $newStartTime = substr($startTime, 0, 5);
+        $newEndTime = substr($endTime, 0, 5);
+
+        // Get all active schedules for ALL OTHER courses
+        $builder = $db->table('schedules s')
+            ->select('s.*')
+            ->where('s.is_active', true)
+            ->where('s.course_id !=', $courseId);
+
+        if ($excludeScheduleId) {
+            $builder->where('s.id !=', $excludeScheduleId);
+        }
+
+        $otherSchedules = $builder->get()->getResultArray();
+
+        // Check each other schedule for time conflicts
+        foreach ($otherSchedules as $other) {
+            $otherDays = $this->expandDayRange($other['day_of_week']);
+
+            // Check if there's any day overlap
+            $dayOverlap = array_intersect($newDays, $otherDays);
+
+            if (!empty($dayOverlap)) {
+                // Convert other times to comparable format
+                $otherStartTime = substr($other['start_time'], 0, 5);
+                $otherEndTime = substr($other['end_time'], 0, 5);
+
+                // Check if times overlap on any common day
+                // Times overlap if: other_start < new_end AND other_end > new_start
+                // A student cannot attend two classes at the same time, regardless of location
+                if ($otherStartTime < $newEndTime && $otherEndTime > $newStartTime) {
+                    return true; // Conflict found - overlapping day and time
+                }
+
+                // Also check for exact same time match
+                if ($otherStartTime === $newStartTime && $otherEndTime === $newEndTime) {
+                    return true; // Conflict found - exact same time
+                }
+            }
+        }
+
+        return false; // No conflicts
+    }
+
+    /**
      * Expand day range (e.g., "Monday-Friday") into array of individual days
      */
     private function expandDayRange($dayRange)

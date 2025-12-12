@@ -122,7 +122,6 @@
                                         </div>
                                         <div class="d-flex gap-2 align-items-center">
                                             <span class="badge bg-warning text-dark">Awaiting Approval</span>
-                                            <a href="/student/courses" class="btn btn-sm btn-outline-secondary">View Courses</a>
                                         </div>
                                     </div>
                                 </div>
