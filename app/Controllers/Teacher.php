@@ -6,6 +6,7 @@ use App\Models\CourseModel;
 use App\Models\EnrollmentModel;
 use App\Models\UserModel;
 use App\Models\ScheduleModel;
+use App\Models\MaterialModel;
 
 class Teacher extends BaseController
 {
@@ -26,7 +27,91 @@ class Teacher extends BaseController
     public function dashboard()
     {
         if ($resp = $this->requireTeacherOrAdmin()) return $resp;
-        return view('teacher/dashboard');
+
+        $userId = session()->get('user_id');
+        $role = session()->get('user_role');
+        $db = \Config\Database::connect();
+        $courseModel = new CourseModel();
+        $enrollmentModel = new EnrollmentModel();
+        $materialModel = new MaterialModel();
+
+        // Get course IDs once for teacher (not needed for admin)
+        $courseIds = [];
+        if ($role !== 'admin') {
+            $allCourses = $courseModel->where('instructor_id', $userId)->findAll();
+            $courseIds = array_column($allCourses, 'id');
+        }
+
+        // Get courses
+        if ($role === 'admin') {
+            $totalCourses = $courseModel->countAll();
+            $courses = $courseModel->select('courses.*, users.name as instructor_name')
+                ->join('users', 'users.id = courses.instructor_id', 'left')
+                ->orderBy('courses.created_at', 'DESC')
+                ->limit(5)
+                ->findAll();
+        } else {
+            $totalCourses = count($courseIds);
+            $courses = $courseModel->select('courses.*, users.name as instructor_name')
+                ->join('users', 'users.id = courses.instructor_id', 'left')
+                ->where('courses.instructor_id', $userId)
+                ->orderBy('courses.created_at', 'DESC')
+                ->limit(5)
+                ->findAll();
+        }
+
+        // Get total students enrolled
+        if ($role === 'admin') {
+            $totalStudents = $enrollmentModel->where('status', 'approved')->countAllResults();
+            $pendingApprovals = $enrollmentModel->where('status', 'pending')->countAllResults();
+        } else {
+            $totalStudents = $enrollmentModel->whereIn('course_id', $courseIds ?: [0])
+                ->where('status', 'approved')
+                ->countAllResults();
+            $pendingApprovals = $enrollmentModel->whereIn('course_id', $courseIds ?: [0])
+                ->where('status', 'pending')
+                ->countAllResults();
+        }
+
+        // Get total materials
+        if ($role === 'admin') {
+            $totalMaterials = $materialModel->countAll();
+        } else {
+            $totalMaterials = $materialModel->whereIn('course_id', $courseIds ?: [0])->countAllResults();
+        }
+
+        // Get recent enrollments
+        if ($role === 'admin') {
+            $recentEnrollments = $db->table('enrollments e')
+                ->select('e.*, c.title as course_title, u.name as student_name')
+                ->join('courses c', 'c.id = e.course_id')
+                ->join('users u', 'u.id = e.user_id')
+                ->orderBy('e.enrollment_date', 'DESC')
+                ->limit(10)
+                ->get()->getResultArray();
+        } else {
+            $recentEnrollments = $db->table('enrollments e')
+                ->select('e.*, c.title as course_title, u.name as student_name')
+                ->join('courses c', 'c.id = e.course_id')
+                ->join('users u', 'u.id = e.user_id')
+                ->whereIn('c.id', $courseIds ?: [0])
+                ->orderBy('e.enrollment_date', 'DESC')
+                ->limit(10)
+                ->get()->getResultArray();
+        }
+
+        $data = [
+            'user_name' => session()->get('user_name'),
+            'user_role' => $role,
+            'totalCourses' => $totalCourses,
+            'totalStudents' => $totalStudents,
+            'totalMaterials' => $totalMaterials,
+            'pendingApprovals' => $pendingApprovals,
+            'courses' => $courses,
+            'recentEnrollments' => $recentEnrollments,
+        ];
+
+        return view('teacher/dashboard', $data);
     }
 
     /**

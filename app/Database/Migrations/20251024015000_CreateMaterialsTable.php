@@ -31,6 +31,13 @@ class CreateMaterialsTable extends Migration
                 'constraint' => 255,
                 'null' => false,
             ],
+            'exam_type' => [
+                'type' => 'ENUM',
+                'constraint' => ['Prelim', 'Midterm', 'Final'],
+                'default' => 'Prelim',
+                'null' => false,
+                'comment' => 'Exam type: Prelim, Midterm, or Final'
+            ],
             'created_at' => [
                 'type' => 'DATETIME',
                 'null' => false,

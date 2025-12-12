@@ -13,6 +13,7 @@ class CourseModel extends Model
         'description',
         'instructor_id',
         'course_code',
+        'control_number',
         'units',
         'term',
         'semester',

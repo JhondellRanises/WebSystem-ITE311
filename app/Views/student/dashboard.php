@@ -5,21 +5,21 @@
     <!-- Welcome Header -->
     <div class="row mb-4">
         <div class="col-12">
-            <h1 class="fw-bold mb-2"><?= $user_role === 'admin' ? 'Admin' : 'Teacher' ?> Dashboard</h1>
-            <p class="text-muted">Welcome back, <strong><?= esc($user_name) ?></strong>! Here's your overview.</p>
+            <h1 class="fw-bold mb-2">Student Dashboard</h1>
+            <p class="text-muted">Welcome back, <strong><?= esc($user_name) ?></strong>! Here's your learning overview.</p>
         </div>
     </div>
 
     <!-- Statistics Cards -->
     <div class="row mb-4">
-        <!-- Courses Card -->
+        <!-- Enrolled Courses Card -->
         <div class="col-md-3 col-sm-6 mb-3">
-            <div class="card border-0 shadow-sm h-100 bg-primary text-white">
+            <div class="card border-0 shadow-sm h-100 bg-success text-white">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h6 class="card-title mb-1">Courses</h6>
-                            <h3 class="mb-0"><?= $totalCourses ?></h3>
+                            <h6 class="card-title mb-1">Enrolled Courses</h6>
+                            <h3 class="mb-0"><?= $approvedEnrollments ?></h3>
                         </div>
                         <div class="fs-1 opacity-50">📚</div>
                     </div>
@@ -27,69 +27,69 @@
             </div>
         </div>
 
-        <!-- Students Card -->
-        <div class="col-md-3 col-sm-6 mb-3">
-            <div class="card border-0 shadow-sm h-100 bg-success text-white">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="card-title mb-1">Enrolled Students</h6>
-                            <h3 class="mb-0"><?= $totalStudents ?></h3>
-                        </div>
-                        <div class="fs-1 opacity-50">🎓</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Materials Card -->
-        <div class="col-md-3 col-sm-6 mb-3">
-            <div class="card border-0 shadow-sm h-100 bg-info text-white">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="card-title mb-1">Materials</h6>
-                            <h3 class="mb-0"><?= $totalMaterials ?></h3>
-                        </div>
-                        <div class="fs-1 opacity-50">📄</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Pending Approvals Card -->
+        <!-- Pending Requests Card -->
         <div class="col-md-3 col-sm-6 mb-3">
             <div class="card border-0 shadow-sm h-100 bg-warning text-dark">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h6 class="card-title mb-1">Pending Approvals</h6>
-                            <h3 class="mb-0"><?= $pendingApprovals ?></h3>
+                            <h6 class="card-title mb-1">Pending Requests</h6>
+                            <h3 class="mb-0"><?= $pendingEnrollments ?></h3>
                         </div>
                         <div class="fs-1 opacity-50">⏳</div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Rejected Enrollments Card -->
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card border-0 shadow-sm h-100 bg-danger text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-title mb-1">Rejected</h6>
+                            <h3 class="mb-0"><?= $rejectedEnrollments ?></h3>
+                        </div>
+                        <div class="fs-1 opacity-50">❌</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Available Courses Card -->
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card border-0 shadow-sm h-100 bg-info text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="card-title mb-1">Available Courses</h6>
+                            <h3 class="mb-0"><?= $availableCoursesCount ?></h3>
+                        </div>
+                        <div class="fs-1 opacity-50">🔍</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Recent Courses and Enrollments -->
+    <!-- Enrolled Courses and Pending Requests -->
     <div class="row mb-4">
-        <!-- Recent Courses -->
+        <!-- Enrolled Courses -->
         <div class="col-lg-6">
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-light border-bottom">
-                    <h5 class="mb-0">📖 Recent Courses</h5>
+                    <h5 class="mb-0">📖 My Enrolled Courses</h5>
                 </div>
                 <div class="card-body p-0">
-                    <?php if (!empty($courses)): ?>
+                    <?php if (!empty($enrolledCourses)): ?>
                         <div class="list-group list-group-flush">
-                            <?php foreach ($courses as $course): ?>
+                            <?php foreach ($enrolledCourses as $course): ?>
                                 <div class="list-group-item">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
                                             <h6 class="mb-1"><?= esc($course['title']) ?></h6>
-                                            <small class="text-muted"><?= esc($course['course_code'] ?? 'N/A') ?></small>
+                                            <small class="text-muted">Instructor: <?= esc($course['instructor_name'] ?? 'N/A') ?></small>
                                         </div>
                                     </div>
                                 </div>
@@ -97,33 +97,32 @@
                         </div>
                     <?php else: ?>
                         <div class="p-3 text-center text-muted">
-                            <p>No courses assigned yet</p>
+                            <p>You are not enrolled in any courses yet.</p>
                         </div>
                     <?php endif; ?>
                 </div>
             </div>
         </div>
 
-        <!-- Recent Enrollments -->
+        <!-- Pending Enrollment Requests -->
         <div class="col-lg-6">
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-light border-bottom">
-                    <h5 class="mb-0">📝 Recent Enrollments</h5>
+                    <h5 class="mb-0">⏳ Pending Enrollment Requests</h5>
                 </div>
                 <div class="card-body p-0">
-                    <?php if (!empty($recentEnrollments)): ?>
+                    <?php if (!empty($pendingCourses)): ?>
                         <div class="list-group list-group-flush">
-                            <?php foreach ($recentEnrollments as $enrollment): ?>
+                            <?php foreach ($pendingCourses as $course): ?>
                                 <div class="list-group-item">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
-                                            <h6 class="mb-1"><?= esc($enrollment['student_name']) ?></h6>
-                                            <small class="text-muted"><?= esc($enrollment['course_title']) ?></small>
+                                            <h6 class="mb-1"><?= esc($course['title']) ?></h6>
+                                            <small class="text-muted">Instructor: <?= esc($course['instructor_name'] ?? 'N/A') ?></small>
                                         </div>
                                         <div class="d-flex gap-2 align-items-center">
-                                            <span class="badge bg-<?= $enrollment['status'] === 'approved' ? 'success' : 'warning' ?>">
-                                                <?= ucfirst(esc($enrollment['status'])) ?>
-                                            </span>
+                                            <span class="badge bg-warning text-dark">Awaiting Approval</span>
+                                            <a href="/student/courses" class="btn btn-sm btn-outline-secondary">View Courses</a>
                                         </div>
                                     </div>
                                 </div>
@@ -131,13 +130,14 @@
                         </div>
                     <?php else: ?>
                         <div class="p-3 text-center text-muted">
-                            <p>No enrollments yet</p>
+                            <p>No pending enrollment requests.</p>
                         </div>
                     <?php endif; ?>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 
 <?= $this->endSection() ?>

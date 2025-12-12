@@ -59,7 +59,7 @@ class Auth extends BaseController
     {
         switch ($role) {
             case 'student':
-                return redirect()->to('/announcements');
+                return redirect()->to('/student/dashboard');
             case 'teacher':
                 return redirect()->to('/teacher/dashboard');
             case 'admin':
@@ -111,7 +111,7 @@ class Auth extends BaseController
         }
     }
 
-    // 🔹 DASHBOARD (if needed for some routes)
+    // 🔹 DASHBOARD - Redirect to role-specific dashboard
     public function dashboard()
     {
         $session = session();
@@ -120,33 +120,8 @@ class Auth extends BaseController
             return redirect()->to('/login')->with('error', 'Please log in first.');
         }
 
-        $user_id = $session->get('user_id');
-        $user_role = $session->get('user_role');
-
-        $db = \Config\Database::connect();
-
-        // Get all courses
-        $courses = $db->table('courses')
-                      ->select('id, title, description')
-                      ->get()
-                      ->getResultArray();
-
-        // Get enrolled courses for this user
-        $enrolledCourses = $db->table('enrollments')
-                              ->select('courses.id, courses.title')
-                              ->join('courses', 'enrollments.course_id = courses.id')
-                              ->where('enrollments.user_id', $user_id)
-                              ->get()
-                              ->getResultArray();
-
-        $data = [
-            'user_name'       => $session->get('user_name'),
-            'user_role'       => $user_role,
-            'courses'         => $courses,
-            'enrolledCourses' => $enrolledCourses
-        ];
-
-        return view('auth/dashboard', $data);
+        // Redirect to role-specific dashboard
+        return $this->redirectBasedOnRole($session->get('user_role'));
     }
 
     // 🔹 LOGOUT

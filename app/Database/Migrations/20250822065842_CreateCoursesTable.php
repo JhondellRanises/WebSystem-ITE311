@@ -23,6 +23,11 @@ class CreateCoursesTable extends Migration
                 'constraint' => 50,
                 'null' => true,
             ],
+            'control_number' => [
+                'type' => 'VARCHAR',
+                'constraint' => 50,
+                'null' => true,
+            ],
             'description' => [
                 'type' => 'TEXT',
                 'null' => true,

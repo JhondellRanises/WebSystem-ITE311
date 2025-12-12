@@ -41,7 +41,6 @@
             <li class="nav-item"><a class="nav-link" href="<?= base_url('teacher/dashboard') ?>">Dashboard</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('teacher/courses') ?>">My Courses</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('teacher/my-schedule') ?>">My Schedule</a></li>
-            <li class="nav-item"><a class="nav-link" href="<?= base_url('teacher/assignments') ?>">Assignments</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('teacher/students') ?>">Manage Students</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('teacher/upload') ?>">Upload Material</a></li>
             
@@ -51,7 +50,6 @@
             <li class="nav-item"><a class="nav-link" href="<?= base_url('dashboard') ?>">Dashboard</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('student/courses') ?>">My Courses</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('student/my-schedule') ?>">My Schedule</a></li>
-            <li class="nav-item"><a class="nav-link" href="<?= base_url('student/grades') ?>">View Grades</a></li>
             <li class="nav-item"><a class="nav-link" href="<?= base_url('announcements') ?>">Announcements</a></li>
           <?php endif; ?>
 

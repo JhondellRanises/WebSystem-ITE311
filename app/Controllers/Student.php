@@ -23,7 +23,63 @@ class Student extends BaseController
     public function dashboard()
     {
         if ($resp = $this->requireStudent()) return $resp;
-        return view('student/dashboard');
+
+        $userId = session()->get('user_id');
+        $db = \Config\Database::connect();
+        $enrollmentModel = new EnrollmentModel();
+        $courseModel = new CourseModel();
+
+        // Get enrollment statistics
+        $approvedEnrollments = $enrollmentModel->where('user_id', $userId)
+            ->where('status', 'approved')
+            ->countAllResults();
+        $pendingEnrollments = $enrollmentModel->where('user_id', $userId)
+            ->where('status', 'pending')
+            ->countAllResults();
+        $rejectedEnrollments = $enrollmentModel->where('user_id', $userId)
+            ->where('status', 'rejected')
+            ->countAllResults();
+
+        // Get enrolled courses (approved only)
+        $enrolledCourses = $db->table('enrollments e')
+            ->select('c.id, c.title, c.description, c.course_code, u.name as instructor_name, e.enrollment_date')
+            ->join('courses c', 'c.id = e.course_id')
+            ->join('users u', 'u.id = c.instructor_id', 'left')
+            ->where('e.user_id', $userId)
+            ->where('e.status', 'approved')
+            ->orderBy('c.title', 'ASC')
+            ->get()->getResultArray();
+
+        // Get pending enrollments
+        $pendingCourses = $db->table('enrollments e')
+            ->select('c.id, c.title, c.description, c.course_code, u.name as instructor_name, e.enrollment_date')
+            ->join('courses c', 'c.id = e.course_id')
+            ->join('users u', 'u.id = c.instructor_id', 'left')
+            ->where('e.user_id', $userId)
+            ->where('e.status', 'pending')
+            ->orderBy('e.enrollment_date', 'DESC')
+            ->get()->getResultArray();
+
+        // Get available courses count
+        $activeEnrolledIds = array_column($db->table('enrollments')
+            ->select('course_id')
+            ->where('user_id', $userId)
+            ->whereIn('status', ['pending', 'approved'])
+            ->get()->getResultArray(), 'course_id') ?: [0];
+        $availableCoursesCount = $courseModel->whereNotIn('id', $activeEnrolledIds)
+            ->countAllResults();
+
+        $data = [
+            'user_name' => session()->get('user_name'),
+            'approvedEnrollments' => $approvedEnrollments,
+            'pendingEnrollments' => $pendingEnrollments,
+            'rejectedEnrollments' => $rejectedEnrollments,
+            'availableCoursesCount' => $availableCoursesCount,
+            'enrolledCourses' => $enrolledCourses,
+            'pendingCourses' => $pendingCourses,
+        ];
+
+        return view('student/dashboard', $data);
     }
 
     public function courses()
