@@ -3895,3 +3895,84 @@ in SYSTEMPATH\Exceptions\FrameworkException.php on line 39.
  7 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
  8 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
  9 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+ERROR - 2025-12-11 17:55:46 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '.`user_id`
+FROM `enrollments` `e`
+WHERE `e`.`course_id` = '5'
+AND `e`.`status...' at line 1 in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINC...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINC...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINC...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINC...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\Materials.php(224): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\Materials->upload('5')
+#6 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+#7 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-12-11 17:59:59 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '.`user_id`
+FROM `enrollments` `e`
+WHERE `e`.`course_id` = '1'
+AND `e`.`status...' at line 1 in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINC...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINC...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINC...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINC...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\Materials.php(224): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\Materials->upload('1')
+#6 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+#7 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-12-11 18:06:43 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '.`user_id`
+FROM `enrollments` `e`
+WHERE `e`.`course_id` = '1'
+AND `e`.`status...' at line 1 in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINC...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINC...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINC...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINC...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\Materials.php(227): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\Materials->upload('1')
+#6 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+#7 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-12-11 18:06:43 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '.`user_id`
+FROM `enrollments` `e`
+WHERE `e`.`course_id` = '1'' at line 1 in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINC...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINC...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINC...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINC...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\Materials.php(234): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\Materials->upload('1')
+#6 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+#7 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}
+ERROR - 2025-12-11 18:11:59 --> mysqli_sql_exception: Unknown column 'DISTINCT' in 'field list' in C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\xampp\htdocs\ITE311-RANISES\system\Database\MySQLi\Connection.php(327): mysqli->query('SELECT `DISTINC...', 0)
+#1 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('SELECT `DISTINC...')
+#2 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT `DISTINC...')
+#3 C:\xampp\htdocs\ITE311-RANISES\system\Database\BaseBuilder.php(1649): CodeIgniter\Database\BaseConnection->query('SELECT `DISTINC...', Array, false)
+#4 C:\xampp\htdocs\ITE311-RANISES\app\Controllers\Materials.php(224): CodeIgniter\Database\BaseBuilder->get()
+#5 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(933): App\Controllers\Materials->upload('5')
+#6 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Materials))
+#7 C:\xampp\htdocs\ITE311-RANISES\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#9 C:\xampp\htdocs\ITE311-RANISES\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 C:\xampp\htdocs\ITE311-RANISES\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 {main}

@@ -56,6 +56,7 @@ $routes->group('admin', function($routes) {
     
     // Schedule Management
     $routes->get('manage-schedules', 'ManageSchedule::index');
+    $routes->get('manage-schedules/search', 'ManageSchedule::search');
     $routes->post('manage-schedules/store', 'ManageSchedule::store');
     $routes->post('manage-schedules/update/(:num)', 'ManageSchedule::update/$1');
     $routes->post('manage-schedules/delete/(:num)', 'ManageSchedule::delete/$1');
@@ -78,12 +79,13 @@ $routes->group('teacher', function($routes) {
     $routes->get('dashboard', 'Teacher::dashboard');
     $routes->get('courses', 'Teacher::courses');
     $routes->get('students', 'Teacher::students');
+    $routes->post('students/remove', 'Teacher::removeStudent');
+    $routes->get('students/search', 'Teacher::searchStudents');
+    $routes->post('students/enroll', 'Teacher::enrollStudent');
+    $routes->get('students/profile/(:num)', 'Teacher::studentProfile/$1');
     $routes->get('my-schedule', 'Teacher::mySchedule');
     $routes->post('enrollments/approve/(:num)', 'Teacher::approveEnrollment/$1');
     $routes->post('enrollments/reject/(:num)', 'Teacher::rejectEnrollment/$1');
-    $routes->get('students/test', 'Teacher::testSearch');
-    $routes->get('students/search', 'Teacher::searchStudents');
-    $routes->post('students/enroll', 'Teacher::enrollStudent');
 });
 
 $routes->group('student', function($routes) {
@@ -96,6 +98,7 @@ $routes->group('student', function($routes) {
 
 // 📚 Courses
 $routes->get('courses', 'Course::index');
+$routes->get('courses/details/(:num)', 'Course::details/$1');
 $routes->post('course/enroll', 'Course::enroll');
 
 // 🔍 Course Search
@@ -117,6 +120,8 @@ $routes->get('/student/courses', 'Materials::studentCourses');
 $routes->get('/notifications', 'Notifications::get');
 $routes->post('/notifications/mark_read/(:num)', 'Notifications::mark_as_read/$1');
 $routes->post('/notifications/mark_read', 'Notifications::mark_as_read');
+$routes->post('/notifications/mark_all_read', 'Notifications::mark_all_as_read');
 // GET fallbacks (for labs without CSRF on AJAX)
 $routes->get('/notifications/mark_read/(:num)', 'Notifications::mark_as_read/$1');
 $routes->get('/notifications/mark_read', 'Notifications::mark_as_read');
+$routes->get('/notifications/mark_all_read', 'Notifications::mark_all_as_read');

@@ -88,6 +88,48 @@ class ManageSchedule extends BaseController
     }
 
     /**
+     * Search schedules via AJAX
+     */
+    public function search()
+    {
+        if (!session()->get('logged_in') || session()->get('user_role') !== 'admin') {
+            return $this->response->setStatusCode(403)->setJSON([
+                'status' => 'error',
+                'message' => 'Unauthorized'
+            ]);
+        }
+
+        $searchTerm = trim($this->request->getGet('q') ?? '');
+
+        if (empty($searchTerm)) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Search term is required',
+                'data' => [],
+                'count' => 0
+            ]);
+        }
+
+        $schedules = $this->scheduleModel->getAllSchedules();
+
+        // Filter by search term
+        $filtered = array_filter($schedules, function($s) use ($searchTerm) {
+            $searchLower = strtolower($searchTerm);
+            return stripos($s['course_title'], $searchTerm) !== false ||
+                   stripos($s['course_code'], $searchTerm) !== false ||
+                   stripos($s['instructor_name'], $searchTerm) !== false ||
+                   stripos($s['room_number'], $searchTerm) !== false ||
+                   stripos($s['building'], $searchTerm) !== false;
+        });
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'data' => array_values($filtered),
+            'count' => count($filtered)
+        ]);
+    }
+
+    /**
      * Store a new schedule
      */
     public function store()

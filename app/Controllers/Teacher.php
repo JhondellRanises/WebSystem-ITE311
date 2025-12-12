@@ -104,7 +104,7 @@ class Teacher extends BaseController
 
             if ($selectedCourse) {
                 // Get enrolled students (only approved)
-                $builder = $enrollmentModel->select('enrollments.*, users.id as user_id, users.name, users.email, users.role')
+                $builder = $enrollmentModel->select('enrollments.id as enrollment_id, enrollments.*, users.id as user_id, users.name, users.email, users.role')
                     ->join('users', 'users.id = enrollments.user_id', 'left')
                     ->where('enrollments.course_id', $courseId)
                     ->where('enrollments.status', 'approved')
@@ -530,6 +530,103 @@ class Teacher extends BaseController
         return view('teacher/my_schedule', [
             'schedules' => $schedules,
             'schedulesByDay' => $schedulesByDay
+        ]);
+    }
+
+    /**
+     * Remove student from course
+     */
+    public function removeStudent()
+    {
+        if ($resp = $this->requireTeacherOrAdmin()) return $resp;
+
+        if ($this->request->getMethod() !== 'POST') {
+            session()->setFlashdata('error', 'Invalid request method.');
+            return redirect()->back();
+        }
+
+        $enrollmentId = (int)($this->request->getPost('enrollment_id') ?? 0);
+        $courseId = (int)($this->request->getPost('course_id') ?? 0);
+
+        if (!$enrollmentId || !$courseId) {
+            session()->setFlashdata('error', 'Enrollment ID and Course ID are required.');
+            return redirect()->back();
+        }
+
+        $db = \Config\Database::connect();
+
+        // Get enrollment record using query builder
+        $enrollment = $db->table('enrollments')
+            ->where('id', $enrollmentId)
+            ->where('course_id', $courseId)
+            ->get()
+            ->getRowArray();
+
+        if (!$enrollment) {
+            session()->setFlashdata('error', 'Enrollment not found.');
+            return redirect()->back();
+        }
+
+        // Verify teacher owns this course (unless admin)
+        if (session()->get('user_role') === 'teacher') {
+            $course = $db->table('courses')
+                ->where('id', $courseId)
+                ->where('instructor_id', session()->get('user_id'))
+                ->get()
+                ->getRowArray();
+            
+            if (!$course) {
+                session()->setFlashdata('error', 'Unauthorized.');
+                return redirect()->back();
+            }
+        }
+
+        // Delete the enrollment from database
+        try {
+            $deleted = $db->table('enrollments')
+                ->where('id', $enrollmentId)
+                ->delete();
+            
+            if ($deleted) {
+                session()->setFlashdata('success', 'Student removed from course successfully.');
+            } else {
+                session()->setFlashdata('error', 'Failed to remove student.');
+            }
+        } catch (\Exception $e) {
+            session()->setFlashdata('error', 'Error removing student: ' . $e->getMessage());
+        }
+
+        // Always redirect back to students page
+        return redirect()->to('teacher/students?course_id=' . $courseId);
+    }
+
+    /**
+     * Get student profile data
+     */
+    public function studentProfile($studentId = null)
+    {
+        if ($resp = $this->requireTeacherOrAdmin()) return $resp;
+
+        if (!$studentId) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Student ID is required.'
+            ])->setStatusCode(400);
+        }
+
+        $userModel = new UserModel();
+        $student = $userModel->find($studentId);
+
+        if (!$student) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Student not found.'
+            ])->setStatusCode(404);
+        }
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'student' => $student
         ]);
     }
 }

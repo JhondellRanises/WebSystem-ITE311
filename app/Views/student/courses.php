@@ -148,8 +148,8 @@
     </div>
   <?php endif; ?>
 
-  <!-- Rejected Enrollments Section -->
-  <?php if (!empty($rejectedCourses ?? [])): ?>
+  <!-- Rejected Enrollments Section (Only show if there are rejected courses) -->
+  <?php if (isset($rejectedCourses) && is_array($rejectedCourses) && count($rejectedCourses) > 0): ?>
     <div class="card shadow-sm mb-4 border-danger">
       <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
         <h5 class="mb-0"><i class="fas fa-times-circle"></i> Rejected Enrollment Requests (<?= count($rejectedCourses) ?>)</h5>
@@ -273,6 +273,30 @@
           </table>
         </div>
       <?php endif; ?>
+    </div>
+  </div>
+</div>
+
+<!-- Course Details Modal -->
+<div class="modal fade" id="courseDetailsModal" tabindex="-1">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Course Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div id="courseDetailsContent">
+          <div class="text-center">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
 </div>
@@ -505,6 +529,107 @@ $(document).ready(function() {
       });
     });
   }
+
+  // ========== VIEW DETAILS MODAL ==========
+  $(document).on('click', '.view-details-btn', function() {
+    const courseId = $(this).data('course-id');
+    const courseDetailsContent = $('#courseDetailsContent');
+    const enrollBtn = $('#enrollFromDetailsBtn');
+    
+    // Show loading spinner
+    courseDetailsContent.html(`
+      <div class="text-center">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    `);
+    
+    // Fetch course details via AJAX
+    $.ajax({
+      url: '<?= base_url('courses/details') ?>/' + courseId,
+      type: 'GET',
+      dataType: 'json',
+      success: function(course) {
+        // Build course details HTML with full information
+        let detailsHtml = `
+          <div class="course-details">
+            <div class="mb-4 pb-3 border-bottom">
+              <h6 class="text-muted mb-2">Course Code</h6>
+              <p class="mb-0"><strong>${course.course_code || 'N/A'}</strong></p>
+            </div>
+            
+            <div class="mb-4 pb-3 border-bottom">
+              <h6 class="text-muted mb-2">Course Title</h6>
+              <p class="mb-0"><strong class="fs-5">${course.title}</strong></p>
+            </div>
+            
+            <div class="mb-4 pb-3 border-bottom">
+              <h6 class="text-muted mb-2">Description</h6>
+              <p class="mb-0">${course.description || '<em class="text-muted">No description available</em>'}</p>
+            </div>
+            
+            <div class="row mb-4 pb-3 border-bottom">
+              <div class="col-md-6 mb-3">
+                <h6 class="text-muted mb-2">Units</h6>
+                <p class="mb-0"><strong>${course.units ? parseFloat(course.units).toFixed(1) : 'N/A'}</strong></p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <h6 class="text-muted mb-2">Semester</h6>
+                <p class="mb-0"><strong>${course.semester || 'N/A'}</strong></p>
+              </div>
+            </div>
+            
+            <div class="mb-4 pb-3 border-bottom">
+              <h6 class="text-muted mb-2">Instructor</h6>
+              <p class="mb-0"><strong>${course.instructor_name || 'Unassigned'}</strong></p>
+            </div>
+            
+            <div class="mb-4 pb-3 border-bottom">
+              <h6 class="text-muted mb-2">Term</h6>
+              <p class="mb-0"><strong>${course.term || 'N/A'}</strong></p>
+            </div>
+            
+            <div class="mb-4 pb-3 border-bottom">
+              <h6 class="text-muted mb-2">Academic Year</h6>
+              <p class="mb-0"><strong>${course.academic_year || 'N/A'}</strong></p>
+            </div>
+            
+            <div class="row mb-4 pb-3 border-bottom">
+              <div class="col-md-6 mb-3">
+                <h6 class="text-muted mb-2">Department</h6>
+                <p class="mb-0">${course.department || '<em class="text-muted">N/A</em>'}</p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <h6 class="text-muted mb-2">Program</h6>
+                <p class="mb-0">${course.program || '<em class="text-muted">N/A</em>'}</p>
+              </div>
+            </div>
+            
+            <div class="mb-4 pb-3 border-bottom">
+              <h6 class="text-muted mb-2">Schedule</h6>
+              <p class="mb-0">${course.schedule || '<em class="text-muted">No schedule available</em>'}</p>
+            </div>
+            
+            <div class="mb-3">
+              <h6 class="text-muted mb-2">Course ID</h6>
+              <p class="mb-0"><small class="text-muted">${course.id}</small></p>
+            </div>
+          </div>
+        `;
+        
+        courseDetailsContent.html(detailsHtml);
+      },
+      error: function(xhr) {
+        courseDetailsContent.html(`
+          <div class="alert alert-danger">
+            <i class="fas fa-exclamation-circle"></i> Error loading course details. Please try again.
+          </div>
+        `);
+        console.error(xhr.responseText);
+      }
+    });
+  });
 
   // Initialize enroll listeners
   attachEnrollListeners();

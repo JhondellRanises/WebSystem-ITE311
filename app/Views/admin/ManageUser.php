@@ -11,13 +11,36 @@
   <div class="card-body">
     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
       <h2 class="fw-bold mb-2 mb-sm-0">Manage Users</h2>
-      <div class="d-flex gap-2 align-items-center">
-        <form class="d-flex" action="<?= base_url('admin/manage-users') ?>" method="get">
-          <input type="text" class="form-control" name="q" placeholder="Search name or email" value="<?= esc($q ?? '') ?>"/>
-          <button type="submit" class="btn btn-outline-secondary ms-2">Search</button>
-        </form>
-        <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#createModal">Add User</button>
+      <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#createModal">Add User</button>
+    </div>
+
+    <!-- Search Form for Users -->
+    <div class="mb-3">
+      <div class="input-group input-group-sm">
+        <input 
+          type="text" 
+          id="userSearchInput" 
+          class="form-control" 
+          placeholder="Search users by name or email..."
+          autocomplete="off"
+        >
+        <button class="btn btn-outline-secondary" type="button" id="userClearBtn">
+          Clear
+        </button>
       </div>
+      <small class="form-text text-muted d-block mt-2">
+        Type to filter users instantly
+      </small>
+    </div>
+
+    <!-- Results Counter -->
+    <div id="userResultsInfo" class="alert alert-info d-none mb-3">
+      <i class="fas fa-info-circle"></i> Found <strong id="userResultCount">0</strong> user(s)
+    </div>
+
+    <!-- No Results Message -->
+    <div id="userNoResults" class="alert alert-warning d-none mb-3">
+      <i class="fas fa-exclamation-circle"></i> No users found matching your search.
     </div>
 
     <?php if (!empty($users)): ?>
@@ -34,13 +57,13 @@
               <th class="text-end">Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="userTableBody">
             <?php $i = 1; foreach ($users as $u): 
               $isDeleted = !empty($u['deleted_at']);
               $isAdmin = $u['role'] === 'admin';
               $isCurrentUser = (int)$u['id'] === (int)session()->get('user_id');
             ?>
-              <tr class="<?= $isDeleted ? 'table-secondary' : '' ?>">
+              <tr class="user-row <?= $isDeleted ? 'table-secondary' : '' ?>" data-name="<?= strtolower(esc($u['name'])) ?>" data-email="<?= strtolower(esc($u['email'])) ?>">
                 <td><?= $i++ ?></td>
                 <td><?= esc($u['name']) ?></td>
                 <td><?= esc($u['email']) ?></td>
@@ -254,6 +277,7 @@
   </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 (function(){
   const qs = new URLSearchParams(window.location.search);
@@ -415,6 +439,76 @@
     if (cm) new bootstrap.Modal(cm).show();
   }
 })();
+
+// ========== MANAGE USERS SEARCH ==========
+$(document).ready(function() {
+  const searchInput = $('#userSearchInput');
+  const clearBtn = $('#userClearBtn');
+  const userTableBody = $('#userTableBody');
+  const noResults = $('#userNoResults');
+  const resultsInfo = $('#userResultsInfo');
+  const resultCount = $('#userResultCount');
+  let allUsers = [];
+
+  // Store initial users data
+  function storeUsersData() {
+    allUsers = [];
+    $('#userTableBody tr.user-row').each(function() {
+      allUsers.push({
+        name: $(this).data('name'),
+        email: $(this).data('email'),
+        html: $(this).prop('outerHTML')
+      });
+    });
+  }
+
+  storeUsersData();
+
+  // Real-time filtering for users
+  searchInput.on('keyup', function() {
+    const searchTerm = $(this).val().toLowerCase().trim();
+    
+    if (searchTerm === '') {
+      userTableBody.html('');
+      allUsers.forEach(user => {
+        userTableBody.append(user.html);
+      });
+      noResults.addClass('d-none');
+      resultsInfo.addClass('d-none');
+      return;
+    }
+
+    const filtered = allUsers.filter(user => 
+      user.name.includes(searchTerm) ||
+      user.email.includes(searchTerm)
+    );
+
+    if (filtered.length === 0) {
+      userTableBody.html('<tr><td colspan="7" class="text-center text-muted py-4">No users match your search.</td></tr>');
+      noResults.removeClass('d-none');
+      resultsInfo.addClass('d-none');
+    } else {
+      userTableBody.html('');
+      filtered.forEach(user => {
+        userTableBody.append(user.html);
+      });
+      resultCount.text(filtered.length);
+      resultsInfo.removeClass('d-none');
+      noResults.addClass('d-none');
+    }
+  });
+
+  // Clear search for users
+  clearBtn.on('click', function() {
+    searchInput.val('');
+    userTableBody.html('');
+    allUsers.forEach(user => {
+      userTableBody.append(user.html);
+    });
+    noResults.addClass('d-none');
+    resultsInfo.addClass('d-none');
+  });
+});
 </script>
 
 <?= $this->endSection() ?>

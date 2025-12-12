@@ -48,6 +48,33 @@ class Course extends BaseController
     return view('student/courses', ['courses' => $courses]);
 }
 
+    public function details($course_id = null)
+    {
+        if (!$course_id) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Course ID is required.'
+            ])->setStatusCode(400);
+        }
+
+        $db = \Config\Database::connect();
+        $course = $db->table('courses c')
+            ->select('c.id, c.title, c.description, c.course_code, c.units, c.semester, c.term, c.academic_year, c.department, c.program, c.schedule, c.instructor_id, u.name as instructor_name')
+            ->join('users u', 'u.id = c.instructor_id', 'left')
+            ->where('c.id', $course_id)
+            ->get()
+            ->getRowArray();
+
+        if (!$course) {
+            return $this->response->setJSON([
+                'status' => 'error',
+                'message' => 'Course not found.'
+            ])->setStatusCode(404);
+        }
+
+        return $this->response->setJSON($course);
+    }
+
     public function enroll()
     {
         // ✅ Check session

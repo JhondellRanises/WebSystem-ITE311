@@ -11,19 +11,28 @@
   <div class="card-body">
     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
       <h2 class="fw-bold mb-2 mb-sm-0">Manage Schedules</h2>
-      <div class="d-flex gap-2 align-items-center flex-wrap">
-        <form class="d-flex gap-2" action="<?= base_url('admin/manage-schedules') ?>" method="get">
-          <input type="text" class="form-control" name="q" placeholder="Search schedules..." value="<?= esc($q ?? '') ?>" style="min-width: 200px;"/>
-          <select class="form-select" name="course_id" style="min-width: 200px;">
-            <option value="">All Courses</option>
-            <?php foreach ($courses as $course): ?>
-              <option value="<?= $course['id'] ?>" <?= ($courseFilter == $course['id']) ? 'selected' : '' ?>>
-                <?= esc($course['course_code'] . ' - ' . $course['title']) ?>
-              </option>
-            <?php endforeach; ?>
-          </select>
-          <button type="submit" class="btn btn-outline-secondary">Filter</button>
-        </form>
+    </div>
+
+    <!-- Search Form -->
+    <div class="row mb-4">
+      <div class="col-md-8">
+        <div class="input-group">
+          <input 
+            type="text" 
+            id="searchInput" 
+            class="form-control" 
+            placeholder="Search schedules by course, instructor, room..." 
+            autocomplete="off"
+          >
+          <button class="btn btn-secondary" type="button" id="clearBtn">
+            Clear
+          </button>
+        </div>
+        <small class="form-text text-muted mt-2">
+          Type to search schedules instantly
+        </small>
+      </div>
+      <div class="col-md-4 text-end">
         <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#createModal">Add Schedule</button>
       </div>
     </div>
@@ -42,28 +51,50 @@
       </div>
     <?php endif; ?>
 
-    <?php if (!empty($schedules)): ?>
-      <div class="table-responsive">
-        <table class="table table-hover align-middle">
-          <thead>
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="text-center d-none mb-3">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="text-muted mt-2">Searching schedules...</p>
+    </div>
+
+    <!-- Results Counter -->
+    <div id="resultsInfo" class="alert alert-info d-none mb-3">
+      Found <strong id="resultCount">0</strong> schedule(s)
+    </div>
+
+    <!-- No Results Message -->
+    <div id="noResults" class="alert alert-warning d-none mb-3">
+      <i class="fas fa-exclamation-circle"></i> No schedules found matching your search.
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle" id="schedulesTable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th style="width:100px;">CN</th>
+            <th>Course</th>
+            <th>Instructor</th>
+            <th>Day</th>
+            <th>Time</th>
+            <th>Duration</th>
+            <th>Room</th>
+            <th>Building</th>
+            <th>Capacity</th>
+            <th>Status</th>
+            <th class="text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="schedulesBody">
+          <?php if (empty($schedules)): ?>
             <tr>
-              <th>#</th>
-              <th style="width:100px;">CN</th>
-              <th>Course</th>
-              <th>Instructor</th>
-              <th>Day</th>
-              <th>Time</th>
-              <th>Duration</th>
-              <th>Room</th>
-              <th>Building</th>
-              <th>Capacity</th>
-              <th>Status</th>
-              <th class="text-end">Actions</th>
+              <td colspan="12" class="text-center text-muted py-4">No schedules available.</td>
             </tr>
-          </thead>
-          <tbody>
+          <?php else: ?>
             <?php $i = 1; foreach ($schedules as $schedule): ?>
-              <tr>
+              <tr class="schedule-row" data-course="<?= strtolower(esc($schedule['course_code'] . ' ' . $schedule['course_title'])) ?>" data-instructor="<?= strtolower(esc($schedule['instructor_name'] ?? '')) ?>" data-room="<?= strtolower(esc($schedule['room_number'] ?? '')) ?>" data-building="<?= strtolower(esc($schedule['building'] ?? '')) ?>">
                 <td><?= $i++ ?></td>
                 <td>
                   <small class="badge bg-secondary"><?= esc($schedule['course_code'] ?? 'N/A') ?></small>
@@ -97,21 +128,21 @@
                   <?php endif; ?>
                 </td>
                 <td class="text-end">
-                  <button class="btn btn-sm btn-outline-info js-enrollments" data-schedule-id="<?= (int)$schedule['id'] ?>">Enrollments</button>
-                  <button class="btn btn-sm btn-outline-primary js-edit" data-schedule-id="<?= (int)$schedule['id'] ?>">Edit</button>
-                  <form action="<?= base_url('admin/manage-schedules/delete/' . $schedule['id']) ?>" method="post" class="d-inline">
-                    <?= csrf_field() ?>
-                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this schedule?')">Delete</button>
-                  </form>
+                  <div class="btn-group btn-group-sm" role="group">
+                    <button class="btn btn-outline-info js-enrollments" data-schedule-id="<?= (int)$schedule['id'] ?>">Enrollments</button>
+                    <button class="btn btn-outline-primary js-edit" data-schedule-id="<?= (int)$schedule['id'] ?>">Edit</button>
+                    <form action="<?= base_url('admin/manage-schedules/delete/' . $schedule['id']) ?>" method="post" class="d-inline">
+                      <?= csrf_field() ?>
+                      <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Delete this schedule?')">Delete</button>
+                    </form>
+                  </div>
                 </td>
               </tr>
             <?php endforeach; ?>
-          </tbody>
-        </table>
-      </div>
-    <?php else: ?>
-      <div class="alert alert-light border">No schedules found.</div>
-    <?php endif; ?>
+          <?php endif; ?>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 
@@ -279,41 +310,116 @@
   </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 const courseInstructorMap = <?= $courseInstructorMap ?? '{}' ?>;
+let allSchedules = [];
 
-document.addEventListener('DOMContentLoaded', function() {
-  const form = document.getElementById('scheduleForm');
-  const scheduleIdInput = document.getElementById('scheduleId');
-  const modalTitle = document.getElementById('modalTitle');
-  const submitBtn = document.getElementById('submitBtn');
-  const modal = new bootstrap.Modal(document.getElementById('createModal'));
-  const courseSelect = document.getElementById('course_id');
-  const instructorSelect = document.getElementById('instructor_id');
+$(document).ready(function() {
+  const searchInput = $('#searchInput');
+  const clearBtn = $('#clearBtn');
+  const schedulesBody = $('#schedulesBody');
+  const loadingSpinner = $('#loadingSpinner');
+  const noResults = $('#noResults');
+  const resultsInfo = $('#resultsInfo');
+  const resultCount = $('#resultCount');
 
-  // Auto-fill instructor when course is selected
-  courseSelect.addEventListener('change', function() {
-    const courseId = this.value;
-    if (courseId && courseInstructorMap[courseId]) {
-      instructorSelect.value = courseInstructorMap[courseId];
-      // Keep enabled so the value gets submitted with the form
-    } else {
-      instructorSelect.value = '';
+  // Store initial schedules data
+  function storeSchedulesData() {
+    allSchedules = [];
+    $('#schedulesTable tbody tr.schedule-row').each(function() {
+      const course = this.getAttribute('data-course') || '';
+      const instructor = this.getAttribute('data-instructor') || '';
+      const room = this.getAttribute('data-room') || '';
+      const building = this.getAttribute('data-building') || '';
+      
+      allSchedules.push({
+        id: $(this).find('td').eq(0).text(),
+        course: String(course).toLowerCase(),
+        instructor: String(instructor).toLowerCase(),
+        room: String(room).toLowerCase(),
+        building: String(building).toLowerCase(),
+        html: $(this).prop('outerHTML')
+      });
+    });
+    console.log('Stored schedules:', allSchedules);
+  }
+
+  storeSchedulesData();
+
+  // Client-side filtering
+  searchInput.on('keyup', function() {
+    const searchTerm = $(this).val().toLowerCase().trim();
+    console.log('Search term:', searchTerm);
+    
+    if (searchTerm === '') {
+      // Show all schedules
+      schedulesBody.html('');
+      allSchedules.forEach(schedule => {
+        schedulesBody.append(schedule.html);
+      });
+      noResults.addClass('d-none');
+      resultsInfo.addClass('d-none');
+      attachScheduleListeners();
+      return;
     }
+
+    // Filter schedules
+    const filtered = allSchedules.filter(schedule => {
+      const matches = schedule.course.includes(searchTerm) || 
+                      schedule.instructor.includes(searchTerm) || 
+                      schedule.room.includes(searchTerm) || 
+                      schedule.building.includes(searchTerm);
+      console.log('Checking schedule:', schedule, 'matches:', matches);
+      return matches;
+    });
+
+    // Display filtered results
+    if (filtered.length === 0) {
+      schedulesBody.html('<tr><td colspan="12" class="text-center text-muted py-4">No schedules match your search.</td></tr>');
+      noResults.removeClass('d-none');
+      resultsInfo.addClass('d-none');
+    } else {
+      schedulesBody.html('');
+      filtered.forEach(schedule => {
+        schedulesBody.append(schedule.html);
+      });
+      resultCount.text(filtered.length);
+      resultsInfo.removeClass('d-none');
+      noResults.addClass('d-none');
+    }
+
+    attachScheduleListeners();
   });
 
-  // Check on form reset
-  form.addEventListener('reset', function() {
-    setTimeout(() => {
-      instructorSelect.value = '';
-      courseSelect.value = '';
-    }, 0);
+  // Clear search
+  clearBtn.on('click', function() {
+    searchInput.val('');
+    schedulesBody.html('');
+    allSchedules.forEach(schedule => {
+      schedulesBody.append(schedule.html);
+    });
+    noResults.addClass('d-none');
+    resultsInfo.addClass('d-none');
+    attachScheduleListeners();
   });
 
-  // Edit button handler
-  document.querySelectorAll('.js-edit').forEach(btn => {
-    btn.addEventListener('click', function() {
-      const scheduleId = this.dataset.scheduleId;
+  // Helper function to escape HTML
+  function escapeHtml(text) {
+    const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    };
+    return String(text).replace(/[&<>"']/g, m => map[m]);
+  }
+
+  // Edit button handler - using event delegation for dynamic content
+  function attachEditListeners() {
+    $(document).off('click', '.js-edit').on('click', '.js-edit', function() {
+      const scheduleId = $(this).data('schedule-id');
       console.log('Loading schedule:', scheduleId);
       
       fetch('<?= base_url('admin/manage-schedules/get/') ?>' + scheduleId)
@@ -328,7 +434,7 @@ document.addEventListener('DOMContentLoaded', function() {
           console.log('Response data:', data);
           if (data.status === 'success') {
             const schedule = data.schedule;
-            scheduleIdInput.value = schedule.id;
+            document.getElementById('scheduleId').value = schedule.id;
             document.getElementById('course_id').value = schedule.course_id;
             document.getElementById('instructor_id').value = schedule.instructor_id;
             
@@ -343,17 +449,22 @@ document.addEventListener('DOMContentLoaded', function() {
               document.getElementById('day_range_end').value = dayRange;
             }
             
-            document.getElementById('start_time').value = schedule.start_time;
-            document.getElementById('end_time').value = schedule.end_time;
+            // Extract HH:MM from HH:MM:SS format if needed
+            const startTimeValue = schedule.start_time ? schedule.start_time.substring(0, 5) : '';
+            const endTimeValue = schedule.end_time ? schedule.end_time.substring(0, 5) : '';
+            document.getElementById('start_time').value = startTimeValue;
+            document.getElementById('end_time').value = endTimeValue;
             document.getElementById('room_number').value = schedule.room_number || '';
             document.getElementById('building').value = schedule.building || '';
             document.getElementById('capacity').value = schedule.capacity || '';
             document.getElementById('notes').value = schedule.notes || '';
             document.getElementById('is_active').checked = schedule.is_active == 1;
             
-            modalTitle.textContent = 'Edit Schedule';
-            submitBtn.textContent = 'Update Schedule';
-            form.action = '<?= base_url('admin/manage-schedules/update/') ?>' + schedule.id;
+            document.getElementById('modalTitle').textContent = 'Edit Schedule';
+            document.getElementById('submitBtn').textContent = 'Update Schedule';
+            document.getElementById('scheduleForm').action = '<?= base_url('admin/manage-schedules/update/') ?>' + schedule.id;
+            
+            const modal = new bootstrap.Modal(document.getElementById('createModal'));
             modal.show();
           } else {
             alert('Error: ' + (data.message || 'Unknown error'));
@@ -364,21 +475,12 @@ document.addEventListener('DOMContentLoaded', function() {
           alert('Failed to load schedule data: ' + error.message);
         });
     });
-  });
+  }
 
-  // Reset form when modal is hidden
-  document.getElementById('createModal').addEventListener('hidden.bs.modal', function() {
-    form.reset();
-    scheduleIdInput.value = '';
-    form.action = '<?= base_url('admin/manage-schedules/store') ?>';
-    modalTitle.textContent = 'Create New Schedule';
-    submitBtn.textContent = 'Save Schedule';
-  });
-
-  // Enrollments button handler
-  document.querySelectorAll('.js-enrollments').forEach(btn => {
-    btn.addEventListener('click', function() {
-      const scheduleId = this.dataset.scheduleId;
+  // Enrollments button handler - using event delegation for dynamic content
+  function attachEnrollListeners() {
+    $(document).off('click', '.js-enrollments').on('click', '.js-enrollments', function() {
+      const scheduleId = $(this).data('schedule-id');
       const enrollmentsModal = new bootstrap.Modal(document.getElementById('enrollmentsModal'));
       
       fetch('<?= base_url('admin/manage-schedules/enrollments/') ?>' + scheduleId)
@@ -418,6 +520,52 @@ document.addEventListener('DOMContentLoaded', function() {
           document.getElementById('enrollmentsContent').innerHTML = '<div class="alert alert-danger">Failed to load enrollments: ' + error.message + '</div>';
         });
     });
+  }
+
+  // Attach event listeners to schedule buttons
+  function attachScheduleListeners() {
+    attachEnrollListeners();
+    attachEditListeners();
+  }
+
+  attachScheduleListeners();
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('scheduleForm');
+  const scheduleIdInput = document.getElementById('scheduleId');
+  const modalTitle = document.getElementById('modalTitle');
+  const submitBtn = document.getElementById('submitBtn');
+  const modal = new bootstrap.Modal(document.getElementById('createModal'));
+  const courseSelect = document.getElementById('course_id');
+  const instructorSelect = document.getElementById('instructor_id');
+
+  // Auto-fill instructor when course is selected
+  courseSelect.addEventListener('change', function() {
+    const courseId = this.value;
+    if (courseId && courseInstructorMap[courseId]) {
+      instructorSelect.value = courseInstructorMap[courseId];
+      // Keep enabled so the value gets submitted with the form
+    } else {
+      instructorSelect.value = '';
+    }
+  });
+
+  // Check on form reset
+  form.addEventListener('reset', function() {
+    setTimeout(() => {
+      instructorSelect.value = '';
+      courseSelect.value = '';
+    }, 0);
+  });
+
+  // Reset form when modal is hidden
+  document.getElementById('createModal').addEventListener('hidden.bs.modal', function() {
+    form.reset();
+    scheduleIdInput.value = '';
+    form.action = '<?= base_url('admin/manage-schedules/store') ?>';
+    modalTitle.textContent = 'Create New Schedule';
+    submitBtn.textContent = 'Save Schedule';
   });
 });
 </script>

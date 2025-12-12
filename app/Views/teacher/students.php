@@ -159,9 +159,17 @@
                         <?php endif; ?>
                       </td>
                       <td class="text-end">
-                        <a href="<?= base_url('admin/manage-users?search=' . urlencode($student['email'])) ?>" class="btn btn-sm btn-outline-primary">
+                        <button class="btn btn-sm btn-outline-primary view-profile-btn" data-student-id="<?= $student['id'] ?>" data-student-name="<?= esc($student['name']) ?>" data-student-email="<?= esc($student['email']) ?>">
                           <i class="fas fa-user"></i> View Profile
-                        </a>
+                        </button>
+                        <form action="<?= base_url('teacher/students/remove') ?>" method="post" class="d-inline" onsubmit="return confirm('Remove <?= esc($student['name']) ?> from this course?');">
+                          <?= csrf_field() ?>
+                          <input type="hidden" name="enrollment_id" value="<?= $student['enrollment_id'] ?>">
+                          <input type="hidden" name="course_id" value="<?= $selectedCourseId ?>">
+                          <button type="submit" class="btn btn-sm btn-outline-danger">
+                            <i class="fas fa-trash"></i> Remove
+                          </button>
+                        </form>
                       </td>
                     </tr>
                   <?php endforeach; ?>
@@ -191,6 +199,33 @@
         <i class="fas fa-info-circle"></i> Please select a course from the dropdown above to view enrolled students.
       </div>
     <?php endif; ?>
+  </div>
+</div>
+
+<!-- Student Profile Modal -->
+<div class="modal fade" id="studentProfileModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">
+          <i class="fas fa-user-circle"></i> Student Profile
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div id="profileContent">
+          <div class="text-center py-4">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2 text-muted">Loading profile...</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -248,6 +283,108 @@
     </div>
   </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+  // ========== VIEW PROFILE MODAL ==========
+  $(document).on('click', '.view-profile-btn', function() {
+    const studentId = $(this).data('student-id');
+    const studentName = $(this).data('student-name');
+    const studentEmail = $(this).data('student-email');
+    const profileContent = $('#profileContent');
+    const modal = new bootstrap.Modal(document.getElementById('studentProfileModal'));
+    
+    // Show loading state
+    profileContent.html(`
+      <div class="text-center py-4">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-2 text-muted">Loading profile...</p>
+      </div>
+    `);
+    
+    modal.show();
+    
+    // Fetch student profile
+    $.ajax({
+      url: '<?= base_url('teacher/students/profile') ?>/' + studentId,
+      type: 'GET',
+      dataType: 'json',
+      success: function(data) {
+        if (data.status === 'success' && data.student) {
+          const student = data.student;
+          let profileHtml = `
+            <div class="student-profile">
+              <div class="row mb-4">
+                <div class="col-md-3 text-center">
+                  <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 100px; height: 100px;">
+                    <i class="fas fa-user" style="font-size: 3rem; color: #666;"></i>
+                  </div>
+                </div>
+                <div class="col-md-9">
+                  <h4 class="mb-1">${escapeHtml(student.name)}</h4>
+                  <p class="text-muted mb-3">${escapeHtml(student.email)}</p>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <small class="text-muted">Role</small>
+                      <p><strong>${escapeHtml(student.role)}</strong></p>
+                    </div>
+                    <div class="col-md-6">
+                      <small class="text-muted">Status</small>
+                      <p><span class="badge bg-success">Active</span></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <hr>
+              
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <small class="text-muted">Account Created</small>
+                  <p><strong>${student.created_at ? new Date(student.created_at).toLocaleDateString() : 'N/A'}</strong></p>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <small class="text-muted">Last Updated</small>
+                  <p><strong>${student.updated_at ? new Date(student.updated_at).toLocaleDateString() : 'N/A'}</strong></p>
+                </div>
+              </div>
+            </div>
+          `;
+          profileContent.html(profileHtml);
+        } else {
+          profileContent.html(`
+            <div class="alert alert-danger">
+              <i class="fas fa-exclamation-circle"></i> Error loading student profile.
+            </div>
+          `);
+        }
+      },
+      error: function(xhr) {
+        profileContent.html(`
+          <div class="alert alert-danger">
+            <i class="fas fa-exclamation-circle"></i> Error loading student profile. Please try again.
+          </div>
+        `);
+        console.error(xhr.responseText);
+      }
+    });
+  });
+  
+  function escapeHtml(text) {
+    const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    };
+    return text.replace(/[&<>"']/g, m => map[m]);
+  }
+});
+</script>
 
 <script>
 // Wait for document ready

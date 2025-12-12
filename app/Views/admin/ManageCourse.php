@@ -9,13 +9,36 @@
   <div class="card-body">
     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
       <h2 class="fw-bold mb-2 mb-sm-0">Manage Courses</h2>
-      <div class="d-flex gap-2 align-items-center">
-        <form class="d-flex" action="<?= base_url('admin/manage-courses') ?>" method="get">
-          <input type="text" class="form-control" name="q" placeholder="Search courses..." value="<?= esc($q ?? '') ?>"/>
-          <button type="submit" class="btn btn-outline-secondary ms-2">Search</button>
-        </form>
-        <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#createModal">Add Course</button>
+      <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#createModal">Add Course</button>
+    </div>
+
+    <!-- Search Form for Courses -->
+    <div class="mb-3">
+      <div class="input-group input-group-sm">
+        <input 
+          type="text" 
+          id="manageCourseSearchInput" 
+          class="form-control" 
+          placeholder="Search courses by title, code, department, or program..."
+          autocomplete="off"
+        >
+        <button class="btn btn-outline-secondary" type="button" id="manageCourseClearBtn">
+          Clear
+        </button>
       </div>
+      <small class="form-text text-muted d-block mt-2">
+        Type to filter courses instantly
+      </small>
+    </div>
+
+    <!-- Results Counter -->
+    <div id="manageCourseResultsInfo" class="alert alert-info d-none mb-3">
+      <i class="fas fa-info-circle"></i> Found <strong id="manageCourseResultCount">0</strong> course(s)
+    </div>
+
+    <!-- No Results Message -->
+    <div id="manageCourseNoResults" class="alert alert-warning d-none mb-3">
+      <i class="fas fa-exclamation-circle"></i> No courses found matching your search.
     </div>
 
     <?php if (!empty($courses)): ?>
@@ -38,9 +61,9 @@
               <th class="text-end">Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="manageCourseTableBody">
             <?php $i = 1; foreach ($courses as $c): ?>
-              <tr>
+              <tr class="manage-course-row" data-title="<?= strtolower(esc($c['title'])) ?>" data-code="<?= strtolower(esc($c['course_code'] ?? '')) ?>" data-department="<?= strtolower(esc($c['department'] ?? '')) ?>" data-program="<?= strtolower(esc($c['program'] ?? '')) ?>">
                 <td><?= $i++ ?></td>
                 <td><?= esc($c['course_code'] ?? '') ?></td>
                 <td>
@@ -355,6 +378,7 @@
   </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 (function(){
   const qs = new URLSearchParams(window.location.search);
@@ -531,6 +555,80 @@
     });
   }
 })();
+
+// ========== MANAGE COURSES SEARCH ==========
+$(document).ready(function() {
+  const searchInput = $('#manageCourseSearchInput');
+  const clearBtn = $('#manageCourseClearBtn');
+  const courseTableBody = $('#manageCourseTableBody');
+  const noResults = $('#manageCourseNoResults');
+  const resultsInfo = $('#manageCourseResultsInfo');
+  const resultCount = $('#manageCourseResultCount');
+  let allCourses = [];
+
+  // Store initial courses data
+  function storeCoursesData() {
+    allCourses = [];
+    $('#manageCourseTableBody tr.manage-course-row').each(function() {
+      allCourses.push({
+        title: $(this).data('title'),
+        code: $(this).data('code'),
+        department: $(this).data('department'),
+        program: $(this).data('program'),
+        html: $(this).prop('outerHTML')
+      });
+    });
+  }
+
+  storeCoursesData();
+
+  // Real-time filtering for courses
+  searchInput.on('keyup', function() {
+    const searchTerm = $(this).val().toLowerCase().trim();
+    
+    if (searchTerm === '') {
+      courseTableBody.html('');
+      allCourses.forEach(course => {
+        courseTableBody.append(course.html);
+      });
+      noResults.addClass('d-none');
+      resultsInfo.addClass('d-none');
+      return;
+    }
+
+    const filtered = allCourses.filter(course => 
+      course.title.includes(searchTerm) ||
+      course.code.includes(searchTerm) ||
+      course.department.includes(searchTerm) ||
+      course.program.includes(searchTerm)
+    );
+
+    if (filtered.length === 0) {
+      courseTableBody.html('<tr><td colspan="13" class="text-center text-muted py-4">No courses match your search.</td></tr>');
+      noResults.removeClass('d-none');
+      resultsInfo.addClass('d-none');
+    } else {
+      courseTableBody.html('');
+      filtered.forEach(course => {
+        courseTableBody.append(course.html);
+      });
+      resultCount.text(filtered.length);
+      resultsInfo.removeClass('d-none');
+      noResults.addClass('d-none');
+    }
+  });
+
+  // Clear search for courses
+  clearBtn.on('click', function() {
+    searchInput.val('');
+    courseTableBody.html('');
+    allCourses.forEach(course => {
+      courseTableBody.append(course.html);
+    });
+    noResults.addClass('d-none');
+    resultsInfo.addClass('d-none');
+  });
+});
 </script>
 
 <?= $this->endSection() ?>

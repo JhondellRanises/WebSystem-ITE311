@@ -72,7 +72,10 @@
               <span id="notifBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display:none;">0</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notifDropdown" style="min-width: 320px;">
-              <li class="px-3 py-2 fw-semibold">Notifications</li>
+              <li class="px-3 py-2 d-flex justify-content-between align-items-center">
+                <span class="fw-semibold">Notifications</span>
+                <button id="markAllReadBtn" class="btn btn-sm btn-link text-primary" style="padding: 0; font-size: 0.85rem; display: none;">Mark All Read</button>
+              </li>
               <li><hr class="dropdown-divider"></li>
               <li id="notifEmpty" class="px-3 text-muted">No notifications.</li>
               <li class="px-0">
@@ -162,11 +165,14 @@
 
     function render(list){
       menu.innerHTML = '';
+      const markAllBtn = document.getElementById('markAllReadBtn');
       if (!list || list.length === 0){
         emptyRow.style.display = 'block';
+        if (markAllBtn) markAllBtn.style.display = 'none';
         return;
       }
       emptyRow.style.display = 'none';
+      if (markAllBtn) markAllBtn.style.display = 'inline-block';
       list.forEach(function(n){
         const item = document.createElement('div');
         item.className = 'list-group-item d-flex justify-content-between align-items-start';
@@ -227,6 +233,49 @@
         .fail(function(xhr){ console.error('GET /notifications failed', xhr?.status, xhr?.responseText); });
     }
 
+    // Handler for Mark All as Read button
+    $(document).on('click', '#markAllReadBtn', function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      const $btn = $(this);
+      $btn.prop('disabled', true).text('...');
+      const data = {};
+      if (csrfName) data[csrfName] = csrfHash;
+      
+      $.ajax({
+        url: '<?= base_url('notifications/mark_all_read') ?>',
+        type: 'POST',
+        data: data,
+        dataType: 'json',
+        headers: {
+          'X-CSRF-TOKEN': csrfHash
+        },
+        success: function(res){
+          if(res && res.csrf){
+            csrfHash = res.csrf;
+            const meta = document.querySelector('meta[name="csrf-token"]');
+            if (meta) meta.setAttribute('content', csrfHash);
+          }
+          fetchNotifs();
+        },
+        error: function(xhr){
+          console.error('mark_all_read POST failed', xhr?.status, xhr?.responseText);
+          // Fallback to GET if POST blocked by CSRF settings
+          $.ajax({
+            url: '<?= base_url('notifications/mark_all_read') ?>',
+            type: 'GET',
+            dataType: 'json',
+            success: function(res){ fetchNotifs(); },
+            error: function(){
+              console.error('mark_all_read GET also failed');
+              alert('Failed to mark all as read. Please try again.');
+              fetchNotifs();
+            }
+          });
+        }
+      });
+    });
+
     // Delegated handler for Mark Read
     $(document).on('click', '#notifMenu button[data-notif-id]', function(e){
       e.preventDefault();
@@ -266,7 +315,7 @@
     });
 
     fetchNotifs();
-    setInterval(fetchNotifs, 60000);
+    setInterval(fetchNotifs, 10000);
   })();
 </script>
 <!-- No modal script needed; Upload Material is now a dedicated page. -->

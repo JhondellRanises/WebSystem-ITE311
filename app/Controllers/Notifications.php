@@ -52,4 +52,23 @@ class Notifications extends BaseController
             'csrf' => csrf_hash(),
         ]);
     }
+
+    public function mark_all_as_read()
+    {
+        if (!session()->get('logged_in')) {
+            return $this->response->setStatusCode(ResponseInterface::HTTP_UNAUTHORIZED)
+                ->setJSON(['status' => 'error', 'message' => 'Unauthorized']);
+        }
+        if (!in_array(strtolower($this->request->getMethod()), ['post','get'])) {
+            return $this->response->setStatusCode(ResponseInterface::HTTP_METHOD_NOT_ALLOWED)
+                ->setJSON(['status' => 'error', 'message' => 'Invalid method']);
+        }
+        $userId = (int) session()->get('user_id');
+        $model = new NotificationModel();
+        $ok = $model->markAllAsRead($userId);
+        return $this->response->setJSON([
+            'status' => $ok ? 'success' : 'error',
+            'csrf' => csrf_hash(),
+        ]);
+    }
 }

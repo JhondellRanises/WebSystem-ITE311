@@ -151,6 +151,15 @@ class Materials extends BaseController
             if (empty($course_id)) {
                 return redirect()->back()->with('error', 'Please select a course first.');
             }
+            
+            // Get exam type from form
+            $examType = $this->request->getPost('exam_type');
+            $validExamTypes = ['Prelim', 'Midterm', 'Final'];
+            
+            if (empty($examType) || !in_array($examType, $validExamTypes)) {
+                return redirect()->back()->with('error', 'Please select a valid exam type (Prelim, Midterm, or Final).')->withInput();
+            }
+            
             // Accept both 'material_file' (new) and 'material' (legacy)
             $fileField = $this->request->getFile('material_file') && $this->request->getFile('material_file')->isValid()
                 ? 'material_file' : 'material';
@@ -197,8 +206,41 @@ class Materials extends BaseController
                 'course_id' => (int) $course_id,
                 'file_name' => $originalName,
                 'file_path' => $relativePath,
+                'exam_type' => $examType,
                 'created_at' => date('Y-m-d H:i:s')
             ]);
+
+            // Send notifications to all enrolled students
+            try {
+                $course = $db->table('courses')->where('id', $course_id)->get()->getRowArray();
+                $courseTitle = $course ? esc($course['title']) : 'Course #' . $course_id;
+                $uploaderName = session()->get('user_name') ?? 'Teacher';
+                
+                // Get all enrolled students in this course (both approved and pending)
+                $enrolledStudents = $db->table('enrollments')
+                    ->select('user_id')
+                    ->where('course_id', (int)$course_id)
+                    ->whereIn('status', ['approved', 'pending'])
+                    ->get()
+                    ->getResultArray();
+                
+                error_log('Found ' . count($enrolledStudents) . ' enrolled students for course ' . $course_id);
+                
+                if (!empty($enrolledStudents)) {
+                    $notificationModel = new \App\Models\NotificationModel();
+                    $message = "New material uploaded to {$courseTitle}: {$originalName} ({$examType}) by {$uploaderName}";
+                    
+                    foreach ($enrolledStudents as $student) {
+                        $userId = (int)$student['user_id'];
+                        if ($userId > 0) {
+                            $result = $notificationModel->createNotification($userId, $message);
+                            error_log('Notification for user ' . $userId . ': ' . ($result ? 'created' : 'failed'));
+                        }
+                    }
+                }
+            } catch (\Exception $e) {
+                error_log('Material upload notification error: ' . $e->getMessage());
+            }
 
             return redirect()->to('/admin/course/' . $course_id . '/upload')->with('success', 'Material uploaded successfully.');
         }

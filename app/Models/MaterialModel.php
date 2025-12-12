@@ -8,7 +8,7 @@ class MaterialModel extends Model
 {
     protected $table = 'materials';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['course_id', 'file_name', 'file_path', 'created_at', 'deleted_at'];
+    protected $allowedFields = ['course_id', 'file_name', 'file_path', 'exam_type', 'created_at', 'deleted_at'];
     public $useTimestamps = false;
 
     public function insertMaterial($data)
@@ -105,5 +105,44 @@ class MaterialModel extends Model
         return $builder->orderBy('created_at', 'DESC')
                        ->get()
                        ->getResultArray();
+    }
+
+    public function getMaterialsByExamType($course_id, $exam_type)
+    {
+        $db = \Config\Database::connect();
+        $builder = $db->table('materials')
+                      ->where('course_id', $course_id)
+                      ->where('exam_type', $exam_type)
+                      ->orderBy('created_at', 'DESC');
+        
+        try {
+            $columns = $db->getFieldData('materials');
+            $hasDeletedAt = false;
+            foreach ($columns as $column) {
+                if ($column->name === 'deleted_at') {
+                    $hasDeletedAt = true;
+                    break;
+                }
+            }
+            if ($hasDeletedAt) {
+                $builder->where('deleted_at', null);
+            }
+        } catch (\Exception $e) {
+            // If we can't check columns, just skip the filter
+        }
+        
+        return $builder->get()->getResultArray();
+    }
+
+    public function getMaterialsGroupedByExamType($course_id)
+    {
+        $examTypes = ['Prelim', 'Midterm', 'Final'];
+        $grouped = [];
+        
+        foreach ($examTypes as $type) {
+            $grouped[$type] = $this->getMaterialsByExamType($course_id, $type);
+        }
+        
+        return $grouped;
     }
 }

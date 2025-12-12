@@ -39,30 +39,49 @@
 
         <h5 class="fw-semibold">Selected Course Materials</h5>
         <?php if (!empty($materials)): ?>
-          <div class="table-responsive">
-            <table class="table table-striped align-middle mt-2">
-              <thead class="table-light">
-                <tr>
-                  <th>#</th>
-                  <th>File Name</th>
-                  <th>Uploaded</th>
-                  <th style="width:120px;" class="text-end">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php foreach ($materials as $m): ?>
-                  <tr>
-                    <td><?= (int)$m['id'] ?></td>
-                    <td><?= esc($m['file_name']) ?></td>
-                    <td><?= esc($m['created_at']) ?></td>
-                    <td class="text-end">
-                      <a class="btn btn-sm btn-primary" href="<?= site_url('/materials/download/' . $m['id']) ?>">Download</a>
-                    </td>
-                  </tr>
-                <?php endforeach; ?>
-              </tbody>
-            </table>
-          </div>
+          <?php 
+            // Group materials by exam type
+            $grouped = ['Prelim' => [], 'Midterm' => [], 'Final' => []];
+            foreach ($materials as $m) {
+              $examType = $m['exam_type'] ?? 'Prelim';
+              if (!isset($grouped[$examType])) {
+                $grouped[$examType] = [];
+              }
+              $grouped[$examType][] = $m;
+            }
+          ?>
+          
+          <?php foreach (['Prelim', 'Midterm', 'Final'] as $examType): ?>
+            <?php if (!empty($grouped[$examType])): ?>
+              <div class="mb-4">
+                <h6 class="fw-semibold text-primary mb-2"><?= esc($examType) ?> Materials</h6>
+                <div class="table-responsive">
+                  <table class="table table-striped align-middle">
+                    <thead class="table-light">
+                      <tr>
+                        <th>#</th>
+                        <th>File Name</th>
+                        <th>Uploaded</th>
+                        <th style="width:120px;" class="text-end">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php foreach ($grouped[$examType] as $m): ?>
+                        <tr>
+                          <td><?= (int)$m['id'] ?></td>
+                          <td><?= esc($m['file_name']) ?></td>
+                          <td><?= esc($m['created_at']) ?></td>
+                          <td class="text-end">
+                            <a class="btn btn-sm btn-primary" href="<?= site_url('/materials/download/' . $m['id']) ?>">Download</a>
+                          </td>
+                        </tr>
+                      <?php endforeach; ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            <?php endif; ?>
+          <?php endforeach; ?>
         <?php else: ?>
           <div class="alert alert-light border">No materials uploaded for this course yet.</div>
         <?php endif; ?>

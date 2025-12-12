@@ -60,6 +60,15 @@ $courses = $courses ?? [];
         <form id="uploadForm" action="<?= empty($course_id) ? base_url('admin/upload') : base_url('admin/course/' . (int)$course_id . '/upload') ?>" method="post" enctype="multipart/form-data">
           <?= csrf_field() ?>
           <div class="mb-2">
+            <label for="exam_type" class="form-label">Exam Type</label>
+            <select name="exam_type" id="exam_type" class="form-select" required>
+              <option value="">-- Select Exam Type --</option>
+              <option value="Prelim">Prelim</option>
+              <option value="Midterm">Midterm</option>
+              <option value="Final">Final</option>
+            </select>
+          </div>
+          <div class="mb-2">
             <label for="material_file" class="form-label">Select Material File</label>
             <input type="file" name="material_file" id="material_file" class="form-control" accept=".pdf,.ppt,.pptx,.doc,.docx" required>
             <div class="form-text">Allowed: PDF, PPT, PPTX, DOC, DOCX. Max 10MB.</div>

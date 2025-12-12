@@ -38,4 +38,13 @@ class NotificationModel extends Model
             'created_at' => date('Y-m-d H:i:s')
         ]);
     }
+
+    public function markAllAsRead(int $userId): bool
+    {
+        $db = \Config\Database::connect();
+        return (bool)$db->table('notifications')
+            ->where('user_id', $userId)
+            ->where('is_read', 0)
+            ->update(['is_read' => 1]);
+    }
 }
