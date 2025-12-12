@@ -42,7 +42,7 @@ class Teacher extends BaseController
         
         $builder = $courseModel->select('courses.*, 
             users.name as instructor_name,
-            (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id) as student_count,
+            (SELECT COUNT(*) FROM enrollments e WHERE e.course_id = courses.id AND e.status = "approved") as student_count,
             (SELECT COUNT(*) FROM materials m WHERE m.course_id = courses.id) as material_count')
             ->join('users', 'users.id = courses.instructor_id', 'left');
 
@@ -313,16 +313,17 @@ class Teacher extends BaseController
         $userModel = new UserModel();
         $enrollmentModel = new EnrollmentModel();
 
-        // Get already enrolled student IDs for this course
-        $enrolledStudentIds = $enrollmentModel->select('user_id')
+        // Get student IDs with pending or approved enrollments (exclude only these, allow rejected to be re-enrolled)
+        $activeEnrolledStudentIds = $enrollmentModel->select('user_id')
             ->where('course_id', $courseId)
+            ->whereIn('status', ['pending', 'approved'])
             ->findAll();
-        $enrolledIds = array_column($enrolledStudentIds, 'user_id') ?: [0];
+        $activeEnrolledIds = array_column($activeEnrolledStudentIds, 'user_id') ?: [0];
 
-        // Search for students (not already enrolled)
+        // Search for students (not already pending or approved)
         $builder = $userModel->select('id, name, email')
             ->where('role', 'student')
-            ->whereNotIn('id', $enrolledIds);
+            ->whereNotIn('id', $activeEnrolledIds);
 
         if ($search) {
             $builder->groupStart()
@@ -334,7 +335,7 @@ class Teacher extends BaseController
         $students = $builder->orderBy('name', 'ASC')->limit(50)->findAll();
 
         // Debug logging
-        log_message('debug', 'searchStudents - Course ID: ' . $courseId . ', Enrolled IDs: ' . json_encode($enrolledIds) . ', Found students: ' . count($students));
+        log_message('debug', 'searchStudents - Course ID: ' . $courseId . ', Active Enrolled IDs: ' . json_encode($activeEnrolledIds) . ', Found students: ' . count($students));
 
         return $this->response->setJSON([
             'status' => 'success',

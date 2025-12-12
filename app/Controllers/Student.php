@@ -76,12 +76,16 @@ class Student extends BaseController
             $rejected = [];
         }
 
-        // Get available courses (not enrolled in at all)
-        $allEnrolledIds = array_column($db->table('enrollments')->select('course_id')->where('user_id', $userId)->get()->getResultArray(), 'course_id') ?: [0];
+        // Get available courses (exclude only pending and approved enrollments, allow rejected to be re-enrolled)
+        $activeEnrolledIds = array_column($db->table('enrollments')
+            ->select('course_id')
+            ->where('user_id', $userId)
+            ->whereIn('status', ['pending', 'approved'])
+            ->get()->getResultArray(), 'course_id') ?: [0];
         $available = $db->table('courses c')
             ->select('c.id, c.title, c.description, c.course_code, c.units, c.semester, c.instructor_id, u.name as instructor_name')
             ->join('users u', 'u.id = c.instructor_id', 'left')
-            ->whereNotIn('c.id', $allEnrolledIds)
+            ->whereNotIn('c.id', $activeEnrolledIds)
             ->orderBy('c.title', 'ASC')
             ->get()->getResultArray();
 

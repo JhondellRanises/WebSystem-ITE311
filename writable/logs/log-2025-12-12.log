@@ -420,3 +420,13 @@ in APPPATH\Controllers\Teacher.php on line 562.
 ERROR - 2025-12-12 02:35:00 --> Schedule update validation failed: {"start_time":"The start_time field is not in the correct format.","end_time":"The end_time field is not in the correct format."}
 ERROR - 2025-12-12 02:35:27 --> Schedule update validation failed: {"start_time":"The start_time field is not in the correct format.","end_time":"The end_time field is not in the correct format."}
 ERROR - 2025-12-12 02:35:45 --> Schedule update validation failed: {"start_time":"The start_time field is not in the correct format.","end_time":"The end_time field is not in the correct format."}
+CRITICAL - 2025-12-12 03:23:30 --> ErrorException: Undefined variable $enrolledIds
+[Method: GET, Route: teacher/students/search]
+in APPPATH\Controllers\Teacher.php on line 338.
+ 1 APPPATH\Controllers\Teacher.php(338): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $enrolledIds', 'C:\\xampp\\htdocs\\ITE311-RANISES\\app\\Controllers\\Teacher.php', 338)
+ 2 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\Teacher->searchStudents()
+ 3 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Teacher))
+ 4 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+ 7 FCPATH\index.php(38): CodeIgniter\Boot::bootWeb(Object(Config\Paths))

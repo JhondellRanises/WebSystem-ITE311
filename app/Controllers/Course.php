@@ -122,53 +122,56 @@ class Course extends BaseController
             ]);
         }
 
-        // ✅ Insert enrollment with pending status (requires student approval)
-        $data = [
-            'user_id' => $student_id,
-            'course_id' => $course_id,
-            'enrollment_date' => date('Y-m-d H:i:s'),
-            'status' => 'pending'
-        ];
+        // ✅ Check if previously rejected - allow re-enrollment
+        $rejectedEnrollment = $enrollmentModel->where('user_id', $student_id)
+            ->where('course_id', $course_id)
+            ->where('status', 'rejected')
+            ->first();
 
-        try {
-            if ($enrollmentModel->insert($data)) {
-                // Create notification for the STUDENT to approve enrollment
-                try {
-                    $db = \Config\Database::connect();
-                    $course = $db->table('courses')
-                        ->select('courses.title, users.name as teacher_name')
-                        ->join('users', 'users.id = courses.instructor_id', 'left')
-                        ->where('courses.id', $course_id)
-                        ->get()
-                        ->getRowArray();
-                    
-                    if ($course) {
-                        $notifModel = new \App\Models\NotificationModel();
-                        $teacherName = $course['teacher_name'] ?? 'Your teacher';
-                        $notifModel->createNotification(
-                            (int)$student_id, 
-                            'You have been enrolled in ' . ($course['title'] ?? 'a course') . ' by ' . $teacherName . '. Please approve or reject this enrollment.'
-                        );
-                    }
-                } catch (\Throwable $e) {
-                    // swallow notification errors to not block enrollment
-                }
-                
-                return $this->response->setJSON([
-                    'status' => 'success',
-                    'message' => 'Student enrolled successfully! Waiting for student approval.'
-                ]);
-            } else {
-                return $this->response->setJSON([
-                    'status' => 'error',
-                    'message' => 'Enrollment failed. Please try again.'
-                ]);
-            }
-        } catch (\Exception $e) {
-            return $this->response->setJSON([
-                'status' => 'error',
-                'message' => 'Database error: ' . $e->getMessage()
+        if ($rejectedEnrollment) {
+            // Update rejected enrollment back to pending
+            $enrollmentModel->update($rejectedEnrollment['id'], [
+                'status' => 'pending',
+                'enrollment_date' => date('Y-m-d H:i:s'),
+                'rejected_at' => null,
+                'rejection_reason' => null
             ]);
+        } else {
+            // ✅ Insert new enrollment with pending status (requires student approval)
+            $data = [
+                'user_id' => $student_id,
+                'course_id' => $course_id,
+                'enrollment_date' => date('Y-m-d H:i:s'),
+                'status' => 'pending'
+            ];
+            $enrollmentModel->insert($data);
         }
+
+        // Create notification for the STUDENT to approve enrollment
+        try {
+            $db = \Config\Database::connect();
+            $course = $db->table('courses')
+                ->select('courses.title, users.name as teacher_name')
+                ->join('users', 'users.id = courses.instructor_id', 'left')
+                ->where('courses.id', $course_id)
+                ->get()
+                ->getRowArray();
+            
+            if ($course) {
+                $notifModel = new \App\Models\NotificationModel();
+                $teacherName = $course['teacher_name'] ?? 'Your teacher';
+                $notifModel->createNotification(
+                    (int)$student_id, 
+                    'You have been enrolled in ' . ($course['title'] ?? 'a course') . ' by ' . $teacherName . '. Please approve or reject this enrollment.'
+                );
+            }
+        } catch (\Throwable $e) {
+            // swallow notification errors to not block enrollment
+        }
+        
+        return $this->response->setJSON([
+            'status' => 'success',
+            'message' => 'Student enrolled successfully! Waiting for student approval.'
+        ]);
     }
 }
