@@ -251,12 +251,18 @@
 
             <div class="col-md-6">
               <label class="form-label" for="room_number">Room Number</label>
-              <input type="text" class="form-control" id="room_number" name="room_number" value="<?= esc(old('room_number')) ?>" placeholder="e.g., 101, A-205" maxlength="50">
+              <input type="text" class="form-control <?= isset($errors['room_number']) ? 'is-invalid' : '' ?>" id="room_number" name="room_number" value="<?= esc(old('room_number')) ?>" placeholder="e.g., 101, A-205" maxlength="50">
+              <?php if (isset($errors['room_number'])): ?>
+                <div class="invalid-feedback d-block"><?= esc($errors['room_number']) ?></div>
+              <?php endif; ?>
             </div>
 
             <div class="col-md-6">
               <label class="form-label" for="building">Building</label>
-              <input type="text" class="form-control" id="building" name="building" value="<?= esc(old('building')) ?>" placeholder="e.g., Science Building" maxlength="100">
+              <input type="text" class="form-control <?= isset($errors['building']) ? 'is-invalid' : '' ?>" id="building" name="building" value="<?= esc(old('building')) ?>" placeholder="e.g., Science Building" maxlength="100">
+              <?php if (isset($errors['building'])): ?>
+                <div class="invalid-feedback d-block"><?= esc($errors['building']) ?></div>
+              <?php endif; ?>
             </div>
 
             <div class="col-md-6">
@@ -347,10 +353,22 @@ $(document).ready(function() {
 
   storeSchedulesData();
 
-  // Client-side filtering
+  // Client-side filtering with character validation
+  const allowedSearchPattern = /^[a-z0-9ñ\s]*$/i;
+  
   searchInput.on('keyup', function() {
-    const searchTerm = $(this).val().toLowerCase().trim();
+    const rawInput = $(this).val().trim();
+    const searchTerm = rawInput.toLowerCase();
     console.log('Search term:', searchTerm);
+    
+    // Check if search term contains special characters
+    if (rawInput && !allowedSearchPattern.test(rawInput)) {
+      // Invalid characters detected - don't search
+      schedulesBody.html('<tr><td colspan="12" class="text-center text-muted py-4">Please remove special characters from your search.</td></tr>');
+      noResults.removeClass('d-none');
+      resultsInfo.addClass('d-none');
+      return;
+    }
     
     if (searchTerm === '') {
       // Show all schedules
@@ -551,11 +569,63 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
+  // Client-side validation for room_number and building
+  const roomNumberInput = document.getElementById('room_number');
+  const buildingInput = document.getElementById('building');
+  const allowedPattern = /^[a-zA-Z0-9ñÑ\s\-()&.,']*/;
+  
+  function validateSpecialChars(input) {
+    const value = input.value.trim();
+    if (value && !allowedPattern.test(value)) {
+      input.classList.add('is-invalid');
+      return false;
+    } else {
+      input.classList.remove('is-invalid');
+      return true;
+    }
+  }
+  
+  if (roomNumberInput) {
+    roomNumberInput.addEventListener('blur', function() {
+      validateSpecialChars(this);
+    });
+  }
+  
+  if (buildingInput) {
+    buildingInput.addEventListener('blur', function() {
+      validateSpecialChars(this);
+    });
+  }
+  
+  // Validate on form submit
+  form.addEventListener('submit', function(e) {
+    let isValid = true;
+    
+    if (roomNumberInput && roomNumberInput.value.trim()) {
+      if (!validateSpecialChars(roomNumberInput)) {
+        isValid = false;
+      }
+    }
+    
+    if (buildingInput && buildingInput.value.trim()) {
+      if (!validateSpecialChars(buildingInput)) {
+        isValid = false;
+      }
+    }
+    
+    if (!isValid) {
+      e.preventDefault();
+      alert('Please correct the errors in Room Number and/or Building fields.');
+    }
+  });
+
   // Check on form reset
   form.addEventListener('reset', function() {
     setTimeout(() => {
       instructorSelect.value = '';
       courseSelect.value = '';
+      if (roomNumberInput) roomNumberInput.classList.remove('is-invalid');
+      if (buildingInput) buildingInput.classList.remove('is-invalid');
     }, 0);
   });
 

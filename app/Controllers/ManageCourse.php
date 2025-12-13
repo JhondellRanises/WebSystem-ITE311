@@ -146,18 +146,29 @@ class ManageCourse extends BaseController
         }
 
         $rules = [
-            'title' => 'required|min_length[3]|max_length[150]',
+            'title' => 'required|min_length[3]|max_length[150]|regex_match[/^[a-zA-Z0-9ñÑ\s\-()&.,\']+$/]',
             'description' => 'permit_empty|max_length[1000]',
             'instructor_id' => 'required|is_not_unique[users.id]',
-            'cn' => 'permit_empty|max_length[30]',
-            'subject_code' => 'permit_empty|max_length[50]',
-            'term' => 'permit_empty|in_list[1,2,3]',
-            'semester' => 'permit_empty|max_length[50]',
-            'units' => 'permit_empty|decimal',
-            'schedule' => 'permit_empty|max_length[255]',
+            'course_code' => 'required|max_length[50]|regex_match[/^[a-zA-Z0-9ñÑ\s\-()&.,\']*$/]',
+            'term' => 'required|in_list[1,2,3]',
+            'semester' => 'required|max_length[50]',
+            'units' => 'required|decimal',
+            'academic_year' => 'required|max_length[20]',
+            'department' => 'required|max_length[100]',
+            'program' => 'required|max_length[100]',
+        ];
+        
+        // Custom error messages
+        $errors = [
+            'title' => [
+                'regex_match' => 'The course title can only contain letters, numbers, and ñ. Special characters are not allowed.'
+            ],
+            'course_code' => [
+                'regex_match' => 'The course code can only contain letters, numbers, and ñ. Special characters are not allowed.'
+            ]
         ];
 
-        if (!$this->validate($rules)) {
+        if (!$this->validate($rules, $errors)) {
             return redirect()->to('/admin/manage-courses')
                 ->withInput()
                 ->with('errors', $this->validator->getErrors());
@@ -232,10 +243,10 @@ class ManageCourse extends BaseController
         }
 
         $rules = [
-            'title' => 'required|min_length[3]|max_length[150]',
+            'title' => 'required|min_length[3]|max_length[150]|regex_match[/^[a-zA-Z0-9ñÑ\s\-()&.,\']+$/]',
             'description' => 'permit_empty|max_length[1000]',
             'instructor_id' => 'permit_empty|is_not_unique[users.id]',
-            'course_code' => 'permit_empty|max_length[50]',
+            'course_code' => 'permit_empty|max_length[50]|regex_match[/^[a-zA-Z0-9ñÑ\s\-()&.,\']*$/]',
             'units' => 'permit_empty|decimal|greater_than_equal_to[0]|less_than_equal_to[10]',
             'term' => 'permit_empty|in_list[1,2,3]',
             'semester' => 'permit_empty|max_length[50]',
@@ -244,7 +255,17 @@ class ManageCourse extends BaseController
             'program' => 'permit_empty|max_length[100]',
         ];
 
-        if (!$this->validate($rules)) {
+        // Custom error messages for edit
+        $errors = [
+            'title' => [
+                'regex_match' => 'The course title can only contain letters, numbers, and ñ. Special characters are not allowed.'
+            ],
+            'course_code' => [
+                'regex_match' => 'The course code can only contain letters, numbers, and ñ. Special characters are not allowed.'
+            ]
+        ];
+
+        if (!$this->validate($rules, $errors)) {
             return redirect()->to('/admin/manage-courses?edit=' . $id)
                 ->withInput()
                 ->with('errors', $this->validator->getErrors());
@@ -264,6 +285,7 @@ class ManageCourse extends BaseController
             $instructorId = null;
         }
 
+        $courseModel = new CourseModel();
         $courseModel->update($id, [
             'title' => $this->request->getPost('title'),
             'description' => $this->request->getPost('description'),

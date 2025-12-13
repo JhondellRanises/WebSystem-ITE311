@@ -173,6 +173,28 @@ class Materials extends BaseController
             $fileField = $this->request->getFile('material_file') && $this->request->getFile('material_file')->isValid()
                 ? 'material_file' : 'material';
 
+            $file = $this->request->getFile($fileField);
+            
+            // Check if file exists and is valid
+            if (!$file || !$file->isValid()) {
+                return redirect()->back()->with('error', 'Please select a valid file.')->withInput();
+            }
+            
+            // Get file extension
+            $fileExtension = strtolower($file->getClientExtension());
+            $allowedExtensions = ['pdf', 'ppt', 'pptx', 'doc', 'docx'];
+            
+            // Check file extension
+            if (!in_array($fileExtension, $allowedExtensions)) {
+                $extensionList = implode(', ', array_map('strtoupper', $allowedExtensions));
+                return redirect()->back()->with('error', 'Invalid file type. Only ' . $extensionList . ' files are allowed. Video files (MP4, AVI, MOV, etc.) are not supported.')->withInput();
+            }
+            
+            // Check file size (10MB max)
+            if ($file->getSize() > 10240 * 1024) {
+                return redirect()->back()->with('error', 'File size exceeds 10MB limit.')->withInput();
+            }
+            
             $rules = [
                 $fileField => 'uploaded['.$fileField.']|max_size['.$fileField.',10240]|ext_in['.$fileField.',pdf,ppt,pptx,doc,docx]'
             ];
@@ -181,10 +203,6 @@ class Materials extends BaseController
                 return redirect()->back()->with('error', 'Invalid file upload.')->withInput();
             }
 
-            $file = $this->request->getFile($fileField);
-            if (!$file->isValid()) {
-                return redirect()->back()->with('error', 'File is not valid.');
-            }
 
             $originalName = $file->getClientName();
             

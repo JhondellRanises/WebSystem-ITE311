@@ -147,13 +147,22 @@ class ManageSchedule extends BaseController
             'day_of_week_end' => 'permit_empty|in_list[Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday]',
             'start_time' => 'required|regex_match[/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/]',
             'end_time' => 'required|regex_match[/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/]',
-            'room_number' => 'permit_empty|string|max_length[50]',
-            'building' => 'permit_empty|string|max_length[100]',
+            'room_number' => 'permit_empty|max_length[50]|regex_match[/^[a-zA-Z0-9ñÑ\s\-()&.,\']*$/]',
+            'building' => 'permit_empty|max_length[100]|regex_match[/^[a-zA-Z0-9ñÑ\s\-()&.,\']*$/]',
             'capacity' => 'permit_empty|integer|greater_than[0]',
             'notes' => 'permit_empty|string',
         ];
+        
+        $errorMessages = [
+            'room_number' => [
+                'regex_match' => 'The room number can only contain letters, and numbers. Special characters are not allowed.'
+            ],
+            'building' => [
+                'regex_match' => 'The building name can only contain letters, and numbers. Special characters are not allowed.'
+            ]
+        ];
 
-        if (!$this->validate($rules)) {
+        if (!$this->validate($rules, $errorMessages)) {
             log_message('error', 'Schedule validation failed: ' . json_encode($this->validator->getErrors()));
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
@@ -234,13 +243,22 @@ class ManageSchedule extends BaseController
             'day_of_week_end' => 'permit_empty|in_list[Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday]',
             'start_time' => 'required|regex_match[/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/]',
             'end_time' => 'required|regex_match[/^([0-1][0-9]|2[0-3]):[0-5][0-9]$/]',
-            'room_number' => 'permit_empty|string|max_length[50]',
-            'building' => 'permit_empty|string|max_length[100]',
+            'room_number' => 'permit_empty|max_length[50]|regex_match[/^[a-zA-Z0-9ñÑ\s\-()&.,\']*$/]',
+            'building' => 'permit_empty|max_length[100]|regex_match[/^[a-zA-Z0-9ñÑ\s\-()&.,\']*$/]',
             'capacity' => 'permit_empty|integer|greater_than[0]',
             'notes' => 'permit_empty|string',
         ];
+        
+        $errorMessages = [
+            'room_number' => [
+                'regex_match' => 'The room number can only contain letters, numbers, and ñ. Special characters are not allowed.'
+            ],
+            'building' => [
+                'regex_match' => 'The building name can only contain letters, numbers, and ñ. Special characters are not allowed.'
+            ]
+        ];
 
-        if (!$this->validate($rules)) {
+        if (!$this->validate($rules, $errorMessages)) {
             log_message('error', 'Schedule update validation failed: ' . json_encode($this->validator->getErrors()));
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }

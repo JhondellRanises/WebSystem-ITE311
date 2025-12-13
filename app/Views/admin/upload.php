@@ -82,7 +82,8 @@ $courses = $courses ?? [];
           <div class="mb-2">
             <label for="material_file" class="form-label">Select Material File</label>
             <input type="file" name="material_file" id="material_file" class="form-control" accept=".pdf,.ppt,.pptx,.doc,.docx" required>
-            <div class="form-text">Allowed: PDF, PPT, PPTX, DOC, DOCX. Max 10MB.</div>
+            <div class="form-text"><strong>Allowed:</strong> PDF, PPT, PPTX, DOC, DOCX. Max 10MB.</div>
+            <div id="fileError" class="text-danger small mt-1" style="display: none;"></div>
           </div>
           <div class="d-flex gap-2">
             <button type="submit" class="btn btn-primary" id="uploadBtn" <?= empty($course_id) ? 'disabled' : '' ?>>Upload File</button>
@@ -95,13 +96,53 @@ $courses = $courses ?? [];
           const uploadBtn = document.getElementById('uploadBtn');
           const uploadForm = document.getElementById('uploadForm');
           const courseIdInput = document.getElementById('courseIdInput');
+          const materialFile = document.getElementById('material_file');
+          const fileError = document.getElementById('fileError');
+          
+          const allowedExtensions = ['pdf', 'ppt', 'pptx', 'doc', 'docx'];
+          
+          function validateFile() {
+            if (!materialFile.files || materialFile.files.length === 0) {
+              fileError.style.display = 'none';
+              uploadBtn.disabled = !courseIdInput.value || courseIdInput.value === '';
+              return true;
+            }
+            
+            const file = materialFile.files[0];
+            const fileName = file.name.toLowerCase();
+            const fileExtension = fileName.split('.').pop();
+            
+            if (!allowedExtensions.includes(fileExtension)) {
+              fileError.textContent = '❌ Invalid file type. Only PDF, PPT, PPTX, DOC, DOCX files are allowed. Video files (MP4, AVI, MOV, etc.) are not supported.';
+              fileError.style.display = 'block';
+              uploadBtn.disabled = true;
+              return false;
+            }
+            
+            const maxSize = 10 * 1024 * 1024;
+            if (file.size > maxSize) {
+              fileError.textContent = '❌ File size exceeds 10MB limit. Please select a smaller file.';
+              fileError.style.display = 'block';
+              uploadBtn.disabled = true;
+              return false;
+            }
+            
+            fileError.style.display = 'none';
+            uploadBtn.disabled = !courseIdInput.value || courseIdInput.value === '';
+            return true;
+          }
+          
+          if (materialFile) {
+            materialFile.addEventListener('change', validateFile);
+          }
+          
           if(courseSwitch && uploadBtn && uploadForm && courseIdInput) {
             courseSwitch.addEventListener('change', function(){
               const courseId = parseInt(this.value, 10);
               if(courseId > 0) {
-                uploadBtn.disabled = false;
                 courseIdInput.value = courseId;
                 uploadForm.action = '<?= base_url('admin/course/') ?>' + courseId + '/upload';
+                validateFile();
               } else {
                 uploadBtn.disabled = true;
               }

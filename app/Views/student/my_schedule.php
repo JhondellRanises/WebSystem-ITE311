@@ -198,9 +198,21 @@ $(document).ready(function() {
 
   storeSchedulesData();
 
-  // Client-side filtering
+  // Client-side filtering with character validation
+  const allowedSearchPattern = /^[a-z0-9ñ\s]*$/i;
+  
   searchInput.on('keyup', function() {
-    const searchTerm = $(this).val().toLowerCase().trim();
+    const rawInput = $(this).val().trim();
+    const searchTerm = rawInput.toLowerCase();
+    
+    // Check if search term contains special characters
+    if (rawInput && !allowedSearchPattern.test(rawInput)) {
+      // Invalid characters detected - don't search
+      schedulesBody.html('<tr><td colspan="7" class="text-center text-muted py-4">Please remove special characters from your search.</td></tr>');
+      noResults.removeClass('d-none');
+      resultsInfo.addClass('d-none');
+      return;
+    }
     
     if (searchTerm === '') {
       // Show all schedules

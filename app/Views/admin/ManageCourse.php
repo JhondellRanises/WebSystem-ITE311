@@ -120,22 +120,37 @@
           <div class="row g-3">
             <div class="col-12">
               <label class="form-label" for="c_title">Course Title <span class="text-danger">*</span></label>
-              <input type="text" class="form-control <?= isset($errors['title']) ? 'is-invalid' : '' ?>" id="c_title" name="title" value="<?= esc(old('title')) ?>" placeholder="e.g., ITE 321 - Web Application Development" required minlength="3" maxlength="150">
+              <div class="input-group">
+                <input type="text" class="form-control <?= isset($errors['title']) ? 'is-invalid' : '' ?>" id="c_title" name="title" value="<?= esc(old('title')) ?>" placeholder="e.g., ITE 321 - Web Application Development" pattern="[a-zA-Z0-9ñÑ\s\-()&.,']+( [a-zA-Z0-9ñÑ\s\-()&.,'])*" title="Only letters, numbers, and ñ are allowed" required minlength="3" maxlength="150">
+                <span class="input-group-text bg-danger text-white border-danger" style="<?= isset($errors['title']) ? 'display: block;' : 'display: none;' ?>">
+                  <i class="bi bi-exclamation-circle"></i>
+                </span>
+              </div>
+              <div class="invalid-feedback" id="c_title_error" style="display: none;">
+                The course title can only contain letters, and numbers. Special characters are not allowed.
+              </div>
               <?php if (isset($errors['title'])): ?>
-                <div class="invalid-feedback d-block"><?= esc($errors['title']) ?></div>
+                <div class="invalid-feedback d-block" style="display: block !important;"><?= esc($errors['title']) ?></div>
               <?php endif; ?>
             </div>
             <div class="col-md-6">
               <label class="form-label" for="c_course_code">Course Number/Code</label>
-              <input type="text" class="form-control <?= isset($errors['course_code']) ? 'is-invalid' : '' ?>" id="c_course_code" name="course_code" value="<?= esc(old('course_code')) ?>" placeholder="e.g., ITE321, CS101" maxlength="50">
+              <div class="input-group">
+                <input type="text" class="form-control <?= isset($errors['course_code']) ? 'is-invalid' : '' ?>" id="c_course_code" name="course_code" value="<?= esc(old('course_code')) ?>" placeholder="e.g., ITE321, CS101" pattern="[a-zA-Z0-9ñÑ\s\-()&.,']*( [a-zA-Z0-9ñÑ\s\-()&.,'])*" title="Only letters, numbers, and ñ are allowed" maxlength="50">
+                <span class="input-group-text bg-danger text-white border-danger" style="<?= isset($errors['course_code']) ? 'display: block;' : 'display: none;' ?>">
+                  <i class="bi bi-exclamation-circle"></i>
+                </span>
+              </div>
+              <div class="invalid-feedback" id="c_course_code_error" style="display: none;">
+                The course code can only contain letters, and numbers. Special characters are not allowed.
+              </div>
               <?php if (isset($errors['course_code'])): ?>
-                <div class="invalid-feedback d-block"><?= esc($errors['course_code']) ?></div>
+                <div class="invalid-feedback d-block" style="display: block !important;"><?= esc($errors['course_code']) ?></div>
               <?php endif; ?>
             </div>
             <div class="col-md-6">
-              <label class="form-label" for="c_units">Units</label>
-              <input type="number" step="0.5" min="0" max="10" class="form-control <?= isset($errors['units']) ? 'is-invalid' : '' ?>" id="c_units" name="units" value="<?= esc(old('units')) ?>" placeholder="e.g., 3">
-              <small class="form-text text-muted">Optional: Number of units (0-10)</small>
+              <label class="form-label" for="c_units">Units <span class="text-danger">*</span></label>
+              <input type="number" step="0.5" min="0" max="10" class="form-control <?= isset($errors['units']) ? 'is-invalid' : '' ?>" id="c_units" name="units" value="<?= esc(old('units')) ?>" placeholder="e.g., 3" required>
               <?php if (isset($errors['units'])): ?>
                 <div class="invalid-feedback d-block"><?= esc($errors['units']) ?></div>
               <?php endif; ?>
@@ -143,29 +158,30 @@
             <div class="col-12">
               <label class="form-label" for="c_description">Description</label>
               <textarea class="form-control <?= isset($errors['description']) ? 'is-invalid' : '' ?>" id="c_description" name="description" rows="4" maxlength="1000" placeholder="Enter course description..."><?= esc(old('description')) ?></textarea>
+              <small class="form-text text-muted">Optional: Add a description for this course.</small>
               <?php if (isset($errors['description'])): ?>
                 <div class="invalid-feedback d-block"><?= esc($errors['description']) ?></div>
               <?php endif; ?>
             </div>
             <div class="col-md-6">
-              <label class="form-label" for="c_instructor">Instructor</label>
-              <select id="c_instructor" name="instructor_id" class="form-select <?= isset($errors['instructor_id']) ? 'is-invalid' : '' ?>">
-                <option value="">-- Select Instructor (Optional) --</option>
+              <label class="form-label" for="c_instructor">Instructor <span class="text-danger">*</span></label>
+              <select id="c_instructor" name="instructor_id" class="form-select <?= isset($errors['instructor_id']) ? 'is-invalid' : '' ?>" required>
+                <option value="">-- Select Instructor --</option>
                 <?php foreach ($instructors as $inst): ?>
                   <option value="<?= (int)$inst['id'] ?>" <?= old('instructor_id') == $inst['id'] ? 'selected' : '' ?>>
                     <?= esc($inst['name']) ?>
                   </option>
                 <?php endforeach; ?>
               </select>
-              <small class="form-text text-muted">You can assign an instructor later.</small>
+              <small class="form-text text-muted">Select an instructor for this course.</small>
               <?php if (isset($errors['instructor_id'])): ?>
                 <div class="invalid-feedback d-block"><?= esc($errors['instructor_id']) ?></div>
               <?php endif; ?>
             </div>
             <div class="col-md-6">
-              <label class="form-label" for="c_academic_year">Academic Year</label>
-              <select id="c_academic_year" name="academic_year" class="form-select <?= isset($errors['academic_year']) ? 'is-invalid' : '' ?>">
-                <option value="">-- Select Academic Year (Optional) --</option>
+              <label class="form-label" for="c_academic_year">Academic Year <span class="text-danger">*</span></label>
+              <select id="c_academic_year" name="academic_year" class="form-select <?= isset($errors['academic_year']) ? 'is-invalid' : '' ?>" required>
+                <option value="">-- Select Academic Year --</option>
                 <?php foreach ($academicYears as $year): ?>
                   <option value="<?= esc($year) ?>" <?= old('academic_year') == $year ? 'selected' : '' ?>><?= esc($year) ?></option>
                 <?php endforeach; ?>
@@ -175,48 +191,48 @@
               <?php endif; ?>
             </div>
             <div class="col-md-6">
-              <label class="form-label" for="c_semester">Semester</label>
-              <select id="c_semester" name="semester" class="form-select <?= isset($errors['semester']) ? 'is-invalid' : '' ?>">
-                <option value="">-- Select Semester (Optional) --</option>
+              <label class="form-label" for="c_semester">Semester <span class="text-danger">*</span></label>
+              <select id="c_semester" name="semester" class="form-select <?= isset($errors['semester']) ? 'is-invalid' : '' ?>" required>
+                <option value="">-- Select Semester --</option>
                 <?php foreach ($semesters as $sem): ?>
                   <option value="<?= esc($sem) ?>" <?= old('semester') == $sem ? 'selected' : '' ?>><?= esc($sem) ?></option>
                 <?php endforeach; ?>
               </select>
-              <small class="form-text text-muted">Select the semester for this course.</small>
+              <small class="form-text text-muted">Required: Select the semester for this course.</small>
               <?php if (isset($errors['semester'])): ?>
                 <div class="invalid-feedback d-block"><?= esc($errors['semester']) ?></div>
               <?php endif; ?>
             </div>
             <div class="col-md-6">
-              <label class="form-label" for="c_term">Term</label>
-              <select id="c_term" name="term" class="form-select <?= isset($errors['term']) ? 'is-invalid' : '' ?>">
-                <option value="">-- Select Term (Optional) --</option>
+              <label class="form-label" for="c_term">Term <span class="text-danger">*</span></label>
+              <select id="c_term" name="term" class="form-select <?= isset($errors['term']) ? 'is-invalid' : '' ?>" required>
+                <option value="">-- Select Term --</option>
                 <?php foreach ($terms as $term): ?>
                   <option value="<?= esc($term) ?>" <?= old('term') == $term ? 'selected' : '' ?>><?= esc($term) ?></option>
                 <?php endforeach; ?>
               </select>
-              <small class="form-text text-muted">Select the term for this course.</small>
+              <small class="form-text text-muted">Required: Select the term for this course.</small>
               <?php if (isset($errors['term'])): ?>
                 <div class="invalid-feedback d-block"><?= esc($errors['term']) ?></div>
               <?php endif; ?>
             </div>
             <div class="col-md-6">
-              <label class="form-label" for="c_department">Department</label>
-              <select id="c_department" name="department" class="form-select <?= isset($errors['department']) ? 'is-invalid' : '' ?>">
-                <option value="">-- Select Department (Optional) --</option>
+              <label class="form-label" for="c_department">Department <span class="text-danger">*</span></label>
+              <select id="c_department" name="department" class="form-select <?= isset($errors['department']) ? 'is-invalid' : '' ?>" required>
+                <option value="">-- Select Department --</option>
                 <?php foreach ($departments as $dept): ?>
                   <option value="<?= esc($dept) ?>" <?= old('department') == $dept ? 'selected' : '' ?>><?= esc($dept) ?></option>
                 <?php endforeach; ?>
               </select>
-              <small class="form-text text-muted">Select the department for this course.</small>
+              <small class="form-text text-muted">Required: Select the department for this course.</small>
               <?php if (isset($errors['department'])): ?>
                 <div class="invalid-feedback d-block"><?= esc($errors['department']) ?></div>
               <?php endif; ?>
             </div>
             <div class="col-md-6">
-              <label class="form-label" for="c_program">Program</label>
-              <select id="c_program" name="program" class="form-select <?= isset($errors['program']) ? 'is-invalid' : '' ?>">
-                <option value="">-- Select Department First --</option>
+              <label class="form-label" for="c_program">Program <span class="text-danger">*</span></label>
+              <select id="c_program" name="program" class="form-select <?= isset($errors['program']) ? 'is-invalid' : '' ?>" required>
+                <option value="">-- Select Program --</option>
                 <?php 
                 // Only show programs if department is already selected (e.g., after validation errors)
                 $oldDept = old('department');
@@ -228,7 +244,7 @@
                 }
                 ?>
               </select>
-              <small class="form-text text-muted">Select a department first to see available programs.</small>
+              <small class="form-text text-muted">Required: Select a program for this course.</small>
               <?php if (isset($errors['program'])): ?>
                 <div class="invalid-feedback d-block"><?= esc($errors['program']) ?></div>
               <?php endif; ?>
@@ -264,22 +280,37 @@
           <div class="row g-3">
             <div class="col-12">
               <label class="form-label" for="e_title">Course Title <span class="text-danger">*</span></label>
-              <input type="text" class="form-control <?= isset($errors['title']) ? 'is-invalid' : '' ?>" id="e_title" name="title" placeholder="e.g., ITE 321 - Web Application Development" required minlength="3" maxlength="150">
+              <div class="input-group">
+                <input type="text" class="form-control <?= isset($errors['title']) ? 'is-invalid' : '' ?>" id="e_title" name="title" placeholder="e.g., ITE 321 - Web Application Development" pattern="[a-zA-Z0-9ñÑ\s\-()&.,']+( [a-zA-Z0-9ñÑ\s\-()&.,'])*" title="Only letters, numbers, and ñ are allowed" required minlength="3" maxlength="150">
+                <span class="input-group-text bg-danger text-white border-danger" style="<?= isset($errors['title']) ? 'display: block;' : 'display: none;' ?>">
+                  <i class="bi bi-exclamation-circle"></i>
+                </span>
+              </div>
+              <div class="invalid-feedback" id="e_title_error" style="display: none;">
+                The course title can only contain letters, and numbers. Special characters are not allowed.
+              </div>
               <?php if (isset($errors['title'])): ?>
-                <div class="invalid-feedback d-block"><?= esc($errors['title']) ?></div>
+                <div class="invalid-feedback d-block" style="display: block !important;"><?= esc($errors['title']) ?></div>
               <?php endif; ?>
             </div>
             <div class="col-md-6">
               <label class="form-label" for="e_course_code">Course Number/Code</label>
-              <input type="text" class="form-control <?= isset($errors['course_code']) ? 'is-invalid' : '' ?>" id="e_course_code" name="course_code" placeholder="e.g., ITE321, CS101" maxlength="50">
+              <div class="input-group">
+                <input type="text" class="form-control <?= isset($errors['course_code']) ? 'is-invalid' : '' ?>" id="e_course_code" name="course_code" placeholder="e.g., ITE321, CS101" pattern="[a-zA-Z0-9ñÑ\s\-()&.,']*( [a-zA-Z0-9ñÑ\s\-()&.,'])*" title="Only letters, numbers, and ñ are allowed" maxlength="50">
+                <span class="input-group-text bg-danger text-white border-danger" style="<?= isset($errors['course_code']) ? 'display: block;' : 'display: none;' ?>">
+                  <i class="bi bi-exclamation-circle"></i>
+                </span>
+              </div>
+              <div class="invalid-feedback" id="e_course_code_error" style="display: none;">
+                The course code can only contain letters, and numbers. Special characters are not allowed.
+              </div>
               <?php if (isset($errors['course_code'])): ?>
-                <div class="invalid-feedback d-block"><?= esc($errors['course_code']) ?></div>
+                <div class="invalid-feedback d-block" style="display: block !important;"><?= esc($errors['course_code']) ?></div>
               <?php endif; ?>
             </div>
             <div class="col-md-6">
-              <label class="form-label" for="e_units">Units</label>
-              <input type="number" step="0.5" min="0" max="10" class="form-control <?= isset($errors['units']) ? 'is-invalid' : '' ?>" id="e_units" name="units" placeholder="e.g., 3">
-              <small class="form-text text-muted">Optional: Number of units (0-10)</small>
+              <label class="form-label" for="e_units">Units <span class="text-danger">*</span></label>
+              <input type="number" step="0.5" min="0" max="10" class="form-control <?= isset($errors['units']) ? 'is-invalid' : '' ?>" id="e_units" name="units" placeholder="e.g., 3" required>
               <?php if (isset($errors['units'])): ?>
                 <div class="invalid-feedback d-block"><?= esc($errors['units']) ?></div>
               <?php endif; ?>
@@ -287,6 +318,7 @@
             <div class="col-12">
               <label class="form-label" for="e_description">Description</label>
               <textarea class="form-control <?= isset($errors['description']) ? 'is-invalid' : '' ?>" id="e_description" name="description" rows="4" maxlength="1000" placeholder="Enter course description..."></textarea>
+              <small class="form-text text-muted">Optional: Add a description for this course.</small>
               <?php if (isset($errors['description'])): ?>
                 <div class="invalid-feedback d-block"><?= esc($errors['description']) ?></div>
               <?php endif; ?>
@@ -483,6 +515,14 @@
           document.getElementById('e_semester').value = data.course.semester || '';
           document.getElementById('e_academic_year').value = data.course.academic_year || '';
           
+          // Clear validation warnings on load
+          $('#e_title').removeClass('is-invalid');
+          $('#e_title').closest('.input-group').find('.input-group-text').hide();
+          $('#e_title_error').hide();
+          $('#e_course_code').removeClass('is-invalid');
+          $('#e_course_code').closest('.input-group').find('.input-group-text').hide();
+          $('#e_course_code_error').hide();
+          
           // Set department first, then update programs
           const department = data.course.department || '';
           const program = data.course.program || '';
@@ -582,9 +622,21 @@ $(document).ready(function() {
 
   storeCoursesData();
 
-  // Real-time filtering for courses
+  // Real-time filtering for courses with character validation
+  const allowedSearchPattern = /^[a-z0-9ñ\s]*$/i;
+  
   searchInput.on('keyup', function() {
-    const searchTerm = $(this).val().toLowerCase().trim();
+    const rawInput = $(this).val().trim();
+    const searchTerm = rawInput.toLowerCase();
+    
+    // Check if search term contains special characters (validate raw input)
+    if (rawInput && !allowedSearchPattern.test(rawInput)) {
+      // Invalid characters detected - don't search
+      courseTableBody.html('<tr><td colspan="13" class="text-center text-muted py-4">Please remove special characters from your search.</td></tr>');
+      noResults.removeClass('d-none');
+      resultsInfo.addClass('d-none');
+      return;
+    }
     
     if (searchTerm === '') {
       courseTableBody.html('');
@@ -628,6 +680,77 @@ $(document).ready(function() {
     noResults.addClass('d-none');
     resultsInfo.addClass('d-none');
   });
+
+  // Real-time validation for course title and code
+  const allowedPattern = /^[a-zA-Z0-9ñÑ\s\-()&.,']*( [a-zA-Z0-9ñÑ\s\-()&.,'])*$/;
+  const titlePattern = /^[a-zA-Z0-9ñÑ\s\-()&.,']+$/;
+  
+  function validateField(inputId, errorId, isRequired = false) {
+    const input = $('#' + inputId);
+    const errorDiv = $('#' + errorId);
+    const inputGroup = input.closest('.input-group');
+    const warningIcon = inputGroup.find('.input-group-text');
+    let hasUserInteracted = false;
+    
+    function updateButtonStates() {
+      // Check if any validation errors exist
+      const hasErrors = $('.is-invalid').length > 0;
+      const submitBtn = input.closest('form').find('button[type="submit"]');
+      
+      if (hasErrors) {
+        submitBtn.prop('disabled', true).css('opacity', '0.6').css('cursor', 'not-allowed');
+      } else {
+        submitBtn.prop('disabled', false).css('opacity', '1').css('cursor', 'pointer');
+      }
+    }
+    
+    input.on('keyup change', function() {
+      hasUserInteracted = true;
+      const value = $(this).val();
+      const isTitle = inputId.includes('title');
+      const pattern = isTitle ? titlePattern : allowedPattern;
+      
+      // Check if empty (for required fields)
+      if (isRequired && value.trim() === '') {
+        $(this).addClass('is-invalid');
+        errorDiv.show();
+        warningIcon.show();
+        updateButtonStates();
+        return;
+      }
+      
+      // Check if matches pattern
+      if (value.length > 0 && !pattern.test(value)) {
+        $(this).addClass('is-invalid');
+        errorDiv.show();
+        warningIcon.show();
+        updateButtonStates();
+      } else {
+        $(this).removeClass('is-invalid');
+        errorDiv.hide();
+        warningIcon.hide();
+        updateButtonStates();
+      }
+    });
+    
+    // Clear any pre-existing validation on initial load
+    input.on('focus', function() {
+      if (!hasUserInteracted) {
+        $(this).removeClass('is-invalid');
+        errorDiv.hide();
+        warningIcon.hide();
+        updateButtonStates();
+      }
+    });
+  }
+  
+  // Apply validation to create modal fields
+  validateField('c_title', 'c_title_error', true);
+  validateField('c_course_code', 'c_course_code_error', false);
+  
+  // Apply validation to edit modal fields
+  validateField('e_title', 'e_title_error', true);
+  validateField('e_course_code', 'e_course_code_error', false);
 });
 </script>
 
